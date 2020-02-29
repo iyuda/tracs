@@ -1,0 +1,111 @@
+﻿@model IEnumerable<RMATracker.Models.Assessment>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.VerifyReturn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PhysicalDamage)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PowerUp)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VerifyLED)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TamperSwitch)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PosSwitch)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CableCut)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SkimAlarm)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CardRead)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NFCProximity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UnitPassFail)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RootCause)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HardwareRootCause)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateCreated)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.VerifyReturn)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PhysicalDamage)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PowerUp)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VerifyLED)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TamperSwitch)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PosSwitch)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CableCut)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SkimAlarm)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CardRead)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NFCProximity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UnitPassFail)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RootCause)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HardwareRootCause)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateCreated)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.id })
+        </td>
+    </tr>
+}
+
+</table>

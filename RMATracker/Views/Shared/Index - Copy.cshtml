@@ -1,0 +1,699 @@
+﻿@model RMATracker.Models.RMATrackerViewModel
+@{
+    ViewBag.EditMode = (ViewBag.EditMode ?? false);
+    //    ViewBag.Title = "Home Page";
+
+
+}
+
+@*<script type="text/javascript">
+
+        $(document).ready(function () {
+
+
+            alert('load');
+        });
+
+        $("input[name^='upload-file-']").change(function (event) {
+            alert('asdfas');
+            var tmppath = URL.createObjectURL(event.target.files[0]);
+            $("img").fadeIn("fast").attr('src',URL.createObjectURL(event.target.files[0]));
+            $("#disp_tmp_path").html("Temporary Path(Copy it and try pasting it in browser address bar) --> <strong>["+tmppath+"]</strong>");
+    });
+
+    </script>*@
+
+<div class="container" style="margin-top:40px;" id="container">
+    <div class="row">
+        @{bool is_rma_empty = Model.RMABase == null; }
+        @if (!is_rma_empty) { is_rma_empty = Model.RMABase.id == null; }
+        @if (is_rma_empty || !ViewBag.EditMode)
+        {
+            <font color="red">
+                When returning PC Boards or exposed electronics, always place in anti -static pink or silver bags. Failure to place exposed electronics(pc boards) in anti -static packaging voids all warranties. Static destroys electronics.
+                All items should be shipped inside boxes with the Case# marked on the box.
+                Items received damaged due to improper packaging are the responsibility of the shipper.
+                Always provide RMA documentation / Case Numbers with ALL returns(print the email received after submitting the form on the website).
+                Please process only one site per RMA form. Do not return equipment from multiple sites on a single RMA form.
+                <br><br>
+                Equipment to be returned with Case # to<br>
+                Parabit Systems <br>
+                35 Debevoise Ave<br>
+                Roosevelt, NY 11575 <br>
+                Attention RMA Depatment<br>
+                Attention: George Koebel, Paul Vitoria<br>
+            </font>
+            <br><br>
+        }
+
+
+                <form id="formRMASend" action="~/Shared/SaveRMAData" method="post" class="wpcf7-form" enctype="multipart/form-data" novalidate="novalidate" runat="server">
+                    <div class="form-group problem-menu" id="div_category">
+                        @*<strong>Select Form Type</strong> <br>*@
+                        @{
+                            var forms_types = RMATracker.Models.RMATrackerViewModel.getFormTypes();
+
+                            IEnumerable<SelectListItem> selectList = from f in forms_types
+                                                                     select new SelectListItem
+                                                                     {
+                                                                         Value = String.Join("(", f.id.ToString(), f.form_name, f.email_address, f.email_name),
+                                                                         Text = f.form_title.Replace("-", "").Replace("–", "")
+                                                                     };
+                            @Html.DropDownList("FormsSelectList", new SelectList(selectList, "Value", "Text"), "-- Select Form Type --", new
+                       {
+                           @aria_invalid = "false",
+                           @class = "wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control",
+                           @onchange = "RedirectToForm(this, '" + @Url.Action("Index", "Shared", new { id = "dummy" }) + "')"
+                       })
+                            @Html.HiddenFor(m => m.RMABase.form_id)
+                            @Html.HiddenFor(m => m.RMABase._form_name)
+                            @Html.HiddenFor(m => m.RMABase._email_address)
+                            @Html.HiddenFor(m => m.RMABase._email_name)
+                        }
+                        @*@Html.DropDownList("Category", new SelectList(new List<Object>{
+                new {value = "rma-boa", text = "RMA BOA"  },
+                new {value = "rma-securitas-general", text ="RMA Securitas General"  },
+                new {value = "rmaparabittech", text = "RMA Parabit Tech" },
+                new {value = "rmaparabitsub", text = "RMA Parabit Sub" },
+                new {value = "rmageneral", text = "RMA General" },
+
+
+            }, "Value", "Text"), "---", new { @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control" })*@
+
+                    </div> <br>
+
+
+                    @Html.HiddenFor(m => m.ViewType)
+                    @Html.AntiForgeryToken()
+                    @{
+                        if (is_rma_empty || !ViewBag.EditMode)
+                        {
+                            <i>*Required Fields</i> <br> <br>
+                        }
+                    }
+                    @*<strong>Problem Description:*</strong>  <br>*@
+
+
+                    <div class="form-group call-number">
+                        @{
+                            if (ViewBag.ViewType == "rmaparabittech" || ViewBag.ViewType == "rmaparabitsub")
+                            {
+                                <label class="">ESC Dispatch #:<span class="required">*</span></label>
+                            }
+                            else
+                            {
+                                <label class="">Vendor Call # (TR #):<span class="required">*</span></label>
+                            }
+                        }
+                        @Html.TextBoxFor(m => m.RMABase.tr_no, new { @maxlength = "12", @data_validation = "required", @required = "", @aria_invalid = "false", @aria_required = "true", @class = "required wpcf7-form-control wpcf7-text wpcf7-validates-as-required wpcf7-not-valid rma-calendar form-control" })
+                    </div> <br>
+                    @{
+                        if (ViewBag.ViewType == "rmaparabittech")
+                        {
+                            @:<div class="container1" style="display:none">
+                            }
+                            else
+                            {
+                                @:<div class="container1">
+                                }
+                    }
+
+                    <strong>Type of RMA:*</strong>  <br>
+                    <div class="form-group TypeofRMA">
+
+                        @Html.DropDownListFor(m => m.RMADetails.ReturnType, new SelectList(new List<Object>{
+                           new { value = 0 , text = "Service request"  },
+                           new { value = 1 , text = "Credit request" },
+                        }, "Value", "Text"), "-- Pick One --", new { @style = "padding:4px", @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-select wpcf7-validates-as-required section1 form-control" })
+
+
+
+
+                    </div><br><br>
+
+                    <strong>If Credit then reason for:*</strong>  <br>
+                    <div class="form-group IfCreditReason">
+
+                        @Html.DropDownListFor(m => m.RMADetails.CreditReason, new SelectList(new List<Object>{
+                            new { value = 0 , text = "Job cancelled"  },
+                            new { value = 1 , text = "No longer required (excess inventory)" },
+                            new { value = 2 , text = "Wrong part ordered" },
+                            new { value = 3 , text = "Wrong color" },
+                        }, "Value", "Text"), "-- Pick One --", new { @style = "padding:4px", @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-select wpcf7-validates-as-required section1 form-control" })
+                    </div><br><br>
+
+                </div>
+                <br>
+
+                <div class="form-group firm-name">
+                    <label class="">Firm Name</label>
+                    @{ bool is_securitas = Model.ViewType == "rma-boa" || Model.ViewType == "rma-securitas-general";}
+                    @Html.TextBoxFor(m => m.TechInfo.ClientName, new {
+                   @placeholder = @is_securitas ? "Securitas" : "",
+                   @maxlength = "50",
+                   @aria_invalid = "false",
+                   @class = "wpcf7-form-control wpcf7-text rma-textfield form-control" })
+                </div>
+
+                <div class="container1">
+                    <div class="section1">
+                        <div class="form-group tech-name">
+                            <label class="">Tech Name<span class="required">*</span></label>
+
+                            @Html.TextBoxFor(m => m.TechInfo.TechName, new { @maxlength = "50", @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" })
+                        </div>
+                    </div>
+                    <div class="section1">
+                        <div class="form-group tech-email">
+                            <label class="">Tech Email<span class="required">*</span></label>
+
+                            @Html.TextBoxFor(m => m.TechInfo.TechEmail, new { @maxlength = "50", @type = "email", @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" })
+                        </div>
+                    </div>
+                    <div class="section1">
+                        <div class="form-group tech-phone">
+                            <label class="">Tech Phone<span class="required">*</span></label>
+                            @Html.TextBoxFor(m => m.TechInfo.TechPhone, new { @maxlength = "15", @type = "tel", @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" })
+                        </div>
+
+
+                    </div>
+                </div>
+
+                <br><br>
+                <fieldset>
+                    <legend>Return Address</legend>
+                    <div class="form-group return-street-address">
+                        <label class="">Street Address<span class="required">*</span></label>
+                        @*<input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required rma-textfield form-control" name="return-street-address" type="text" value="" aria-invalid="false" aria-required="true" required="">*@
+                        @Html.TextBoxFor(m => m.ReturnAddress.StreetAddress, new { @maxlength = "255", @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" })
+                    </div>
+
+                    <div class="container1">
+                        <div class="section1">
+                            <div class="form-group return-city">
+                                <label class="">City<span class="required">*</span></label>
+                                @*    <input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" name="return-city" type="text" value="" aria-invalid="false" aria-required="true" required="">*@
+                                @Html.TextBoxFor(m => m.ReturnAddress.City, new { @maxlength = "50", @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" })
+                            </div>
+                        </div>
+                        <div class="section1">
+                            <div class="form-group return-state">
+                                <label class="">State<span class="required">*</span></label>
+                                @*<input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required rma-short form-control" name="return-state" type="text" value="" aria-invalid="false" aria-required="true" required="">*@
+
+                                @Html.DropDownListFor(m => m.ReturnAddress.State, new SelectList(Model.States, "Value", "Text", Model.ReturnAddress == null ? null : Model.ReturnAddress.State), "-- Select State --", new
+                           {
+                               @aria_invalid = "false",
+                               @aria_required = "true",
+                               @required = "",
+                               @class = "wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control",
+                               @onchange = "GetReturnAddressStateName(this)"
+                           })
+                                @Html.HiddenFor(m => m.ReturnAddress._ReturnAddressStateFullName)
+                                @*@Html.TextBoxFor(m => m.ReturnAddress.State, new { @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" })*@
+                            </div>
+                        </div>
+                        <div class="section1">
+                            <div class="form-group return-zip">
+                                <label class="">Zip Code<span class="required">*</span></label>
+                                @*<input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" name="return-zip" type="text" value="" aria-invalid="false" aria-required="true" required="">*@
+                                @Html.TextBoxFor(m => m.ReturnAddress.ZipCode, new { @maxlength = "9", @aria_invalid = "false", @aria_required = "true", @required = "", @class = "zipcode wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" })
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <br><br>
+                <fieldset>
+                    <legend>Bank Name &amp; Address</legend>
+                    <div class="form-group bank-name">
+                        <label class="">Bank Name</label>
+                        @*<input class="wpcf7-form-control wpcf7-text rma-textfield form-control" name="bank-name" type="text" value="" placeholder="Bank of America" aria-invalid="false">*@
+                        @Html.TextBoxFor(m => m.BankInfo.BankName, new { @aria_invalid = "false", @class = "wpcf7-form-control wpcf7-text rma-textfield form-control" })
+                    </div><br>
+
+                    <div class="form-group bank-street-address">
+                        <label class="">Service Call Street Address<span class="required">*</span></label>
+                        @*<input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required rma-textfield form-control" name="bank-street-address" type="text" value="" aria-invalid="false" aria-required="true" required="">*@
+                        @Html.TextBoxFor(m => m.BankInfo.BankStreetAddress, new { @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" })
+                    </div>
+
+                    <div class="container1">
+                        <div class="section1">
+                            <div class="form-group bank-city">
+                                <label class="">City<span class="required">*</span></label>
+                                @*<input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" name="bank-city" type="text" value="" aria-invalid="false" aria-required="true" required="">*@
+                                @Html.TextBoxFor(m => m.BankInfo.BankCity, new { @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" })
+                            </div>
+                        </div>
+                        <div class="section1">
+                            <div class="form-group bank-state">
+                                <label class="">State<span class="required">*</span></label>
+                                @*<input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required rma-short form-control" name="bank-state" type="text" value="" aria-invalid="false" aria-required="true" required="">*@
+
+                                @Html.DropDownListFor(m => m.BankInfo.BankState, new SelectList(Model.States, "Value", "Text", Model.BankInfo == null ? null : Model.BankInfo.BankState), "-- Select State --", new
+                           {
+                               @aria_invalid = "false",
+                               @aria_required = "true",
+                               @required = "",
+                               @class = "wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control",
+                               @onchange = "GetBankStateName(this)"
+                           })
+                                @Html.HiddenFor(m => m.BankInfo._BankStateFullName)
+                                @*@Html.TextBoxFor(m => m.BankInfo.BankState, new { @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" })*@
+                            </div>
+                        </div>
+                        <div class="section1">
+                            <div class="form-group bank-zip">
+                                <label class="">Zip Code<span class="required">*</span></label>
+                                @*<input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" name="bank-zip" type="text" value="" aria-invalid="false" aria-required="true" required="">*@
+                                @Html.TextBoxFor(m => m.BankInfo.BankZipCode, new { @maxlength = "9", @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" })
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+
+
+
+
+                <strong>Date of Service Call:*</strong> <div class="form-group service-call-date">
+                    @*<input class="wpcf7-form-control wpcf7-date wpcf7-validates-as-required wpcf7-validates-as-date rma-calendar form-control" name="service-call-date" type="date" value="" min="" max="" step="" aria-invalid="false" aria-required="true" required="">*@
+                    @Html.TextBoxFor(m => m.Dates.CaseDate, new { @type = "date", @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-date wpcf7-validates-as-required wpcf7-validates-as-date wpcf7-not-valid rma-calendar form-control" })
+                </div> <br>
+                <strong>Problem Description:*</strong> <br>
+                <div class="form-group problem-menu">
+                    @*<select class="wpcf7-form-control wpcf7-select wpcf7-validates-as-required rma-dropdown form-control" name="problem-menu" aria-invalid="false" aria-required="true" required=""><option value="" selected="">---
+        </option><option value="Card swipe not reading cards"> Card swipe not reading cards</option><option value="Reader flashing red/ access denied"> Reader flashing red/ access denied</option><option value="Phones/Contactless cards not being read"> Phones / Contactless cards not being read</option><option value="False skimming/overlay alarm"> False skimming/overlay alarm</option><option value="Tamper alarm active"> Tamper alarm active</option><option value="CableCut alarm active"> CableCut alarm active</option><option value="Reader LED not working"> Reader LED not working</option><option value="Trouble loading firmware"> Trouble loading firmware</option><option value="Controller unresponsive"> Controller unresponsive</option><option value="Doors not locking"> Doors not locking</option><option value="Doors not opening"> Doors not opening</option><option value="Can't connect to controller"> Can't connect to controller</option><option value="Other">Other</option>
+        </select>*@
+                    @{
+                        var ProblemTypes = RMATracker.Models.RMATrackerViewModel.getProblemTypes();
+                    }
+                    @Html.DropDownListFor(m => m.RMABase.problem_id, new SelectList(ProblemTypes, "id", "problem_description"), "--", new
+               //@Html.DropDownList("ComplaintCode", new SelectList(new List<Object>{
+               //    new {value = 0, text = "Card swipe not reading cards"  },
+               //    new {value = 1, text = "Reader flashing red/ access denied" },
+               //    new {value = 2, text = "Phones/Contactless cards not being read" },
+               //    new {value = 3, text = "False skimming/overlay alarm" },
+               //    new {value = 4, text = "Tamper alarm active" },
+               //    new {value = 5, text = "CableCut alarm active" },
+               //    new {value = 6, text = "Reader LED not working" },
+               //    new {value = 7, text = "Trouble loading firmware" },
+               //    new {value = 8, text = "Controller unresponsive" },
+               //    new {value = 9, text = "Doors not locking" },
+               //    new {value = 10, text = "Doors not opening" },
+               //    new {value = 11, text = "Can't connect to controller" },
+               //    new {value = 12, text = "Other" },
+
+               //}, "Value", "Text"), "---", new
+               { @onchange = "GetProblemDescription(this)", @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control" })
+                    @Html.HiddenFor(m => m.TechInfo.ClientComplaint)
+                </div> <br>
+                <div class="form-group additional-info">
+                    <label class="">Additional Information:</label>
+                    @Html.TextAreaFor(m => m.TechInfo.FieldObservation, new { @maxlength = "255", @rows = "4", @aria_invalid = "false", @class = "wpcf7-form-control wpcf7-textarea rma-textarea form-control" })
+                    @*<textarea class="wpcf7-form-control wpcf7-textarea rma-textarea form-control" name="additional-info" rows="4" aria-invalid="false"></textarea>*@
+                </div> <br>
+                <div class="form-group steps-taken">
+                    <label class="">Steps Undertaken to Resolve Issues:</label>
+                    @*<textarea class="wpcf7-form-control wpcf7-textarea rma-textarea form-control" name="steps-taken" rows="4" aria-invalid="false"></textarea>*@
+                    @Html.TextAreaFor(m => m.TechInfo.StepsUndertaken, new { @maxlength = "255", @rows = "4", @aria_invalid = "false", @class = "wpcf7-form-control wpcf7-textarea rma-textarea form-control" })
+                </div> <br>
+
+
+                <fieldset>
+                    <legend>Part Number and Serial Number Returns</legend>
+                    @{
+                        if (is_rma_empty || !ViewBag.EditMode)
+                        {
+                            <i>*Only the 1st Part Number &amp; Serial Number is required</i> <br> <br>
+                        }
+                        var PartTypes = RMATracker.Models.RMATrackerViewModel.getPartTypes();
+                    }
+                    @*@foreach (DataLayer.Parts part in Model.Parts.Where(p=> (p.part_types_id ?? "") !=""))*@
+                    @for (int i = 0; i < (Model.Parts != null ? Model.Parts.Count : 0); i++)
+                    {
+                        if (!is_rma_empty && ViewBag.EditMode && (Model.Parts[i].part_types_id ?? "") == "")
+                        {
+                            continue;
+                        }
+                        <div class="container1" style="border:solid">
+                            <div class="section1" style="padding-left: 10px">
+                                @{
+                                    if (i == 0)
+                                    {
+                                        @:<strong>Part Number @(i + 1):*</strong>
+                                        @:<div class="form-group part-menu">
+                                            //ViewBag
+                                            @Html.DropDownListFor(m => m.Parts[i]._PartNo, new SelectList(PartTypes, "PartNo", "PartDescription", Model.Parts[i]._PartNo), "-- Select Part --", new
+                                       {
+                                           @aria_invalid = "false",
+                                           @aria_required = "true",
+                                           @required = "",
+                                           @class = "wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control",
+                                           @onchange = "GetPartID(this)"
+                                       })
+                                    }
+                                    else
+                                    {
+                                            @:<strong>Part Number @(i + 1):</strong>
+                                            @:<div class="form-group part-menu">
+                                                @Html.DropDownListFor(m => m.Parts[i]._PartNo, new SelectList(PartTypes, "PartNo", "PartDescription", Model.Parts[i]._PartNo), "-- Select Part --", new
+                                           {
+                                               @aria_invalid = "false",
+                                               @class = "wpcf7-form-control wpcf7-select form-control",
+                                               @onchange = "GetPartID(this)"
+                                           })
+                                    }
+                                            @Html.DropDownListFor(m => m.Parts[i]._PartDescription, new SelectList(PartTypes, "PartDescription", "PartDescription", Model.Parts[i]._PartDescription), "--", new
+                                       {
+                                           @style = "display:none"
+                                       })
+                                            @Html.DropDownListFor(m => m.Parts[i].part_types_id, new SelectList(PartTypes, "id", "id", Model.Parts[i].part_types_id), "--", new
+                                       {
+                                           @style = "display:none"
+                                       })
+                                        @:</div>
+                                }
+
+                            </div>
+
+                            <div class="section1">
+                                @{
+                                    if (i == 0)
+                                    {
+                                        @:<strong>Serial Number @(i + 1):* </strong>
+                                        @:<div class="form-group serial-number">
+                                            @Html.TextBoxFor(m => m.Parts[i].SN, new { @maxlength = "6", @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-validates-as-required form-control" })
+                                    }
+                                    else
+                                    {
+                                            @:<strong>Serial Number @(i + 1): </strong>
+                                            @:<div class="form-group serial-number">
+                                                @Html.TextBoxFor(m => m.Parts[i].SN, new { @maxlength = "6", @aria_invalid = "false", @class = "wpcf7-form-control form-control" })
+                                    }
+                                        @:</div>
+                                }
+                            </div>
+                                          <div class="section1">
+                                              @{
+                                                  if (i == 0)
+                                                  {
+                                                      @:<strong>Description @(i + 1):* </strong>
+                                                      @:<div class="form-group description-1">
+                                                          @Html.TextBoxFor(m => m.Parts[i].image_description, new { @maxlength = "100", @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-validates-as-required form-control" })
+                                                      }
+                                                      else
+                                                      {
+                                                          @:<strong>Description @(i + 1): </strong>
+                                                          @:<div class="form-group description-1">
+                                                              @Html.TextBoxFor(m => m.Parts[i].image_description, new { @maxlength = "100", @aria_invalid = "false", @class = "wpcf7-form-control form-control" })
+                                                          }
+                                                      @:</div>
+                                              }
+                                          </div>
+                                          @{
+                                              int index = i + 1;
+                                              if (is_rma_empty || !ViewBag.EditMode)
+                                              {
+                                                  <div class="section1" style="padding-left: 10px">
+                                                      <div class="form-group upload-file-1">
+                                                          @*<input accept="image/jpeg,image/png,image/gif,image/bmp" aria-required="true" required="" aria-invalid="false" class="wpcf7-form-control wpcf7-slim wpcf7-validates-as-required" id="upload-file-0" name="upload-file-0" type="file">*@
+
+                                                          @*<span class="slim" data-status-file-size="File is too big, maximum file size: $0 MB." data-status-file-type="Invalid file type, expects: $0." data-status-image-too-small="Image is too small, minimum size is: $0 pixels." data-max-file-size="9" data-post="output" data-filter-sharpen="15" data-size="640,480" data-download="true">*@
+                                                          @{
+                                                              if (i == 0)
+                                                              {
+                                                                  @*<input accept="image/jpeg,image/png,image/gif,image/bmp" aria-required="true" required="" aria-invalid="false" class="wpcf7-form-control wpcf7-slim wpcf7-validates-as-required" id="upload-file-@index" name="upload-file-@index" type="file">*@
+
+                                                                  @Html.TextBox("upload-file-" + @index.ToString(), null, new
+                                                             {
+                                                                 @index = @index.ToString(),
+                                                                 @type = "file",
+                                                                 @accept = "image/jpeg,image/png,image/gif,image/bmp",
+                                                                 @aria_invalid = "false",
+                                                                 @aria_required = "true",
+                                                                 @required = "",
+                                                                 @class = "wpcf7-form-control wpcf7-slim wpcf7-validates-as-required",
+                                                                 @onchange = "LoadImageOnForm(this)"
+                                                             })
+
+                                                                  @*@Html.Image("image-" + @index.ToString(), "", "100", "100");*@
+                                                                  @*<img id="blah" src="#" alt="your image" />*@
+                                                                  @*@Html.TextBox("upload-file-"+@index.ToString(), null, new
+                            {
+                                @type = "file",
+                                @accept = "image/jpeg,image/png,image/gif,image/bmp",
+                                @aria_invalid = "false",
+                                @aria_required = "true",
+                                @required = "",
+                                @class = "wpcf7-form-control wpcf7-slim wpcf7-validates-as-required",
+                                @onchange = "LoadFileInfo(this)"
+                                })*@
+                                                              }
+                                                              else
+                                                              {
+                                                                  @*<input accept="image/jpeg,image/png,image/gif,image/bmp" aria-invalid="false" class="wpcf7-form-control wpcf7-slim" id="upload-file-@index" name="upload-file-@index" type="file">*@
+                                                                  @Html.TextBox("upload-file-" + @index.ToString(), null, new
+                                                             {
+                                                                 @index = @index.ToString(),
+                                                                 @type = "file",
+                                                                 @accept = "image/jpeg,image/png,image/gif,image/bmp",
+                                                                 @aria_invalid = "false",
+                                                                 @class = "wpcf7-form-control wpcf7-slim",
+                                                                 @onchange = "LoadImageOnForm(this)"
+                                                             })
+                                                              }
+                                                              @Html.HiddenFor(m => m.Parts[i].image_path, new { @index = @index.ToString(), })
+                                                          }
+                                                          @*</span>*@
+                                                      </div>
+                                                  </div>
+                                              }
+                                              var style = (!is_rma_empty && ViewBag.EditMode) ? "style='padding-left:10px'" : "";
+                                              <div class="section1" @style>
+                                                  @{
+                                                      var image_path = String.IsNullOrEmpty(Model.Parts[i].image_path) ? "" : Model.Parts[i].image_path;
+                                                      if (String.IsNullOrEmpty(@image_path))
+                                                      {
+                                                          <img alt="Image Not Available" id="image-@index" style="width: auto;height: auto;" />
+                                                      }
+                                                      else
+                                                      {
+                                                          <img alt="Image Not Available" src="@image_path" id="image-@index" style="width: auto;height:100px;" />
+                                                      }
+                                                  }
+                                              </div>
+
+                                              if (!is_rma_empty && ViewBag.EditMode)
+                                              {
+                                                  @*<table style="width:auto">
+            <tr>
+              <td>*@
+                                                  <div class="section1" style="padding-bottom:27px; border-top:solid; border-left:solid; border-width:medium">
+                                                      @{
+                                                          @:<div class="panel-body" id="div_update_status">
+                                                          @:<strong>Part @(i + 1)  Note: </strong>
+                                                              @Html.TextAreaFor(m => m.Parts[i].additional_notes, new { @style = "width:100%;", @maxlength = "255", @aria_invalid = "false", @class = "wpcf7-form-control wpcf7-textarea rma-textarea form-control" })
+                                                          @:</div>
+                                                      }
+                                                  </div>
+                                                  <div class="section1" style="border-top:solid;border-width:medium">
+                                                      <div class="panel-body" id="div_update_status">
+                                                          @*  <form id="formStatus" action="~/Shared/UpdatePartStatus" method="post" class="wpcf7-form" enctype="multipart/form-data" runat="server">*@
+                                                          <table style="width:auto">
+                                                              <tr>
+                                                                  <td class="lableHeader" width="50">Part @(i + 1) Status:</td>
+                                                              <tr>
+                                                                  <td class="controlCell" width="150">
+                                                                      <div class="ui-widget">
+                                                                          @Html.HiddenFor(m => m.RMABase.id)
+                                                                          @Html.HiddenFor(m => m.Parts[i].id)
+                                                                          @Html.HiddenFor(m => m.RMABase.case_no, new { @id = "case_no" })
+                                                                          @{
+                                                                              var Statuses1 = RMATracker.Models.RMATrackerViewModel.getStatuses();
+                                                                          }
+
+                                                                          @Html.DropDownListFor(m => m.Parts[i].status_id,
+                                                                          new SelectList(Statuses1, "id", "status", Model.Parts[i].status_id), "--",
+                                                                          //new SelectList(new List<Object>
+                                                                          // {
+                                                                          // new {value = "", text = ""  },
+                                                                          // new {value = "Pending", text = "Pending"  },
+                                                                          // new {value = "Received", text ="Received"  },
+                                                                          // new {value = "Shipped", text = "Shipped" },
+                                                                          // }, "Value", "Text", Model.Parts[i].status), new
+                                                                          new {
+                                                                              @index=@i,
+                                                                              @style = "width:170px;",
+                                                                              @class = "form -control",
+                                                                              @onchange="SetPartStatus(this)"
+                                                                          })
+                                                                      </div>
+                                                                  </td>
+                                                                  <td class="controlCell">
+                                                                      <div class="ui-widget" style="padding-left: 10px">
+                                                                          <button type="button" class="btn btn-primary" id="btnUpdatePartStatus" button_index="@i" onclick="UpdatePartStatus(this)" part_id="@Model.Parts[i].id" status_id="@Model.Parts[i].status_id" last_updated_status="@Model.Parts[i].status_id" disabled>
+                                                                              @*formaction="UpdatePartStatus" name="PartIndex" value="@i">*@  @*name="submit"  value="UpdatePartStatus">*@
+                                                                              Update Part Status
+                                                                          </button>
+                                                                      </div>
+                                                                  </td>
+                                                              </tr>
+
+                                                          </table>
+                                                          @*</form>*@
+                                                      </div>
+                                                  </div>
+
+                                                  @*</td><td style="width:auto">*@
+                                                  @*</td></tr></table>*@
+                                              }
+                                          }
+                                          </div>
+                                <br>
+                    }
+
+                </fieldset>
+                <div class="container1">
+                    <div class="section1"><strong>Was Parabit Called?*</strong></div>
+                    @*<div class="section1"><strong>If yes, Date:</strong></div>*@
+                    <div class="section1"><strong>Parabit Dispatch #:</strong></div>
+                </div>
+
+
+                <div class="section1">
+                    <div class="form-group parabit-called">
+
+                        <div class="radio-jquery-ui">
+                            @Html.RadioButtonFor(m => m.RMABase.was_parabit_called, "false", new { @tag = "No", @onchange = "WasParabitCalled(this)" })
+                            @Html.LabelFor(m => m.RMABase.was_parabit_called, "No")
+                        </div>
+                        <div class="radio-jquery-ui">
+                            @Html.RadioButtonFor(m => m.RMABase.was_parabit_called, "true", new { @tag = "Yes", @onchange = "WasParabitCalled(this)" })
+                            @Html.LabelFor(m => m.RMABase.was_parabit_called, "Yes")
+                        </div>
+                    </div>
+
+                    <div class="section1" style="width:100%">
+                        @{
+
+                            if (Model.RMABase == null ? false : (Model.RMABase.was_parabit_called == null ? false : (bool)Model.RMABase.was_parabit_called))
+                            {
+                                @:<div id="called_date_div" class="form-group call-date">
+                                }
+                                else
+                                {
+                                    @:<div id="called_date_div" class="form-group call-date" style="display:none">
+                                    }
+
+                                    @*<input class="wpcf7-form-control wpcf7-date wpcf7-validates-as-date form-control" name="call-date" type="date" value="" min="" max="" step="" aria-invalid="false">*@
+                                    @Html.Label("Parabit Call Date")
+                                    @Html.TextBoxFor(m => m.Dates.ParabitCalledDate, new { @type = "date", @min = "", @max = "", @step = "", @aria_invalid = "false", @class = "wpcf7-form-control wpcf7-date wpcf7-validates-as-date form-control" })
+                                @:</div>
+                        }
+                        @*<select class="wpcf7-form-control wpcf7-select wpcf7-validates-as-required rma-short form-control" name="parabit-called" aria-invalid="false" aria-required="true" required=""><option value="" selected="">---</option><option value="Yes">Yes</option><option value="No">No</option></select>*@
+                        @*@Html.RadioButtonFor(m => m.RMABase.was_parabit_called, new { @onchange = "WasParabitCalled()" })*@
+                        @*@Html.Label("Was Parabit Called?")*@
+                    </div>
+                </div>
+
+                <div class="section1">
+                    <div class="form-group dispatch-number">
+                        @*<input class="wpcf7-form-control wpcf7-text form-control" name="dispatch-number" type="text" value="" aria-invalid="false">*@
+                        @Html.TextBoxFor(m => m.RMABase.DispatchNo, new { @maxlength = "20", @aria_invalid = "false", @class = "wpcf7-form-control wpcf7-text form-control" })
+                    </div>
+                </div>
+
+
+
+                @if (!is_rma_empty && ViewBag.EditMode)
+                {
+                    <div class="section1">
+                        <div class="panel-body" id="div_update_status" style="border:solid; border-width :thin; border-color:green;">
+                            <table style="width:auto">
+                                <tr>
+                                    <td class="lableHeader" width="50">RMA Status:</td>
+                                <tr>
+                                    <td class="controlCell" width="150">
+                                        <div class="ui-widget">
+
+                                            @{
+                                                var Statuses = RMATracker.Models.RMATrackerViewModel.getStatuses();
+                                            }
+
+                                            @Html.DropDownListFor(m => m.RMABase.status_id,
+                                            new SelectList(Statuses, "id", "status", Model.RMABase.status_id), "--",
+                                            new {
+                                                @style = "width:170px;",
+                                                @class = "form -control",
+                                                @onchange="SetStatus(this)"
+                                            })
+                                            @Html.HiddenFor(m => m.RMABase._status, new { @id = "rma_status_description" })
+                                        </div>
+                                    </td>
+                                    <td class="controlCell">
+                                        <div class="ui-widget" style="padding-left: 10px">
+                                            <button type="submit" formaction="UpdateStatus" class="btn btn-primary" id="btnUpdateStatus" disabled>
+                                            @*formaction="UpdateStatus" name="PartIndex" value="@i">*@  @*name="submit"  value="UpdateStatus">*@
+                                            Update RMA Status
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                            </table>
+                            @*</form>*@
+                        </div>
+                    </div>
+                }
+
+
+
+
+                </div>
+
+
+
+
+
+
+                <span class="wpcf7-form-control-wrap cf7-counter"><input type="hidden" name="cf7-counter" value="225" size="40" class="wpcf7-form-control wpcf7dtx-dynamictext wpcf7-dynamichidden" aria-invalid="false"></span>
+
+
+
+                <div class="form-group">
+                    <div>
+                        <input class="wpcf7-form-control wpcf7-submit btn btn-primary" type="submit" value="Send" id="btnSend">
+                    </div>
+                </div><div class="wpcf7-response-output wpcf7-display-none alert"></div>
+                </fieldset>
+                </form>
+
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+    <script type="text/javascript">
+
+
+        $("#formRMASend").validate({});
+        $("input[name$='SN']").each(function () {
+            $(this).rules('add', {
+                maxlength: 6
+            });
+        });
+        $("input[name$='ZipCode']").each(function () {
+            $(this).rules('add', {
+                number: true
+            });
+        });
+
+
+        
+    </script>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    <script src="@Url.Content("~/Scripts/rma-form.js")" type="text/javascript"></script>
+
+    </div>
+    </div>

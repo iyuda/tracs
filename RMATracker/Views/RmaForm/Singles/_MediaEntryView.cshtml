@@ -1,0 +1,175 @@
+﻿
+@using RMATracker.Models
+@using DataLayer
+@model RMAModel
+@{
+    ViewBag.QueryMode = (ViewBag.QueryMode ?? false);
+    //    ViewBag.Title = "Home Page";
+    string is_asterik = ":"; // ViewBag.QueryMode ? ": " : "*";
+    var IsMobile = (ViewBag.IsMobile ?? ViewContext.HttpContext.GetOverriddenBrowser().IsMobileDevice);
+    var SectionClass = IsMobile ? "section-mobile" : "section1";
+
+}
+@{ var Media_Index = int.Parse(ViewData["index"].ToString());
+    var displayEntry = (ViewBag.DynamicAdd ?? false) ? "display:none" : "";
+    @:<div class="container1 image_details_class dynamic" id="image_details_@Media_Index" style="border-bottom:dotted;max-height:100%;display:block;@displayEntry">
+
+
+
+
+        bool isVideo;
+        if (ViewBag.AcceptTypes == null)
+        {
+            isVideo = Model?.rma?.RMAMedias?[Media_Index]?.isVideo ?? false;
+        }
+        else
+        {
+            isVideo = (ViewBag.AcceptTypes ?? "").ToString().ToLower() == "videos" ? true : false;
+        }
+        @Html.HiddenFor(m => m.rma.RMAMedias[Media_Index].isVideo, new { @Value = isVideo });
+
+        @Html.HiddenFor(m => m.rma.RMAMedias[Media_Index].id)
+
+        bool IsRemoved;
+        if (ViewBag.IsRemoved == null)
+        {
+            IsRemoved = Model?.rma?.RMAMedias?[Media_Index]?.IsRemoved ?? false;
+        }
+        else
+        {
+            IsRemoved = ViewBag.IsRemoved ?? false;
+        }
+        @Html.HiddenFor(m => m.rma.RMAMedias[Media_Index].IsRemoved, new { @Value = IsRemoved });
+
+        if (!ViewBag.QueryMode)
+        {
+
+            var imageAcceptTypes = "image/*";
+            var videoAcceptTypes = "video/*";
+            var fileElementName = "upload-file-" + Media_Index.ToString();
+            var mediaType = isVideo ? "Video" : "Image";
+            var mediaClass = isVideo ? "video-item" : "image-item";
+            //class="video-item"
+            <div class="section1" style="padding-left: 10px">
+                @*<button type="button" id="btnLoadFile" onclick="document.getElementById('upload-file-' + @Media_Index.ToString()).click()">Load File</button>*@
+                <br />
+                <input class="btn btn-primary @mediaClass" type="button" value="Change @mediaType" onclick="document.getElementById('upload-file-@Media_Index').click();" /><br />
+                <br />
+                @Html.TextBox("upload-file-" + @Media_Index.ToString(), null, new
+              {
+                  @style = "display:none",
+                  @data_buttonText = "Select " + (isVideo ? "Video" : "Image"),
+                  @index = @Media_Index.ToString(),
+                  @type = "file",
+                  @accept = isVideo ? "video/*" : "image/*",
+                  @aria_invalid = "false",
+                  @aria_required = "true",
+                  @required = "",
+                  @class = "wpcf7-form-control wpcf7-slim wpcf7-validates-as-required",
+                  @onchange = "LoadMediaOnForm(this)",
+              })
+                @{
+                    var media_path = String.IsNullOrEmpty(Model?.rma?.RMAMedias?[Media_Index].Filename) ? "" : Model?.rma?.RMAMedias?[Media_Index].Filename;
+                    var absolutePath = Server.MapPath(media_path);
+                    if (!File.Exists(absolutePath)) { media_path = ""; }
+
+                    var strdDsplayImage = (!isVideo && media_path != "") ? "" : "display:none";
+                    var strDisplayVideo = (isVideo && media_path != "") ? "" : "display:none"; ;
+
+                    if (String.IsNullOrEmpty(@media_path))
+                    {
+                        <img alt="Image Not Available" id="image-@Media_Index" class="image-item" style="width:50px;height:50px;@strdDsplayImage" />
+                        @*<img alt="Image Not Available" id="image-@Media_Index" style="width:50;height:50;@displayImage" />*@
+                        <video class="video-item" controls id="video-@Media_Index" style="width:50px;height:50px;@strDisplayVideo">
+                            Your browser does not support the video tag.
+                        </video>
+                    }
+                    else
+                    {
+                        <img alt="Image Not Available" src="@media_path" id="image-@Media_Index" class="image-item" style="width:50px;height:50px;@strdDsplayImage" />
+                        <video class="video-item" controls src="@media_path" id="video-@Media_Index" style="width:50px;height:50px;@strDisplayVideo">
+                            Your browser does not support the video tag.
+                        </video>
+                    }
+
+                }
+            </div>
+
+
+            if (!IsMobile)
+            {
+                <div class="section1" style="padding-left: 10px;" align="left">
+                    <label>File Name:</label>
+                    @Html.TextBoxFor(m => m.rma.RMAMedias[Media_Index].Filename, Model?.rma?.RMAMedias?[Media_Index].Filename ?? "", new {
+                                        @aria_required = "true",
+                                        @required = "",
+                                        @class = "wpcf7-form-control wpcf7-text rma-textfield form-control",
+                                        @readonly = "", @tag = "media-path-" + Media_Index, @style = "float:right;border:sold;border-width:thin;width:100%" })
+                </div>
+                <div class="section1" style="padding-left: 10px" align="right">
+                    <br />
+                    <a class="btn btn-primary view-media-button" style="display:none;float:left;" href="" target="_blank" role="button" id="btnViewFile_@Media_Index">View @mediaType</a>
+                    <button type="button" style="float:right;" class="btn btn-primary remove-media-button" id="btnRemoveMedia_@Media_Index" index="@Media_Index" onclick="RemoveMediaEntry(this)">
+                        Remove
+                    </button>
+                </div>
+            }
+            else
+            {
+                <div class="section1">
+                    @Html.TextBoxFor(m => m.rma.RMAMedias[Media_Index].Filename, Model?.rma?.RMAMedias?[Media_Index].Filename ?? "", new {
+                        @aria_required = "true",
+                        @required = "",
+                        @class = "wpcf7-form-control wpcf7-text rma-textfield form-control",
+                        @readonly = "", @tag = "media-path-" + Media_Index, @style = "display:none;float:right;border:sold;border-width:thin;width:100%" })
+
+
+                </div>
+                <div class="section1" style="padding-left: 10px" align="right">
+                    <br />
+                    <a class="btn btn-primary view-media-button" style="display:none;float:left;" href="" target="_blank" role="button" id="btnViewFile_@Media_Index">View @mediaType</a>
+                    <button type="button" style="float:right;" class="btn btn-primary remove-media-button" id="btnRemoveMedia_@Media_Index" index="@Media_Index" onclick="RemoveMediaEntry(this)">
+                        Remove
+                    </button>
+                </div>
+            }
+        }
+
+        var style = (ViewBag.QueryMode) ? "style='padding-left:10px'" : "";
+        <div class="section1" style="padding-left: 10px;">
+
+        </div>
+    @:</div>
+}
+<script>
+    function RemoveMediaEntry(e) {
+        var MediaIndex = $(e).attr("index");
+        var queryString = $.param({ index: MediaIndex});
+        var sURL = '@Url.Action("RemoveMedia", "RmaForm")' +  '?' + queryString;
+        $.get(sURL, function (data) {
+            $("#image_details_" + MediaIndex).replaceWith(data);
+            $("#image_details_" + MediaIndex).hide();
+
+            var rmaParentDiv = $("div[id^=tabs-" + $('#TabId').val() + "]");
+            if (rmaParentDiv.length == 0) {
+                rmaParentDiv = $("div[id='rmaContainer']");
+            }
+
+            var visible_count = rmaParentDiv.find("input.image-item:visible").length;
+            if (visible_count <= 5) {
+                $("#lblImageLimitError").hide();
+            }
+            visible_count = rmaParentDiv.find("input.video-item:visible").length;
+            if (visible_count <= 1) {
+                $("#lblImageLimitError").hide();
+            }
+
+        });
+    }
+    function OpenFile(e) {
+        var MediaIndex = $(e).attr("index");
+
+        }
+</script>
+
+

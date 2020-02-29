@@ -1,0 +1,160 @@
+﻿@using RMATracker.Models
+@using DataLayer
+@model RMAModel
+@{
+    ViewBag.QueryMode = (ViewBag.QueryMode ?? false);
+    //    ViewBag.Title = "Home Page";
+    string is_asterik = ":"; // ViewBag.QueryMode ? ": " : "*";
+    var SectionClass = (ViewBag.IsMobile ?? ViewContext.HttpContext.GetOverriddenBrowser().IsMobileDevice) ? "section-mobile" : "section1";
+}
+
+    <fieldset>
+        <legend>Tech Information</legend>
+
+        <div style="border:solid">
+            <div class="form-group firm-name" style="padding-left:10px">
+                <label class="">Company Name: </label>
+                @*@{ bool is_securitas = ViewData["Attribute"].ToString() == "rma-boa" || ViewData["Attribute"].ToString() == "rma-securitas-general";*@
+                @{ var FirmName = Model?.techInfo?.firmName; // (ViewData["FirmName"]??"").ToString();
+                }
+                @if (!ViewBag.QueryMode)
+                {
+                    @Html.TextBox("FirmName", FirmName, new
+                    {
+                        @readonly = "",
+                        @style = "width:98%",
+
+                        @maxlength = "50",
+                        @aria_invalid = "false",
+                   @class = "capitalize wpcf7-form-control wpcf7-text rma-textfield form-control"
+                    })
+
+                }
+                else
+                {
+
+                    @Html.DisplayFor(m => FirmName)
+                    @Html.HiddenFor(m => FirmName)
+                }
+            </div>
+            @{ var PrimeContractorName = Model?.techInfo?.contractorName;
+                var displayPrimeContractorName= PrimeContractorName==null?"display:none;":"";
+                }
+            <div class="form-group contractor-name" style="@displayPrimeContractorName padding-left:10px">
+                <label class="">Prime Contractor: </label>
+
+                @if (!ViewBag.QueryMode)
+                {
+                    @Html.TextBox("FirmName", PrimeContractorName, new
+                    {
+                        @readonly = "",
+                        @style = "width:98%",
+
+                        @maxlength = "50",
+                        @aria_invalid = "false",
+                   @class = "capitalize wpcf7-form-control wpcf7-text rma-textfield form-control"
+                    })
+
+                }
+                else
+                {
+
+                    @Html.DisplayFor(m => PrimeContractorName)
+                    @Html.HiddenFor(m => PrimeContractorName)
+                }
+            </div>
+            <div class="container1" style="padding-left:10px">
+                <div class="@SectionClass">
+                    <div class="form-group tech-name">
+                        <label class="">Tech Name<span class="required">@is_asterik</span></label>
+                        @if (!ViewBag.QueryMode)
+                        {
+                            @Html.TextBoxFor(m => m.techInfo.user.Name, new { @readonly = "", @maxlength = "50", @aria_invalid = "false", @aria_required = "true", @required = "", @class = "capitalize wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" })
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(m => m.techInfo.user.Name)
+                            @Html.HiddenFor(m => m.techInfo.user.Name)
+                        }
+                    </div>
+                </div>
+                <div class="@SectionClass">
+                    <div class="form-group tech-email">
+                        <label class="">Tech Email<span class="required">@is_asterik</span></label>
+                        @if (!ViewBag.QueryMode)
+                        {
+                            @Html.TextBoxFor(m => m.techInfo.user.Email, new { @readonly = "", @maxlength = "50", @type = "email", @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" })
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(m => m.techInfo.user.Email)
+                            @Html.HiddenFor(m => m.techInfo.user.Email)
+                        }
+                    </div>
+                </div>
+                <div class="@SectionClass">
+                    <div class="form-group tech-phone">
+                        <label class="">Tech Phone<span class="required">@is_asterik</span></label>
+                        @if (!ViewBag.QueryMode)
+                        {
+                            @Html.TextBoxFor(m => m.techInfo.user.Phone, new { @data_mask = "(___) ___-____", @readonly = "", @maxlength = "15", @type = "text", @aria_invalid = "false", @class = "wpcf7-form-control wpcf7-text form-control" })
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(m => m.techInfo.user.Phone)
+                            @Html.HiddenFor(m => m.techInfo.user.Phone)
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="container" style="border-top:none">
+                <div align="right" style="padding-right:20px">
+                    <button type="button" class="btn btn-primary" id="btnAddNewAddress" onclick="ShowUserProfile(this)" style="background-color: rgb(245, 123, 32);">
+                        Edit Profile
+                    </button>
+                </div>
+                <br />
+            </div>
+        </div>
+    </fieldset>
+@*</form>*@
+<br><br>
+    <script>
+Array.prototype.forEach.call(document.body.querySelectorAll("*[data-mask]"), applyDataMask);
+
+function applyDataMask(field) {
+    var mask = field.dataset.mask.split('');
+
+    // For now, this just strips everything that's not a number
+    function stripMask(maskedData) {
+        function isDigit(char) {
+            return /\d/.test(char);
+        }
+        return maskedData.split('').filter(isDigit);
+    }
+
+    // Replace `_` characters with characters from `data`
+    function applyMask(data) {
+        return mask.map(function(char) {
+            if (char != '_') return char;
+            if (data.length == 0) return char;
+            return data.shift();
+        }).join('')
+    }
+
+    function reapplyMask(data) {
+        return applyMask(stripMask(data));
+    }
+
+    function MaskText() {
+        var oldStart = field.selectionStart;
+        var oldEnd = field.selectionEnd;
+
+        field.value = reapplyMask(field.value);
+
+        field.selectionStart = oldStart;
+        field.selectionEnd = oldEnd;
+    }
+    MaskText();
+}
+    </script>

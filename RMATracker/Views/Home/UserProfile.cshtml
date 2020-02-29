@@ -1,0 +1,437 @@
+﻿@model DataLayer.UserProfile
+@{
+    ViewBag.LoginFailed = (ViewBag.LoginFailed ?? false);
+    ViewBag.HideLogin = (ViewBag.HideLogin ?? false);
+    ViewBag.Title = "Profile";
+    Layout = null;
+    var IsMobile = (ViewBag.IsMobile ?? ViewContext.HttpContext.GetOverriddenBrowser().IsMobileDevice);
+    var w50Class = IsMobile ? "" : "";
+}
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+
+<body class="text-center">
+
+    @using (Html.BeginForm("UserProfileUpdate", "Home", FormMethod.Post, new { @class = "center formCenter", @id = "frmUserProfile" }))
+    {
+        var @DisplayLogin = ViewBag.HideLogin ? "display:none" : "";
+        <div class="container" style="width:100%" id="dialog-content">
+            @*<h1 class="h3 mb-3 font-weight-bold" style="font-size:large;text-decoration:underline ">Edit User Profile</h1><br />*@
+            <br />
+            <div>@Html.HiddenFor(m => m.UserId)</div>
+            <div class="">
+                <ul class="nav nav-pills" role="tablist">
+                    <li id="navEditProfile" class="active nav-item" role="presentation"><a data-toggle="tab" tab-item="navEditProfile" href="#edit-profile" aria-controls="edit-profile" aria-selected="true">Edit Profile</a></li>
+                    <li id="navEditAddress" class="nav-item" role="presentation"><a data-toggle="tab" tab-item="navEditAddress" href="#edit-address" aria-controls="edit-address" aria-selected="false">Edit Return Address</a></li>
+                    @*<li id="navChangePassword" class="nav-item"> <a onclick="ShowChangePassword(this)" class="nav-link">Change Password</a></li>*@
+                </ul>
+                <div id="profile" class="tab-content">
+                    <div class="tab-pane active in @w50Class" aria-labelledby="edit profile" role="tabpanel" id="edit-profile">
+                        <div class="row p-px-y5">
+                            <div class="col-md-8">
+                                <label for="prof-fname-txt" style="text-align:right;"><span>First Name:</span> </label>
+                                @Html.TextBoxFor(m => m.FirstName, new { @id = "prof-fname-txt", @class = "capitalize wpcf7-form-control profile-updatable wpcf7-text rma-textfield form-control", @placeholder = "First Name", @required = "", @autofocus = "" })
+                            </div>
+                        </div>
+                        <div class="row p-px-y5">
+                            <div class="col-md-8">
+                                <label for="prof-lname-txt" style="text-align:right;"><span>Last Name:</span> </label>
+                                @Html.TextBoxFor(m => m.LastName, new { @id = "prof-lname-txt", @class = "capitalize wpcf7-form-control profile-updatable wpcf7-text rma-textfield form-control", @placeholder = "Last Name", @required = "", @autofocus = "" })
+                            </div>
+                        </div>
+                        <div class="row p-px-y5">
+                            <div class="col-md-8">
+                                <label for="prof-email-txt" style="text-align:right;"><span>E-Mail:</span> </label>
+                                @Html.TextBoxFor(m => m.Email, new { @id = "prof-email-txt", @type = "email", @class = "wpcf7-form-control profile-updatable wpcf7-text rma-textfield form-control", @placeholder = "E-Mail Address", @required = "", @autofocus = "" })
+                            </div>
+                        </div>
+                        <div class="row p-px-y5">
+                            <div class="col-md-8">
+                                <label for="prof-phone-txt" style="text-align:right;"><span>Phone:</span> </label>
+                                @Html.TextBoxFor(m => m.Phone, new { @onkeypress= "javascript:phoneKeyPress(this, event)", @onkeyup = "javascript:getPhoneFormat(this, event)", @id = "prof-phone-txt", @pattern = "^[0-9-+s()]*$", @maxlength = "13", @type = "tel", @class = "wpcf7-form-control profile-updatable wpcf7-text rma-textfield form-control", @placeholder = "Phone Number", @required = "", @autofocus = "" })
+                            </div>
+                        </div>
+                        <div class="row p-px-y5">
+                            <div class="col-md-8">
+                                <label for="prof-firm-txt" style="text-align:right;"><span>Company:</span> </label>
+                                @{SelectList selFirmList = new SelectList(DataLayer.Firm.fullList, "Id", "FirmName", Model.FirmId);}
+                                @(Html.Kendo().ComboBoxFor(m => m.FirmId)
+                                                                    .Filter("contains")
+                                                                    .Placeholder("-- Select Company Name --")
+                                                                    .DataTextField("Text")
+                                                                    .DataValueField("Value")
+                                                                    .BindTo(selFirmList)
+                                                                    .Suggest(true)
+                                                                    .HtmlAttributes(new
+                                                                    {
+                                                                        @class = "profile-updatable form-control",
+                                                                        @id = "prof-firm-txt",
+                                                                        @style = "width:100%;",
+                                                                        @required = "required",
+                                                                        onchange = "ComboChangeEvent(this); LoadContractorFirms(this)"
+                                                                    }))
+
+                            </div>
+                            
+                        </div>
+                        <br />
+                        <div class="row p-px-y5">
+                            <div class="col-md-3" id="divIsContractor">
+                                @Html.CheckBoxFor(m => m.IsSubcontractor, new { @class = "profile-updatable is-subcontractor" })
+                                <label>Subcontractor? </label>
+                            </div>
+                            <div class="col-md-5" style="display:none" id="divContractor">
+                                <label for="prof-contractor-txt" style="text-align:right;"><span>Prime Contractor:</span> </label>
+                                @(Html.Kendo().ComboBoxFor(m => m.PrimecontractorId)
+                                                                            .Filter("contains")
+                                                                            .Placeholder("-- Select Subcontractor --")
+                                                                            .DataTextField("Text")
+                                                                            .DataValueField("Value")
+                                                                            .BindTo(selFirmList.Where(f=>f.Value!=Model.FirmId))
+                                                                            .Suggest(true)
+                                                                            .HtmlAttributes(new
+                                                                            {
+                                                                                @class = "profile-updatable form-control",
+                                                                                @id = "prof-contractor-txt",
+                                                                                @style = "width:100%;",
+                                                                                @required = "required",
+                                                                                onchange = "ComboChangeEvent(this)"
+                                                                            }))
+
+                            </div>
+                        </div>
+                        @Html.TextBoxFor(m => m.UserId, new { @class = "profile-updatable address-updatable hidden" })
+                        
+                        @Html.TextBoxFor(m => m.ReturnAddressId, new { @class = "profile-updatable address-updatable hidden" })
+                    </div>
+                    <div class="tab-pane in" id="edit-address" role="tabpanel">
+                        <div class="p-px-y10">
+                            @{Html.RenderPartial("_UserProfileAddress", Model);}
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            <br />
+
+        </div>
+
+
+    }
+    <div id="divChangePassword" style="border:solid;display:none;">
+        @{Html.RenderAction("PasswordChangeGet", "Home", new { CurrentPassword = Model.Password });}
+    </div>
+    @*<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous"></script>*@
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1"
+            crossorigin="anonymous"></script>
+    <script src="~/Scripts/Login/bootbox.min.js"></script>
+</body>
+
+</html>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#frmUserProfile").data("validator").settings.ignore = "";
+        var status = '@String.IsNullOrEmpty(ViewBag.RmaErrors)';
+        var message = '@ViewBag.RmaErrors';
+        if (status == 'False') {
+            changeFeedbackMessage('error', message);
+        }
+    });
+</script>
+<script src="~/Scripts/ParabitScripts/phone_validation.js"></script>
+
+
+<script>
+    $("#profile input").on("blur", function () {
+        var id = this.id;
+        //this.reset();
+    });
+
+    $("#frmUserProfile").validate({
+        errorClass: 'validate-error',
+    });
+
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        var tab_item = $(e.target).attr("tab-item")
+        if (!$("#" + tab_item).hasClass('active')) {
+            $("#" + tab_item).addClass("active");
+        }
+    });
+
+    var password_submits = 0;
+
+    function ShowChangePassword(e) {
+        var divName = "divChangePassword";
+        var formName = "frmChangePassword";
+        var saveButtonName = "btnSavePassword";
+        var cancelButtonName = "btnCancelSavePassword";
+        var isMobile = '@IsMobile'.toLowerCase() == "false" ? false : true;
+
+        $('#' + divName).css('zIndex', 99999999999999);
+        $('#' + divName).dialog({
+            autoOpen: true,
+            position: { my: "center"}, //position: { my: "center", at: "top+300", of: window },
+            //width: !isMobile ? $(window).width() / 4 : $(window).width(),
+            resizable: true,
+            modal: true,
+            title: "Change Password",
+            create: function (event) {
+                if (!isMobile)
+                    $(this).parent().css({ 'position': 'fixed' });
+            },
+            beforeClose: function (event, ui) {
+                if (!isMobile)
+                    $("body").css({ overflow: 'inherit' })
+            },
+            open: function () {
+
+                if (!isMobile) {
+                    var dialog = $(this).data("ui-dialog");
+                    dialog.option("width", $(window).width() / 4);
+                    $(window).resize(function () {
+                        var dialog = $('#' + divName).data("ui-dialog");
+                        dialog.option("position", dialog.options.position);
+                        dialog.option("width", $(window).width() / 4);
+                        if (!$('.navbar-toggle').hasClass('collapsed'))
+                            $('.navbar-toggle').click();
+                    });
+                    $("body").css({ overflow: 'hidden' })
+                }
+                password_submits = 0;
+                $('#' + saveButtonName).attr('form', formName);
+                $('#' + saveButtonName).attr('class', "btn btn-primary");
+                $('#' + cancelButtonName).attr('class', "btn btn-primary");
+                $('.btn-primary').css('background-color', '#F57B20')
+                //ValidatePasswordMain();
+                $("#" + formName).submit(function (e) {
+                    e.preventDefault();
+                    if (password_submits > 0)
+                        return;
+                    if ($(this).find(".error:visible").length == 0 && $(this).find(".validate-error:visible").length == 0)
+                        UpdatePassword(divName, formName);
+
+                });
+
+            },
+            close: function () {
+                //clear();
+                $('label.error').remove();
+                $('label.validate-error').remove();
+                $('#' + formName)[0].reset();
+               
+            },
+            buttons: [
+                {
+                    id: cancelButtonName,
+                    text: "Cancel",
+                    click: function () {
+                        $(this).dialog("close");
+                        //$(this).remove();
+                    }
+                },
+                {
+                    id: saveButtonName,
+                    text: "Save",
+                    click: function () {
+                        $("#" + formName).submit();
+                    }
+                }
+
+            ]
+        });
+    }
+
+    function UpdatePassword(divName, formName) {
+            var current_pass = $('#txtCurrentPassword').val();
+            var new_pass = $('#password-txt').val();
+            var confirm_pass = $('#confirm-password-txt').val();
+           if (current_pass.length == 0 || new_pass.length == 0 || confirm_pass.length == 0) {
+                return;
+            }
+            
+            if (!ValidatePassword()) {
+
+                return;
+            }
+            
+            if (new_pass != confirm_pass) {
+                changeFeedbackMessage('error', "Passwords do not match!");
+                return;
+            }
+            if (new_pass == current_pass) {
+                changeFeedbackMessage('error', "New password cannot be the same!");
+                return;
+            }
+
+            if (!confirm('Are you sure you want to change your password?'))
+                return;
+
+            $.ajax({
+                url: $("#" + formName).attr('action'),
+                type: 'POST',
+                data: $("#" + formName).serialize(),
+                async:false,
+                success: function (result) {
+                    $("#CurrentPassword").val(new_pass);
+                    var status = result.status;
+                    var message = result.message;
+                    if (status == 0) {
+                        
+                        changeFeedbackMessage('error', message, "Change Password Error");
+                        return false;
+                    }
+                    else {
+                        password_submits++;
+                        changeFeedbackMessage('success', message, '');
+                        $('#' + divName).dialog("close");
+                        return true;
+                    }
+
+                },
+                error: function (request, status, error) {
+                    changeFeedbackMessage('error', error, 'Error');
+                    return false;
+                }
+            });
+    }
+
+    function SaveUserProfile(divName, formName) {
+        var state_val = $("#ProfileStateId").val();
+        var country_val = $("#ProfileCountryId").val();
+        var form_string = $(".profile-updatable").serialize() + "&ProfileStateId=" + state_val + "&ProfileCountryId=" + country_val;
+        $.ajax({
+            url: $("#" + formName).attr('action'),
+            type: 'POST',
+            data: form_string,
+            async: false,
+            success: function (result) {
+                var status = result.status;
+                var message = result.message;
+
+                if (status == 0) {
+                    changeFeedbackMessage('error', message);
+                    return false;
+                }
+                else {
+                    if (updateAddress()) {
+                        profile_submits++;
+                        $('#' + divName).dialog("close");
+                        if (result.data[0].FirmTypeId==3)
+                            window.location.href = '@Url.Action("Securitas", "Home")'; @*//'@Url.Content("~/Home/Securitas")';*@
+                        else
+                            window.location.href = '@Url.Action("GetRMAForm", "RmaForm")'; @*//'@Url.Content("~/RmaForm/GetRMAForm")';*@
+                        $('#' + formName)[0].reset();
+                        return true;
+                    }
+                    else
+                        return false;
+                }
+
+            },
+            error: function (request, status, error) {
+                changeFeedbackMessage('error', error);
+                return false;
+            }
+        });
+    }
+
+
+    $.extend(
+        {
+            redirectPost: function (location, args) {
+                var form = '';
+                $.each(args, function (key, value) {
+                    value = value.split('"').join('\"')
+                    form += '<input type="hidden" name="' + key + '" value="' + value + '">';
+                });
+                $('<form action="' + location + '" method="POST">' + form + '</form>').appendTo($(document.body)).submit();
+            }
+    });
+
+    function updateAddress() {
+        $("#error_msg_profile").hide();
+        $("#success_msg_profile").hide();
+        var x = $(".address-updatable").serialize();
+        var returnValue = false;
+        //var firm = $("#prof-firm-txt").text();
+        $.ajax({
+            url:  '@Url.Action("UpdateDefaultAddress", "Home")', //"~/Home/UpdateDefaultAddress",
+            type: 'POST',
+            data: $(".address-updatable").serialize(),
+            async: false,
+            success: function (result) {
+                var status = result.status;
+                var message = result.message;
+                if (status == 0) {
+                    changeFeedbackMessage('error', message);
+                    returnValue = false;
+                }
+                else {
+                    changeFeedbackMessage('success', 'Successfully updated profile');
+                    
+                    returnValue = true;
+                }
+
+            },
+            error: function (request, status, error) {
+                changeFeedbackMessage('error', error, 'Error');
+                returnValue = false;
+            }
+        });
+        return returnValue;
+    }
+
+   
+</script>
+<script>
+    $('#prof-phone-txt').change(function (e) {
+        $(this).val($(this).val().replace(/(\ds{3})(\d{3})(\d{4})/, "$1-$2-$3"));// ('(000)-00-0000');
+    });
+</script>
+<script>
+    Array.prototype.forEach.call(document.body.querySelectorAll("*[data-mask]"), applyDataMask);
+
+    function applyDataMask(field) {
+        var mask = field.dataset.mask.split('');
+
+        // For now, this just strips everything that's not a number
+        function stripMask(maskedData) {
+            function isDigit(char) {
+                return /\d/.test(char);
+            }
+            return maskedData.split('').filter(isDigit);
+        }
+
+        // Replace `_` characters with characters from `data`
+        function applyMask(data) {
+            return mask.map(function (char) {
+                if (char != '_') return char;
+                if (data.length == 0) return char;
+                return data.shift();
+            }).join('')
+        }
+
+        function reapplyMask(data) {
+            return applyMask(stripMask(data));
+        }
+
+        function MaskText() {
+            var oldStart = field.selectionStart;
+            var oldEnd = field.selectionEnd;
+
+            field.value = reapplyMask(field.value);
+
+            field.selectionStart = oldStart;
+            field.selectionEnd = oldEnd;
+        }
+        MaskText();
+    }
+</script>

@@ -1,0 +1,119 @@
+﻿@model DataLayer.User
+@{
+    ViewBag.Title = "Login";
+}
+
+
+
+
+@*<form class="form-signin" id="ResetRequestForm">
+    <table>
+        <tbody>
+            <tr>
+
+                <td width="10%" id="DI800FormAgency">
+                    <input id="Log" type="image" src="ResetPassword%20Dependencies/logoWithName.png">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <br /><br />
+    <img class="mb-4" src="ResetPassword%20Dependencies/bootstrap-solid.htm" alt="" height="72" width="72">
+    <h1 class="h3 mb-3 font-weight-normal" style="font-size:large ">Please Enter User Information</h1>
+    <label for="Agency_Number" class="sr-only">Agency</label>
+    <input id="Agency_Number" class="form-control" placeholder="Agency Number" required="" autofocus="" type="text">
+    <label for="Badge" class="sr-only">User</label>
+    <input id="Badge" class="form-control" placeholder="Badge Number" required="" type="text">
+    <br /><br />
+    <div class="checkbox mb-3">
+        <label>
+            <input value="remember-me" type="checkbox"> Remember me
+        </label>
+    </div>
+    <button class="btn btn-lg btn-primary btn-block" type="submit" id="SubmitReset">Submit</button>
+
+</form>*@
+@using (Html.BeginForm("Login", "Home", FormMethod.Post, new { id = "loginForm" }))
+{
+
+    <img class="mb-4" src="ResetPassword%20Dependencies/bootstrap-solid.htm" alt="" height="72" width="72">
+    <h1 class="h3 mb-3 font-weight-normal" style="font-size:large ">Please Enter User Information</h1>
+    @Html.LabelFor(m => m.Name, new { @class = "sr-only" })
+    @*<label for="Agency_Number" class="sr-only">Agency</label>*@
+    @Html.TextBoxFor(m => m.Name, new { @class = "sr-only", @placeholder = "User Name", @required = "", @autofocus = "" })
+    <input id="Agency_Number" class="form-control" placeholder="Agency Number" required="" autofocus="" type="text">
+    @Html.LabelFor(m => m.Password, new { @class = "sr-only" })
+    @Html.PasswordFor(m => m.Password, new { @class = "sr-only", @placeholder = "Password", @required = "", @autofocus = "" })
+    @*<label for="Badge" class="sr-only">User</label>
+    <input id="Badge" class="form-control" placeholder="Badge Number" required="" type="text">*@
+    <br /><br />
+    <!--<div class="checkbox mb-3">
+        <label>
+            <input value="remember-me" type="checkbox"> Remember me
+        </label>
+    </div>-->
+    <button class="btn btn-lg btn-primary btn-block" type="submit" id="SubmitReset">Submit</button>
+  
+    
+    
+    @*<script type="text/javascript">
+
+        $("#loginForm").submit(function (e) {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("Login", "Home")',
+                data: JSON.stringify($('#loginForm').serialize()),
+                success: function (data) {
+                    if (data == 'OK') {
+                        $(e).attr("disabled", "disabled");
+                        $(e).attr("last_updated_status", status);
+                        alert("Status Updated Successfully");
+                    }
+                    else
+                        alert("Invalid credentials.  Please corrent the entries");
+                }
+            });
+           
+            
+        });
+    </script>*@
+    @*<fieldset>
+        <legend>Mvc Simple Login Application Demo</legend>
+
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+        @if (@ViewBag.Message != null)
+        {
+            <div style="border: 1px solid red">
+                @ViewBag.Message
+            </div>
+        }
+        <table>
+            <tr>
+                <td>@Html.LabelFor(a => a.Name)</td>
+                <td>@Html.TextBoxFor(a => a.Name)</td>
+                <td>@Html.ValidationMessageFor(a => a.Name)</td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(a => a.Password)
+                </td>
+                <td>
+                    @Html.PasswordFor(a => a.Password)
+                </td>
+                <td>
+                    @Html.ValidationMessageFor(a => a.Password)
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input type="submit" value="Login" />
+                </td>
+                <td></td>
+            </tr>
+        </table>
+    </fieldset>*@
+}
+
+

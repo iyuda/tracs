@@ -1,0 +1,302 @@
+﻿<script src="@Url.Content("~/Scripts/jquery-input-file-text.js")"></script>
+<script src="@Url.Content("~/Scripts/bootstrap-filestyle.min.js")"></script>
+
+@using RMATracker.Models
+@using DataLayer
+@model RMAModel
+@{
+    ViewBag.QueryMode = (ViewBag.QueryMode ?? false);
+    //    ViewBag.Title = "Home Page";
+    string is_asterik = ViewBag.QueryMode ? ": " : "*";
+
+}
+
+@*<form id="formImages" action="~/RmaForm/SaveImages" method="post" class="wpcf7-form" enctype="multipart/form-data" novalidate="novalidate" runat="server">*@
+
+    <fieldset>
+        <legend>Images/Videos</legend>
+        <div class="container1" style="border:solid">
+            <div id="divImages">
+                @{ if (Model?.rma?.RMAMedias == null)
+                    {
+                        Model.rma.RMAMedias = new List<RMAMedia>();
+                    }
+                    if (Model?.rma?.RMAMedias?.Count == 0)
+                    {
+                        Model?.rma?.RMAMedias.Add(new RMAMedia());
+                    }
+                }
+                @{for (int i = 0; i < (Model != null ? Model?.rma?.RMAMedias?.Count : 0); i++)
+                    {
+                        @:<div class="container1 image_details_class" id="image_details" style="border-bottom:dotted;max-height:100%;display:block">
+                            var isVideo = Model.rma.RMAMedias[i].isVideo ?? false;
+                            @Html.HiddenFor(m => m.rma.RMAMedias[i].id)
+                        if (!ViewBag.QueryMode)
+                        {
+
+                            var imageAcceptTypes = "image/*";
+                            var videoAcceptTypes = "video/*";
+                            var fileElementName = "upload-file-" + i.ToString();
+                                
+                                <div class="section1" style="padding-left: 10px">
+                                    @*<button type="button" id="btnLoadFile" onclick="document.getElementById('upload-file-' + @i.ToString()).click()">Load File</button>*@
+
+                                    @if (i == 0)
+                                    {
+                                        @Html.TextBox("upload-file-" + @i.ToString(), null, new
+                                   {
+                                       @style="display:none",
+                                       @data_buttonText="Add new picture or video",
+                                       @index = @i.ToString(),
+                                       @type = "file",
+                                       @accept = isVideo ? "video/*" : "image/*",
+                                       @aria_invalid = "false",
+                                       @aria_required = "true",
+                                       @required = "",
+                                       @class = "wpcf7-form-control wpcf7-slim wpcf7-validates-as-required",
+                                       @onchange = "LoadMediaOnForm(this)"
+                                   })
+
+                                    }
+                                    else
+                                    {
+                                        @Html.TextBox("upload-file-" + @i.ToString(), null, new
+                                            {
+                                                @style="display:none",
+                                                @data_buttonText="Add new picture or video",
+                                                @index = @i.ToString(),
+                                                @type = "file",
+                                                @accept = isVideo ? "video/*" : "image/*",
+                                                @aria_invalid = "false",
+                                                @class = "wpcf7-form-control wpcf7-slim",
+                                                @onchange = "LoadMediaOnForm(this)"
+                                            })
+                                    }
+                                    @Html.HiddenFor(m => m.rma.RMAMedias[i].Filename, new { @index = @i.ToString(), @tag = "image-path-" + i })
+                                    @{
+                                        var media_path = String.IsNullOrEmpty(Model?.rma?.RMAMedias?[i].Filename) ? "" : Model?.rma?.RMAMedias?[i].Filename;
+                                        var absolutePath = Server.MapPath(media_path);
+                                        if (!File.Exists(absolutePath)) { media_path = ""; }
+
+                                        var displayImage = isVideo ? "display:none" : "";
+                                        var displayVideo = !isVideo ? "display:none" : "";
+
+                                        if (String.IsNullOrEmpty(@media_path))
+                                        {
+                                            <img alt="Image Not Available" id="image-@i" style="width:50;height:50;@displayImage" />
+                                            @*<img alt="Image Not Available" id="image-@i" style="width: auto;height:auto;@displayImage" />*@
+                                            @*<video controls id="video-@i" style="width: auto;height:100px;@displayVideo">
+                                                Your browser does not support the video tag.
+                                            </video>*@
+                                        }
+                                        else
+                                        {
+                                            <img alt="Image Not Available" src="@media_path" id="image-@i" style="width:50;height:50;@displayImage" />
+                                            @*<video controls src="@media_path" id="video-@i " style="width: auto;height:100px;@displayVideo">
+                                                Your browser does not support the video tag.
+                                            </video>*@
+                                        }
+                                        @Html.LabelFor(m=>m.rma.RMAMedias[i].Filename, Model?.rma?.RMAMedias?[i].Filename??"");
+                                        <a id="OpenFile-@i" href="~/Home/ForgotPassword" style="display:none">View</a>
+                                        Html.HiddenFor(m => m.rma.RMAMedias[i].isVideo);
+                                    }
+                                    @*<div align="left">
+            <button type="button" class="btn btn-primary" id="btnLoadVideo" onclick="FileSelectEvent('@fileElementName','@videoAcceptTypes')">
+                Load File...
+            </button>
+        </div>*@
+                                </div>
+                            }
+                            
+                            var style = (ViewBag.QueryMode) ? "style='padding-left:10px'" : "";
+                                <div class="section1" style="padding-left: 10px;">
+                                   
+                                </div>
+                        @:</div>
+                    }
+                }
+            </div>
+            <div class="section1"></div><div class="section1"></div>
+            <div class="section1">
+                
+                    <button  style="float: left;" type="button" class="btn btn-primary" id="btnAddImage" onclick="AddMediaRecord(this)">
+                        Add Image 
+                    </button>
+                
+                
+                    <button  style="float: right;" type="button" class="btn btn-primary" id="btnAddVideo" onclick="AddMediaRecord(this)">
+                        Add Video
+                    </button>
+                
+            </div>
+        </div>
+    </fieldset>
+
+@*</form>*@
+
+<script>
+    $(document).ready(function () {
+        $("input[name^='upload-file-']").each(function () {
+            LoadMediaOnForm(this);
+        });
+        //$(":file").filestyle();
+        //$("input[name^='upload-file-']").inputFileText({ text: 'Add new picture or video' });
+    });
+</script>
+<script>
+   
+    @*function clickAddMedia(e) {
+        //$("input[name^='upload-file-']").inputFileText({ text: 'Add new picture or video' });
+        var rmaParentDiv = $("div[id^=tabs-" + $('#TabId').val() + "]");
+        var itemIndex = rmaParentDiv.find(".image_details_class").length;
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("NewImageRecord", "RMAForm")/' + itemIndex,
+            data: JSON.stringify($('#formImages').serialize()),
+            async:false,
+            success: function (data) {
+                AddMediaRecord();
+            },
+            error: function (request, status, error) {
+                alert(error);
+            }
+
+        });
+    }*@
+
+    function MediaTypeChange(e, index, accept_types) {
+        var rmaParentDiv = $("div[id^=tabs-" + $('#TabId').val() + "]");
+        if (rmaParentDiv.length == 0) {
+            rmaParentDiv = $("div[id='rmaContainer']");
+        }
+        //rmaParentDiv.find("#" + e.id).attr("accept", accept_types);
+        rmaParentDiv.find("#upload-file-" + index).attr("accept", accept_types);
+        var namePrefix = "#" + accept_types.replace("/*", "") + "-";
+        
+        if (accept_types.toLowerCase().indexOf("image") >= 0) {
+            rmaParentDiv.find(namePrefix + index).show();
+        }
+        else 
+            rmaParentDiv.find("#image-" + index).hide();
+    }
+    
+    function LoadMediaOnForm(e) {    
+        var rmaParentDiv = $("div[id^=tabs-" + $('#TabId').val() + "]");
+        if (rmaParentDiv.length == 0) {
+            rmaParentDiv = $("div[id='rmaContainer']");
+        }
+        var index = rmaParentDiv.find("#" + e.id).attr("index");
+        
+        var namePrefix = "#" + rmaParentDiv.find("#" + e.id).attr("accept").replace("/*", "") + "-";
+        if (e.files.length == 0) {
+            fileName = rmaParentDiv.find("[id$=" + index + "__image_location]").val();
+            if (fileName != '' && fileName != null) {
+                //alert(namePrefix + index);
+                rmaParentDiv.find(namePrefix + index).attr("src", fileName);
+                rmaParentDiv.find("#" + e.id).removeAttr("aria-required");
+                rmaParentDiv.find("#" + e.id).removeAttr("required");
+                $("#OpenFile-" + index).show();
+            }
+
+            return;
+        }
+
+        fileName = e.files[0].name;
+        fileName = fileName;
+        if (rmaParentDiv.find("[id$=" + index + "__image_location]").length > 0)
+            rmaParentDiv.find("[id$=" + index + "__image_location]").val(fileName);
+        else if (rmaParentDiv.find("[tag=image-path-" + index + "]").length > 0)
+            rmaParentDiv.find("[tag$=image-path-" + index + "]").val(fileName);
+
+        if (namePrefix.toLowerCase().indexOf("image") >= 0) {
+            var reader = new FileReader();
+            //alert(namePrefix + index);
+            reader.onload = function (e) {
+                rmaParentDiv.find(namePrefix + index).attr("src", e.target.result);
+                $("#OpenFile-" + index).show();
+            }
+            //alert(e.files[0].name);
+            //alert("image-" + index);
+            reader.readAsDataURL(e.files[0]);
+            rmaParentDiv.find(namePrefix + index).fadeIn("fast").attr('src', URL.createObjectURL(e.files[0]));
+        }
+    }
+    function ClickBrowse(index) {
+        $('upload-file-' + index).click();
+    } 
+    function AddMediaRecord() {
+        
+        var rmaParentDiv = $("div[id^=tabs-" + $('#TabId').val() + "]");
+        if (rmaParentDiv.length == 0) {
+            rmaParentDiv = $("div[id='rmaContainer']");
+        }
+        var new_image = rmaParentDiv.find("#image_details:first").clone();
+        var new_number = rmaParentDiv.find(".image_details_class").length;
+
+        var images_count = 0;
+        var videos_count = 0;
+        
+        rmaParentDiv.find(".image_details_class").each(function () {
+            images_count += $(this).find("input[value='false']:checked").length;
+            videos_count += $(this).find("input[value='true']:checked").length;
+        }); 
+        if (images_count >= 4) {
+            alert("You have reached the maximum number of images!");
+            return;
+        }
+        if (videos_count >= 2) {
+            alert("You have reached the maximum number of videos!");
+            return;
+        }
+        $(new_image).find("input, select").each(function () {
+            $(this).removeAttr("required");
+            $(this).removeAttr("aria-required");
+            $(this).removeClass("wpcf7-validates-as-required");
+        });
+        $(new_image).find("[id$='-error']").remove();
+
+        $(new_image).find("input[type='file'], input[type='hidden'], input[type='radio']").each(function () {      
+            this.name = this.name.replace('0', new_number);
+            this.id = this.id.replace('0', new_number);
+            switch ($(this).attr('type') ){
+                case 'file':
+                    $(this).prop('value', '');
+                    $(this).attr('index', new_number);
+                    break;
+                case 'radio':
+                    if ($(this).attr('value') =='false') {
+                        $(this).prop("checked", "checked");
+                    }
+                    $(this).attr('onchange', $(this).attr('onchange').replace('0', new_number));
+                    break;
+                case 'hidden':
+                    if ('index' in $(this)) {
+                        $(this).attr('index', new_number);
+                        $(this).attr('tag', 'image-path-' + new_number);
+                    }
+                    
+                    break;
+            }
+        });
+        $(new_image).find("img, video").each(function () {
+            this.id = this.id.replace('0', new_number);
+            if ($(this).is('img')) {
+                $(this).prop('src', '..');
+            }
+            else {
+                $(this).prop('src', '');
+            }
+        });
+            
+       
+        //$(new_image).find("img").each(function () {
+        //    this.name = this.name.replace('0', new_number);
+        //    this.id = this.id.replace('0', new_number);
+        //    $(this).prop('src', '..');
+        //});
+        rmaParentDiv.find("#divImages").append(new_image);
+
+    }
+
+
+</script>

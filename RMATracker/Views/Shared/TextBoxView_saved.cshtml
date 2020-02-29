@@ -1,0 +1,46 @@
+﻿@model RMATracker.Models.SurveyModel
+@{
+                /**/
+
+
+                ViewBag.QueryMode = (ViewBag.QueryMode ?? false);
+                var className = ViewData["ClassName"];
+                var propertyName = ViewData["PropertyName"];
+                var index = ViewData["Index"];
+                var attributes = ViewData["Attributes"];
+
+
+
+                string AddToID = "";
+                string AddToName = "";
+                if (index != null)
+                {
+                    AddToID = index.ToString() + "__";
+                    AddToName = "[" + index.ToString() + "]";
+                }
+                dynamic attributes_temp = new System.Dynamic.ExpandoObject();
+                attributes_temp.Stuff = attributes;
+                //attributes_temp.Name = className + AddToName + "." + propertyName;
+                attributes_temp.Name = className + AddToName + "." + propertyName;
+                //attributes = attributes_temp;
+                //var NameProperty = attributes.GetType().GetProperties().First(prop => prop.Name == "Name");
+                //if (NameProperty != null) {
+                //    NameProperty.SetValue(attributes, className + AddToName + "." + propertyName);
+                //}
+                //attributes.add("Name", className + AddToName + "." + propertyName);
+}
+
+
+
+@if (!ViewBag.QueryMode)
+{
+
+    var html = @Html.TextBox(className + "_" + AddToID + propertyName, null, attributes);
+    @Html.Raw(String.Format(html.ToString().Replace("input ", "input Name={0}"), className + AddToName + "." + propertyName));
+    
+}
+else
+{
+    @
+    @
+}

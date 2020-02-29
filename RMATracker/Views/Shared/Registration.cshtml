@@ -1,0 +1,440 @@
+﻿@model RMATracker.Models.RegistrationsModel
+@{
+    ViewBag.QueryMode = (ViewBag.QueryMode ?? false);
+    //    ViewBag.Title = "Home Page";
+    string is_asterik = ViewBag.QueryMode ? ": " : "*";
+
+}
+
+
+<div class="container" style="margin-top:40px;" id="container">
+    <div class="row">
+        @*@{bool is_rma_empty = Model.RMABase == null; }
+            @if (!is_rma_empty) { is_rma_empty = Model.RMABase.id == null; }*@
+        @if (!ViewBag.QueryMode)
+        {
+            <font color="red">
+                Product Registration
+            </font>
+            <br><br>
+        }
+
+
+        <form id="formRMASend" action="~/Shared/SaveRegistrationData" method="post" class="wpcf7-form" enctype="multipart/form-data" novalidate="novalidate" runat="server">
+
+            <div class="form-group firm-name">
+                <label class="">Firm Name of Installer: </label>
+                @{ bool is_securitas = Model.ViewType == "rma-boa" || Model.ViewType == "rma-securitas-general";}
+                @if (!ViewBag.QueryMode)
+                {
+                    @Html.TextBoxFor(m => m.TechInfo.ClientName, new {
+                    @style = "width:98%",
+                    @placeholder = @is_securitas ? "Securitas" : "",
+                    @maxlength = "50",
+                    @aria_invalid = "false",
+                    @class = "wpcf7-form-control wpcf7-text rma-textfield form-control" })
+                }
+                else
+                {
+                    @Html.DisplayFor(m => m.TechInfo.ClientName)
+                    @Html.HiddenFor(m => m.TechInfo.ClientName)
+                }
+            </div>
+
+            <div class="container1">
+                <div class="section1">
+                    <div class="form-group tech-name">
+                        <label class="">Tech Name<span class="required">@is_asterik</span></label>
+                        @if (!ViewBag.QueryMode)
+                        {
+                            @Html.TextBoxFor(m => m.TechInfo.TechName, new { @maxlength = "50", @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" })
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(m => m.TechInfo.TechName)
+                            @Html.HiddenFor(m => m.TechInfo.TechName)
+                        }
+                    </div>
+                </div>
+                <div class="section1">
+                    <div class="form-group tech-email">
+                        <label class="">Tech Email<span class="required">@is_asterik</span></label>
+                        @if (!ViewBag.QueryMode)
+                        {
+                            @Html.TextBoxFor(m => m.TechInfo.TechEmail, new { @maxlength = "50", @type = "email", @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" })
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(m => m.TechInfo.TechEmail)
+                            @Html.HiddenFor(m => m.TechInfo.TechEmail)
+                        }
+                    </div>
+                </div>
+                <div class="section1">
+                    <div class="form-group tech-phone">
+                        <label class="">Tech Phone<span class="required">@is_asterik</span></label>
+                        @if (!ViewBag.QueryMode)
+                        {
+                            @Html.TextBoxFor(m => m.TechInfo.TechPhone, new { @maxlength = "15", @type = "tel", @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" })
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(m => m.TechInfo.TechPhone)
+                            @Html.HiddenFor(m => m.TechInfo.TechPhone)
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <br><br>
+
+            <fieldset>
+                <legend>Bank Name &amp; Address</legend>
+                <div style="border:dashed">
+                    <div class="form-group bank-name" style="padding-left:10px">
+                        <label class="">Bank Name: </label>
+                        @*<input class="wpcf7-form-control wpcf7-text rma-textfield form-control" name="bank-name" type="text" value="" placeholder="Bank of America" aria-invalid="false">*@
+                        @if (!ViewBag.QueryMode)
+                        {
+                            @Html.TextBoxFor(m => m.BankInfo.BankName, new { @style = "width:98%", @aria_invalid = "false", @class = "wpcf7-form-control wpcf7-text rma-textfield form-control" })
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(m => m.BankInfo.BankName)
+                            @Html.HiddenFor(m => m.BankInfo.BankName)
+                        }
+                    </div><br>
+
+                    <div class="form-group bank-street-address" style="padding-left:10px">
+                        <label class="">Street Address<span class="required">@is_asterik</span></label>
+                        @*<input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required rma-textfield form-control" name="bank-street-address" type="text" value="" aria-invalid="false" aria-required="true" required="">*@
+                        @if (!ViewBag.QueryMode)
+                        {
+                            @Html.TextBoxFor(m => m.BankInfo.BankStreetAddress, new { @style = "width:98%", @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" })
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(m => m.BankInfo.BankStreetAddress)
+                            @Html.HiddenFor(m => m.BankInfo.BankStreetAddress)
+                        }
+                    </div>
+
+                    <div class="container1" style="padding-left:10px">
+                        <div class="section1">
+                            <div class="form-group bank-city">
+                                <label class="">City<span class="required">@is_asterik</span></label>
+                                @*<input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" name="bank-city" type="text" value="" aria-invalid="false" aria-required="true" required="">*@
+                                @if (!ViewBag.QueryMode)
+                                {
+                                    @Html.TextBoxFor(m => m.BankInfo.BankCity, new { @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" })
+                                }
+                                else
+                                {
+                                    @Html.DisplayFor(m => m.BankInfo.BankCity)
+                                    @Html.HiddenFor(m => m.BankInfo.BankCity)
+                                }
+                            </div>
+                        </div>
+                        <div class="section1">
+                            <div class="form-group bank-state">
+                                <label class="">State<span class="required">@is_asterik</span></label>
+                                @*<input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required rma-short form-control" name="bank-state" type="text" value="" aria-invalid="false" aria-required="true" required="">*@
+                                @if (!ViewBag.QueryMode)
+                                {
+                                    @Html.DropDownListFor(m => m.BankInfo.BankState, new SelectList(Utilities.GetStates(), "Value", "Text", Model.BankInfo == null ? null : Model.BankInfo.BankState), "-- Select State --", new
+                               {
+                                   @aria_invalid = "false",
+                                   @aria_required = "true",
+                                   @required = "",
+                                   @class = "wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control",
+                                   @onchange = "GetBankStateName(this)"
+                               })
+                                }
+                                else
+                                {
+                                    @Html.DisplayFor(m => m.BankInfo.BankState)
+                                    @Html.HiddenFor(m => m.BankInfo.BankState)
+                                }
+                                @Html.HiddenFor(m => m.BankInfo._BankStateFullName)
+                                @*@Html.TextBoxFor(m => m.BankInfo.BankState, new { @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" })*@
+                            </div>
+                        </div>
+                        <div class="section1">
+                            <div class="form-group bank-zip">
+                                <label class="">Zip Code<span class="required">@is_asterik</span></label>
+                                @*<input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" name="bank-zip" type="text" value="" aria-invalid="false" aria-required="true" required="">*@
+                                @if (!ViewBag.QueryMode)
+                                {
+                                    @Html.TextBoxFor(m => m.BankInfo.BankZipCode, new { @maxlength = "9", @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" })
+                                }
+                                else
+                                {
+                                    @Html.DisplayFor(m => m.BankInfo.BankZipCode)
+                                    @Html.HiddenFor(m => m.BankInfo.BankZipCode)
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <br />
+
+
+
+
+            <strong>Date of Install @is_asterik</strong> <div class="form-group service-call-date">
+                @*<input class="wpcf7-form-control wpcf7-date wpcf7-validates-as-required wpcf7-validates-as-date rma-calendar form-control" name="service-call-date" type="date" value="" min="" max="" step="" aria-invalid="false" aria-required="true" required="">*@
+                @{
+                    var InstallDate = (Model.Registrations?.date_installed == null ? "" : DateTime.Parse(Model.Registrations.date_installed).ToString("yyyy-MM-dd"));
+                }
+                @if (!ViewBag.QueryMode)
+                {
+                    @Html.TextBoxFor(m => m.Registrations.date_installed, new { @Value = @InstallDate, @type = "date", @min = "", @max = "", @step = "", @aria_invalid = "false", @class = "wpcf7-form-control wpcf7-date wpcf7-validates-as-date form-control" })
+                }
+                else
+                {
+                    @Html.LabelFor(m => m.Registrations.date_installed, @InstallDate, new { @style = "font-weight: normal;" })
+                    @Html.HiddenFor(m => m.Registrations.date_installed, @InstallDate)
+                }
+            </div> <br>
+
+
+            <fieldset>
+                <legend>Part Number and Serial Number Installed</legend>
+                @{
+                    var PartTypes = RMATracker.Models.RMATrackerViewModel.getPartTypes();
+                }
+                @*@foreach (DataLayer.Parts part in Model.Parts.Where(p=> (p.part_types_id ?? "") !=""))*@
+                @Html.HiddenFor(m => m.CurrentPartIndex, new { @id = "CurrentPartIndex" })
+                @for (int i = 0; i < (Model.Parts != null ? Model.Parts.Count : 0); i++)
+                {
+                    if (ViewBag.QueryMode && (Model.Parts[i].part_types_id ?? "") == "")
+                    {
+                        @Html.HiddenFor(m => m.Parts[i].part_types_id)
+                        continue;
+                    }
+                    <div class="container1" style="border:solid">
+                        <div class="section1" style="padding-left: 10px">
+                            @{
+                                if (!ViewBag.QueryMode)
+                                {
+                                    if (i == 0)
+                                    {
+                                        @:<strong>Part Number @(i + 1):*</strong>
+                                        @:<div class="form-group part-menu">
+                                            //ViewBag
+                                            @Html.DropDownListFor(m => m.Parts[i]._PartNo, new SelectList(PartTypes, "PartNo", "PartDescription", Model.Parts[i]._PartNo), "-- Select Part --", new
+                                       {
+                                           @aria_invalid = "false",
+                                           @aria_required = "true",
+                                           @required = "",
+                                           @class = "wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control",
+                                           @onchange = "GetPartID(this)"
+                                       })
+                                        }
+                                        else
+                                        {
+                                            @:<strong>Part Number @(i + 1):</strong>
+                                            @:<div class="form-group part-menu">
+                                                @Html.DropDownListFor(m => m.Parts[i]._PartNo, new SelectList(PartTypes, "PartNo", "PartDescription", Model.Parts[i]._PartNo), "-- Select Part --", new
+                                           {
+                                               @aria_invalid = "false",
+                                               @class = "wpcf7-form-control wpcf7-select form-control",
+                                               @onchange = "GetPartID(this)"
+                                           })
+                                            }
+                                            @Html.DropDownListFor(m => m.Parts[i]._PartDescription, new SelectList(PartTypes, "PartDescription", "PartDescription", Model.Parts[i]._PartDescription), "--", new
+                                            {
+                                                @style = "display:none"
+                                            })
+                                            @Html.DropDownListFor(m => m.Parts[i].part_types_id, new SelectList(PartTypes, "id", "id", Model.Parts[i].part_types_id), "--", new
+                                            {
+                                                @style = "display:none"
+                                            })
+                                        @:</div>
+                                    }
+                                    else
+                                    {
+                                        @:<strong>Part @(i + 1):</strong>
+                                        @Html.DisplayFor(m => m.Parts[i]._PartDescription)
+                                        @Html.HiddenFor(m => m.Parts[i]._PartDescription)
+                                    }
+                            }
+
+                        </div>
+
+                        <div class="section1">
+                            @{
+                                if (!ViewBag.QueryMode)
+                                {
+                                    if (i == 0)
+                                    {
+                                        @:<strong>Serial Number @(i + 1):* </strong>
+                                        @:<div class="form-group serial-number">
+                                            @Html.TextBoxFor(m => m.Parts[i].SN, new { @maxlength = "6", @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-validates-as-required form-control" })
+                                        }
+                                        else
+                                        {
+                                            @:<strong>Serial Number @(i + 1): </strong>
+                                            @:<div class="form-group serial-number">
+                                                @Html.TextBoxFor(m => m.Parts[i].SN, new { @maxlength = "6", @aria_invalid = "false", @class = "wpcf7-form-control form-control" })
+                                            }
+                                        @:</div>
+                                    }
+                                    else
+                                    {
+                                        @:<strong>Serial Number @(i + 1): </strong>
+                                        @Html.DisplayFor(m => m.Parts[i].SN)
+                                        @Html.HiddenFor(m => m.Parts[i].SN)
+                                    }
+                            }
+                        </div>
+                        <div class="section1">
+                            @{
+                                if (!ViewBag.QueryMode)
+                                {
+                                    if (i == 0)
+                                    {
+                                        @:<strong>Description @(i + 1):* </strong>
+                                        @:<div class="form-group description-1">
+                                            @Html.TextBoxFor(m => m.Parts[i].image_description, new { @maxlength = "100", @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-validates-as-required form-control" })
+                                        }
+                                        else
+                                        {
+                                            @:<strong>Description @(i + 1): </strong>
+                                            @:<div class="form-group description-1">
+                                                @Html.TextBoxFor(m => m.Parts[i].image_description, new { @maxlength = "100", @aria_invalid = "false", @class = "wpcf7-form-control form-control" })
+                                            }
+                                        @:</div>
+                                    }
+                                    else
+                                    {
+                                        @:<strong>Description @(i + 1): </strong>
+                                        @Html.DisplayFor(m => m.Parts[i].image_description)
+                                        @Html.HiddenFor(m => m.Parts[i].image_description)
+                                    }
+                            }
+                        </div>
+                        @{
+                            int index = i + 1;
+                            if (!ViewBag.QueryMode)
+                            {
+                                <div class="section1" style="padding-left: 10px">
+                                    <div class="form-group upload-file-1">
+                                        @*<input accept="image/jpeg,image/png,image/gif,image/bmp" aria-required="true" required="" aria-invalid="false" class="wpcf7-form-control wpcf7-slim wpcf7-validates-as-required" id="upload-file-0" name="upload-file-0" type="file">*@
+
+                                        @*<span class="slim" data-status-file-size="File is too big, maximum file size: $0 MB." data-status-file-type="Invalid file type, expects: $0." data-status-image-too-small="Image is too small, minimum size is: $0 pixels." data-max-file-size="9" data-post="output" data-filter-sharpen="15" data-size="640,480" data-download="true">*@
+                                        @{
+                                            if (i == 0)
+                                            {
+                                                @*<input accept="image/jpeg,image/png,image/gif,image/bmp" aria-required="true" required="" aria-invalid="false" class="wpcf7-form-control wpcf7-slim wpcf7-validates-as-required" id="upload-file-@index" name="upload-file-@index" type="file">*@
+
+                                                @Html.TextBox("upload-file-" + @index.ToString(), null, new
+                                           {
+                                               @index = @index.ToString(),
+                                               @type = "file",
+                                               @accept = "image/jpeg,image/png,image/gif,image/bmp",
+                                               @aria_invalid = "false",
+                                               @aria_required = "true",
+                                               @required = "",
+                                               @class = "wpcf7-form-control wpcf7-slim wpcf7-validates-as-required",
+                                               @onchange = "LoadImageOnForm(this)"
+                                           })
+
+                                                @*@Html.Image("image-" + @index.ToString(), "", "100", "100");*@
+                                                @*<img id="blah" src="#" alt="your image" />*@
+                                                @*@Html.TextBox("upload-file-"+@index.ToString(), null, new
+                                                    {
+                                                        @type = "file",
+                                                        @accept = "image/jpeg,image/png,image/gif,image/bmp",
+                                                        @aria_invalid = "false",
+                                                        @aria_required = "true",
+                                                        @required = "",
+                                                        @class = "wpcf7-form-control wpcf7-slim wpcf7-validates-as-required",
+                                                        @onchange = "LoadFileInfo(this)"
+                                                        })*@
+                                            }
+                                            else
+                                            {
+                                                @*<input accept="image/jpeg,image/png,image/gif,image/bmp" aria-invalid="false" class="wpcf7-form-control wpcf7-slim" id="upload-file-@index" name="upload-file-@index" type="file">*@
+                                                @Html.TextBox("upload-file-" + @index.ToString(), null, new
+                                           {
+                                               @index = @index.ToString(),
+                                               @type = "file",
+                                               @accept = "image/jpeg,image/png,image/gif,image/bmp",
+                                               @aria_invalid = "false",
+                                               @class = "wpcf7-form-control wpcf7-slim",
+                                               @onchange = "LoadImageOnForm(this)"
+                                           })
+                                            }
+                                            @Html.HiddenFor(m => m.Parts[i].image_path, new { @index = @index.ToString(), })
+                                        }
+                                        @*</span>*@
+                                    </div>
+                                </div>
+                            }
+                            var style = (ViewBag.QueryMode) ? "style='padding-left:10px'" : "";
+                            <div class="section1" style="padding-left: 10px">
+                                @{
+                                    var image_path = String.IsNullOrEmpty(Model.Parts[i].image_path) ? "" : Model.Parts[i].image_path;
+                                    var absolutePath = Server.MapPath(image_path);
+                                    if (!File.Exists(absolutePath)) { image_path = ".." + image_path; }
+                                    if (String.IsNullOrEmpty(@image_path))
+                                    {
+                                        <img alt="Image Not Available" id="image-@index" style="width: auto;height: auto;" />
+                                    }
+                                    else
+                                    {
+                                        <img alt="Image Not Available" src="@image_path" id="image-@index" style="width: auto;height:100px;" />
+                                    }
+                                }
+                            </div>
+
+                        }
+                    </div>
+                    <br>
+                }
+
+</fieldset>
+
+
+
+<span class="wpcf7-form-control-wrap cf7-counter"><input type="hidden" name="cf7-counter" value="225" size="40" class="wpcf7-form-control wpcf7dtx-dynamictext wpcf7-dynamichidden" aria-invalid="false"></span>
+
+
+
+<div class="form-group">
+    <div>
+        <input class="wpcf7-form-control wpcf7-submit btn btn-primary" type="submit" value="Send" id="btnSend">
+    </div>
+</div><div class="wpcf7-response-output wpcf7-display-none alert"></div>
+</form>
+
+<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+<script type="text/javascript">
+
+
+        //$("#formRMASend").validate({});
+        $("input[name$='SN']").each(function () {
+            $(this).rules('add', {
+                maxlength: 6
+            });
+        });
+        $("input[name$='ZipCode']").each(function () {
+            $(this).rules('add', {
+                number: true
+            });
+        });
+
+
+
+</script>
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+<script src="@Url.Content("~/Scripts/rma-form.js")" type="text/javascript"></script>
+
+</div>
+</div>

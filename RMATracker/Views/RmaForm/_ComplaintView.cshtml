@@ -1,0 +1,49 @@
+﻿@using RMATracker.Models
+@using DataLayer
+@model RMAModel
+@{
+    ViewBag.QueryMode = (ViewBag.QueryMode ?? false);
+    //    ViewBag.Title = "Home Page";
+    string is_asterik = ViewBag.QueryMode ? ": " : ": * ";
+
+}
+
+<fieldset>
+    <legend>Customer Complaint</legend>
+    @{Html.HiddenFor(m => m.rma.dispatchReason.id); }
+    <div class="container" style="border:solid;">
+        <br>
+        <div class="form-group problem-menu" style="padding-left:10px">
+            <label class="">Complaint @is_asterik</label>
+            @if (!ViewBag.QueryMode)
+            {
+                var dispatchReasons = DispatchReason.fullList ?? new List<DispatchReason>();
+                @Html.DropDownListFor(m => m.rma.dispatchReason.id, new SelectList(dispatchReasons, "id", "Description"), "-- Pick One --", new { @style = "padding:4px;font-weight: normal;", @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control" })
+                
+
+            }
+            else
+            {
+                @Html.DisplayFor(m => m.rma.dispatchReason.Name)
+            }
+
+        </div>
+
+
+        <br>
+        <div class="form-group" style="padding-left:10px">
+            <label class="">Description @is_asterik</label>
+            @if (!ViewBag.QueryMode)
+            {
+                @Html.TextAreaFor(m => m.rma.dispatchReason.Description, new { @aria_required = "true", @required = "", @style = "width:100%;font-weight:normal", @maxlength = "255", @rows = "4", @aria_invalid = "false", @class = "wpcf7-form-control wpcf7-textarea rma-textarea form-control" })
+            }
+            else
+            {
+                @Html.DisplayFor(m => m.rma.dispatchReason.Description)
+                @Html.HiddenFor(m => m.rma.dispatchReason.Description)
+            }
+        </div>
+
+        <br>
+    </div>
+</fieldset>

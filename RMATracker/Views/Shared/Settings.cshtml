@@ -1,0 +1,42 @@
+﻿<div id="navbar-collapse-1" class="navbar-collapse collapse" aria-expanded="false" style="display:none;height: 1px;">
+    <ul class="nav navbar-nav navbar-right">
+
+
+        <li>
+                @{
+                    var url = (ViewBag.HomeLogin ?? 0) == 1 ? Url.Action("Login", "Home") : Url.Action("GetRMAForm", "RmaForm");
+                    if ((ViewBag.BankIncludeType ?? 0) > 0 || (ViewBag.Securitas ?? false) == true)
+                    {
+                        url = Url.Action("Securitas", "Home");
+                    }
+                }
+                <a onclick="location.href='@url'">
+                    <input style="width:40px;height:40px;" type="image" src="~/images/HomeIcon.png" name="btnHome" class="btTxt" id="btnHome" />
+                    <br />
+                    <label style="font-weight:bold;align-content:center">Home</label>
+                </a>
+
+        </li>
+
+        <li>
+                <a  onclick="ShowUserProfile(this)">
+                    <input style="width:40px;height:40px;" type="image" src="~/images/ProfileIcon@3x.png" name="btnUserProfile" class="btTxt" id="btnUserProfile" />
+                    <br />
+                    <label style="font-weight:bold">Profile</label>
+                </a>
+                
+        </li>
+        <li>
+            @{
+                var url2 = Url.Action("Logoff", "Home");
+            }
+            <a onclick="location.href='@url2'">
+                <input style="width:40px;height:40px;" type="image" src="~/images/LogoutIcon@3x.png" name="btnLogoff" class="btTxt submit" id="btnUserProfile" />
+                <br />
+                <label style="font-weight:bold">Log Off</label>
+            </a>
+
+        </li>
+    </ul>
+</div>
+

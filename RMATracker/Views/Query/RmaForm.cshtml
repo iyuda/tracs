@@ -1,0 +1,201 @@
+﻿
+<script src="@Url.Content("~/Scripts/tracs-common.js")" type="text/javascript"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if ('@ViewBag.CaseNo') {
+            $("#combobox").val('@ViewBag.CaseNo')
+            GetRMA();
+        }
+    });
+    ////$(document).live('ready', function () {
+    ////    alert('live');
+    ////});
+    //$(document).on('change', '#div_rma_form', function (e) {
+    //    alert('dasfdasdfdasas');
+    //});
+    ////$("#div_rma_form").live("change", function (e) {
+    ////    alert("div");
+    ////});
+    //$(document).on("change", "input[name^='upload-file-']", function (e) {
+    //    LoadImageOnForm(this);
+    //});
+    //$(document).on("DOMSubtreeModified", "#div_rma_form", function () {
+    //    $("input[name$='image_path']").each(function () {
+    //        alert('..\\' + $(this).attr("id"));
+    //        var index = $(this).attr("index");
+    //        $("#image-" + index).attr("src", '..\\'+$(this).val());
+    //    });
+    //});
+    function SetStatus(e) {
+        var selectedValue = $("#" + e.id + " option:selected").val();
+        var selectedText = $("#" + e.id + " option:selected").text();
+        if (selectedValue == "" || selectedValue == $("#btnUpdateStatus").attr("last_updated_status")) {
+            $("#btnUpdateStatus").attr("disabled", "disabled");
+        }
+        else {
+            //$("#btnUpdatePartStatus").attr("changed", "1");
+            $("#btnUpdateStatus").attr("status_id", selectedValue);
+            //$("#btnUpdateStatus").attr("status", selectedText);
+            $("#rma_status_description").val(selectedText);
+            $("#btnUpdateStatus").removeAttr("disabled");
+        }
+    }
+
+    function SetPartStatus(e) {
+
+        var index = $("#" + e.id).attr("index");
+        var selectedValue = $("#" + e.id + " option:selected").val();
+        var selectedText = $("#" + e.id + " option:selected").text();
+        var button_element = $("button[button_index='" + index + "']");
+        var status_element_id = "#part_" + (index - 1) + "_status";
+
+        if (selectedValue == "" || selectedValue == button_element.attr("last_updated_status")) {
+            button_element.attr("disabled", "disabled");
+        }
+        else {
+            //$("#btnUpdatePartStatus").attr("changed", "1");
+            //button_element.attr("status_id", selectedValue);
+            button_element.removeAttr("disabled");
+            $(status_element_id).val(selectedText);
+        }
+
+    }
+
+
+    function UpdatePartStatus(e)
+    {
+        $("#CurrentPartIndex").val($(e).attr("button_index"));
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("UpdatePartStatus", "Query")',
+            data: JSON.stringify($('#formRMAParent').serialize()),
+            success: function (data) {
+                if (data == 'OK') {
+                    $(e).attr("disabled", "disabled");
+                    $(e).attr("last_updated_status", status);
+                    alert("Status Updated Successfully");
+                }
+                else
+                    alert('Error updating status:\n\n' + data);
+            }
+        });
+
+        }
+    function GetRMA()
+    {
+        //window.open("shared/GetSearch&CaseNo=" + key, "GetSearch");
+        //var combo_id = '[class^="custom-combobox-input-"]';
+        var key = $("#CaseList").val();
+        var text = $("#combobox option:selected").text();
+        if (key == "--" || key == "") {
+            alert("Selected Case # Does Not Exist!");
+            return;
+        }
+
+        $.ajax({
+            url: '@Url.Action("GetSearch", "Query")',
+            async: true,
+            type: "GET",
+            contentType: 'application/json',
+            data: { 'case_no': key },
+            dataType: 'html',
+            success: function (result) {
+
+                $("#rma_header").html('<h2>RMA Details for Case #' + text + '</h2>');
+                $(document).attr("title", "RMA Details for Case #" + text);
+
+                $("#div_rma_header").show();;
+                result = result.replace('"div_category"', '"div_category" style="display:none"');
+
+                result = result.replace('"btnSend"', '"btnSend" style="display:none"');
+
+                //var script = $.create('script');
+
+                //script.type = 'text/javascript';
+
+                //script.src = '../Sripts/tracs-common.js';
+
+                $.getScript('https://code.jquery.com/jquery-1.12.4.js');
+                $.getScript('https://code.jquery.com/ui/1.12.1/jquery-ui.js');
+
+                $("#div_rma_form").html(result);
+
+                //$("input[type='text']").each(function () {
+                //    alert($(this).id);
+                //    var label = $(document.createElement('label')).attr({
+                //        id: $(this).id,
+                //        name: $(this).name,
+                //        value: $(this).val()
+                //    });
+                //    alert($(this).val());
+                //    $(this).replaceWith(label);
+                //});
+
+
+
+
+
+
+
+
+            },
+            error: function (request, status, error) {
+                //spinner.stop();
+                alert(error);
+            }
+        });
+    }
+
+</script>
+
+
+<br /><br /><br /><br />
+<div class="container col-md-12" id="container">
+    <div class="panel panel-default">
+        <div class="panel-heading"><h2>@ViewBag.MenuTitle</h2></div>
+        <div class="panel-body">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <table style="width:auto">
+                        <tr>
+                            <td class="lableHeader" width="100"> Select Case:</td>
+                            <td class="controlCell" width="250">
+                                <div class="ui-widget" style="padding-left: 20px">
+                                    @*<script src="@Url.Content("~/Scripts/AutoComplete.js")" type="text/javascript"></script>*@
+                                    @{
+                                        ViewBag.DropDownList = RMATracker.Models.RMATrackerViewModel.getCaseList;
+                                        ViewBag.DropDownTextAlign = "left";
+                                        ViewBag.DropDownListID = "CaseList";
+                                        ViewBag.DropDownListName = "CaseList";
+                                        ViewBag.DropDownWidth = 275;
+                                    }
+                                    @RenderPage("~/Views/Shared/AutoComplete.cshtml")
+
+                                    @*@Html.DropDownList("CaseList", new SelectList(RMATracker.Models.RMATrackerViewModel.getCaseList, "Value", "Text"), "-- Select Case --", new {
+                                        @style = "width:370px;display:none",  @class = "form -control" })*@
+                                </div>
+                            </td>
+                            <td class="controlCell">
+                                <div class="ui-widget" style="padding-left: 50px">
+                                    <button type="button" class="btn btn-primary" style="width:100px;" id="btnSearch" onclick="GetRMA()">
+                                        @*<span class="glyphicon glyphicon-zoom-in" id="spanBtn">  Search</span>*@
+                                        Search
+                                    </button>
+                                </div>
+                            </td>
+                            <td style="width:700px; text-align:right;">
+                                <span class="countCell" id="spanTotal"></span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container" id="div_rma_header" style="display:none;">
+        <div class="panel-heading" id="rma_header"><h2>RMA Details</h2></div>
+    </div>
+    <div class="container" id="div_rma_form" style="border-style:solid; width:110%">
+    </div>
+</div>

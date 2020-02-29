@@ -1,0 +1,662 @@
+﻿@using RMATracker.Models
+@using DataLayer
+@model RMAModel
+@{
+    ViewBag.QueryMode = (ViewBag.QueryMode ?? false);
+    //    ViewBag.Title = "Home Page";
+    string is_asterik = ViewBag.QueryMode ? ": " : "*";
+    var IsMobile = (ViewBag.IsMobile ?? ViewContext.HttpContext.GetOverriddenBrowser().IsMobileDevice);
+    var SubmitButtonWidth = IsMobile ? "45%" : "20%";
+}
+
+
+<head>
+
+    <link href="~/content/web/kendo.common-material.min.css" rel="stylesheet" />
+    <link href="~/content/web/kendo.rtl.min.css" rel="stylesheet" />
+    <link href="~/content/web/kendo.material.min.css" rel="stylesheet" />
+    <link href="~/content/web/kendo.material.mobile.min.css" rel="stylesheet" />
+    <link href="~/content/shared/examples.css" rel="stylesheet" />
+
+    <script src="~/Scripts/Kendo/jquery.min.js"></script>
+    <script src="~/Scripts/Kendo/kendo.all.min.js"></script>
+    <script src="~/Scripts/Kendo/kendo.aspnetmvc.min.js"></script>
+    <script src="~/Scripts/Kendo/kendo.timezones.min.js"></script>
+
+</head>
+<head>
+    <script src="~/Scripts/ParabitScripts/loading-bar.js"></script>
+    <script src="~/Scripts/ParabitScripts/progressbar.js"></script>
+</head>
+
+   
+<div id="ld-bar-container" class="loading-container center" style="border:none">
+    <div class=''>
+        <div id="ldBar" data-value="50"
+             class='ldBar'
+             style="height:40%;width:40%"
+             data-type="stroke"
+             data-stroke-width="8"
+             data-stroke-trail="#000000"
+             data-stroke-trail-width="3"
+             data-stroke="data:ldbar/res,gradient(0,1,#FBF9F9,#DC6E1C)"
+             data-path="m48.451835,9.83544l-34.718925,250.164563l36.728527,0l28.043553,-206.819661c0,0 108.49402,0 115.623737,0c7.126222,0 19.365569,0.379807 16.125742,22.152543c-3.107019,21.734329 4.019203,52.98943 -37.500913,52.98943c-41.394297,0 -85.577572,0 -85.577572,0l-6.000845,43.89114c0,0 71.108441,0 95.139781,0c24.157158,0 59.655459,-5.300223 67.875604,-78.534628c8.363437,-73.230138 -7.444263,-85.341276 -67.424754,-84.389625c-59.983986,0.938848 -128.313934,0.546239 -128.313934,0.546239z">
+        </div>
+    </div>
+    <p class="loading center" id="loading-banner">Loading</p>
+</div>
+    <table>
+        @*<tr style="border-bottom:solid">
+                <td align="right">
+                    <a style="margin-bottom:5px;" href="~/Home/Logoff" class="btn btn-info" role="button">Log Out</a>
+                    <br />
+                </td>
+            </tr>*@
+
+        <tr>
+            <td>
+                <div class="container" style="margin-top:40px;width:auto" id="rmaContainer">
+
+
+                    <div class="row">
+
+
+                        @{ var suffix = Model?.attribute?.id.ToString() == "" ? "" : Model?.attribute?.id?.ToString();
+                            var formId = "formRMAParent";
+                            if (!String.IsNullOrEmpty(suffix))
+                            {
+                                formId += suffix;
+                            }
+                        }
+                        <form id="@formId" action="~/RmaForm/submitRMA" method="post" class="wpcf7-form" enctype="multipart/form-data" novalidate="novalidate" runat="server">
+                            @Html.HiddenFor(m => m.FirmTypeId)
+                            @Html.HiddenFor(m => m.attribute.id)
+                            @Html.HiddenFor(m => m.attribute.Name)
+                            @Html.HiddenFor(m => m.rma.Token)
+                            @Html.AntiForgeryToken()
+
+
+                            @{Html.RenderPartial("_RMAHeading");}
+                            @{
+                                if (!ViewBag.QueryMode)
+                                {
+                                    <i>*Required Fields</i> <br> <br>
+                                }
+                            }
+
+
+                            @{Html.RenderPartial("_RMAMainView", Model);}
+                            @{Html.RenderPartial("_TechView", Model);}
+                            <br>
+                            @Html.HiddenFor(m => m.rma.ReturnAddressId)
+                            @*@{Html.RenderPartial("_ReturnAddressListView");}*@
+                            <div id="divReturnAddressesContainer">
+                                @{Html.RenderAction("ReturnAddressListViewGet", "RmaForm");}
+                            </div>
+                            <br>
+
+                            @{Html.RenderPartial("_CompanyView", Model, new ViewDataDictionary() { { "Firm", ViewBag.Firm }, { "AttributeName", Model?.attribute?.Name } });}
+                            <br />
+
+                            @{Html.RenderPartial("_ComplaintView", Model);}
+                            <br />
+                            @{Html.RenderPartial("_FaultsView", Model);}
+                            <br />
+                            @{Html.RenderPartial("_ImagesView", Model);}
+                            <br />
+                            @{Html.RenderPartial("_PartsView", Model);}
+                            <br />
+                            @{Html.RenderPartial("_ParabitCallview", Model);}
+                            <span class="wpcf7-form-control-wrap cf7-counter"><input type="hidden" name="cf7-counter" value="225" size="40" class="wpcf7-form-control wpcf7dtx-dynamictext wpcf7-dynamichidden" aria-invalid="false"></span>
+                            
+
+                            <br /><br />
+                            <div class="form-group" align="center">
+                                <div>
+
+                                    <input style="width:@SubmitButtonWidth" class="wpcf7-form-control wpcf7-submit btn btn-primary" type="submit" value="Submit the request" id="btnSend">
+                                </div>
+                            </div><div class="wpcf7-response-output wpcf7-display-none alert"></div>
+
+                        </form>
+                        @*<div id="frmAddNewAddress" style="border:solid;display:none;">*@
+                        <div id="divAddReturnAddress" style="border:solid;display:none;">
+                            @{Html.RenderPartial("_NewReturnAddressView", new DataLayer.ReturnAddress(),
+                                                              new ViewDataDictionary() { { "Attribute", Model?.attribute?.id } });}
+
+                        </div>
+                        <div id="divAddBranchAddress" style="border:solid;display:none;">
+                            @{Html.RenderPartial("_NewCompanyAddressView", new DataLayer.CompanyBranch(),
+                                                          new ViewDataDictionary() { { "Attribute", Model?.attribute?.id } });}
+
+                        </div>
+                        <div id="divAddCompanyDetails" style="border:solid;display:none;">
+                            @{Html.RenderPartial("_NewCompanyDetailsView", new DataLayer.CompanyDetails(),
+                                                            new ViewDataDictionary() { { "Attribute", Model?.attribute?.id } });}
+
+                        </div>
+                        
+                       
+                        <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+                        <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+                        <script type="text/javascript">
+      
+            $("#@formId").validate({
+                errorClass: 'validate-error',
+                errorPlacement: function (error, element) {
+                    var divParent = element.closest('div');
+                    error.appendTo(divParent);
+
+
+                },
+                rules: {
+                    rdSelectedAdress: {
+                        required: true,
+                    },
+                    rmaType: {
+                        required: true,
+                    }
+                },
+                
+            });
+
+            $("#formReturnAddressSave").validate({ errorClass: 'validate-error' });
+            $("#formCompanyBranchSave").validate({ errorClass: 'validate-error' });
+            $("#formCompanyDetailsSave").validate({ errorClass: 'validate-error'});
+          
+            function ValidateFormForKendo(FormName) {
+                var status = true;
+                var scrolled = false;
+                $("#" + FormName).find("input[data-role='combobox'][optional!='true']").each(function () {
+                    if (!$(this).closest('div').is(':visible'))
+                        return;
+                    if (this.id == 'rma_CompanyBranchId')
+                        if ($(this).text().length == 0) {
+                            var data = $(this).data('kendoComboBox').dataSource._data
+                            for (var x = 0; x < data.length; x++) {
+                                if (data[x].Text == $(this).val()) {
+                                    $(this).val(data[x].Value);
+                                }
+                            }
+                        }
+                        
+                    if ($(this).val().length == 0 && $(this).closest('form').attr('id') == FormName) {
+                        var $label = $("<label  class='error' for='" + this.id + "'>");
+                        $label.attr('id', this.id + "-error");
+                        
+                        $label.text("This field is required.");$label.css("color", "red");
+                        var divParent = $(this).closest('div');
+                        $(divParent).find("label.error").each(function () {
+                            $(this).remove();
+                        });
+                        $label.appendTo(divParent);
+                        var parentFormId = 'formRMAParent';
+                        if ($(divParent).is(':visible') && FormName == parentFormId) { 
+                        }
+                        status = false;
+                    }
+
+                });
+                return status;
+                }
+
+            $("#@formId").on("invalid-form.validate", function (event, validator) { });
+
+            $("#@formId").submit(function (e) {
+                e.preventDefault();
+                var form_valid = true;
+                status = ValidateFormForKendo("@formId");
+
+                if (status =='false') {
+                    form_valid=false;
+                }
+                $(".serial:visible").each(function () {
+                    if (!validateSerialNo(this, scroll)) {
+                        form_valid = false;
+                    }
+                });
+
+
+                var rmaParentDiv = $("div[id^=tabs-" + $('#TabId').val() + "]");
+                if (rmaParentDiv.length == 0) {
+                    rmaParentDiv = $("div[id='rmaContainer']");
+                }
+                
+                var imageCount = rmaParentDiv.find("img.image-item:visible").length;
+                var videoCount = rmaParentDiv.find("video.video-item:visible").length;
+
+                if (imageCount + videoCount < 1) {
+                    //alert("At least one image/video has to be added!");
+                    $("#lblImageLimitError").text('At least one image/video has to be added!');
+                    $("#lblImageLimitError").show();
+                    
+                    form_valid = false;
+                }
+                else if (imageCount + videoCount > 10) {
+                    $("#lblImageLimitError").text('You have exceeded the maximum number of media items!');
+                    $("#lblImageLimitError").show();
+
+                    form_valid = false;
+                }
+                else if (videoCount > 1) {
+                    $("#lblImageLimitError").text('You have exceeded the maximum number of video items!');
+                    $("#lblImageLimitError").show();
+
+                    form_valid = false;
+                }
+                else {
+                    $("#lblImageLimitError").hide();
+                }
+                var last_top_offset = 100000;
+                $(this).find(".error:visible, .validate-error:visible, .media-limit-error:visible").each(function () {
+                    var divParent = $(this).closest('div');
+                    if (last_top_offset > $(divParent).offset().top)
+                        last_top_offset = $(divParent).offset().top;
+                });
+                if (last_top_offset <100000)
+                    $('html, body').animate({
+                        scrollTop: last_top_offset - $("#navigation").height()
+                    }, 2);
+
+                if ($(this).find(".error:visible, .validate-error:visible").length > 0)
+                    return;
+                if (!form_valid) {
+                    return;
+                }
+
+                // use hidden fields to submit disabled items
+                var $form = $(this);
+                $form.find('input:disabled, textarea:disabled, select:disabled, option:disabled').each(function () {
+
+                    var $item = $(this);
+
+                    var hiddenItem = $item.clone();
+                    hiddenItem.removeAttr('id');
+                    hiddenItem.removeAttr('disabled');
+                    hiddenItem.attr('style', 'display: none');
+
+                    $item.after(hiddenItem);
+                });
+                var test_this = this;
+                $('input[type="submit"]').attr('disabled', 'disabled');
+                var progressbar = generate_progressbar();
+                var formData = new FormData($(this)[0]);
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', $("#@formId").attr('action'), true);
+                // xhr.setRequestHeader("Content-Type", "multipart/form-data");
+                xhr.addEventListener("loadend", function () { destroy_progressbar(progressbar); });
+                xhr.onreadystatechange = function () {
+                    if (xhr.status === 200 && xhr.readyState === 4) {
+                        var result = JSON.parse(xhr.response); // JSON.parse(xhr.response);
+                        var message = result.message;
+                        var status = result.status;
+                        if (status == '1') {
+                            $("#@formId")[0].reset();
+                            $(".image_details_class").remove();
+                            var rmaId = result.data[0].RMAId;
+                            rmaId = "RMA Request #: " + rmaId;
+                            message = '<p>' + message + '<p>' + rmaId;
+
+                            var location;
+
+                            if ($("#FirmTypeId").val() == '3')
+                                location = '@Url.Action("Securitas", "Home")';
+                            else
+                                location = '@Url.Action("GetRMAForm", "RmaForm")';
+
+                            changeToTapToDismissToastr();
+                            changeFeedbackMessage(status == '1' ? 'success' : 'error', message, '',
+                                '<br /><br /><br /><button onclick = "href" type="button" class="para-btn clear">Ok</button>'.replace('href', 'window.location.href = \'' + location + '\''),
+                                true);
+                        }
+                        else {
+                            $('input[type="submit"]').removeAttr('disabled');
+                            changeToStandardToastr();
+                            changeFeedbackMessage(status == '1' ? 'success' : 'error', message, '',
+                                '<br /><br /><br /><button onclick = "toastr.clear()" type="button" class="para-btn clear">Ok</button>');
+                            //changeFeedbackMessage("error", xhr.responseText);
+
+                            return false;
+                        }
+
+                    }
+                }
+                xhr.onerror = function () {
+                    $('input[type="submit"]').removeAttr('disabled');
+                    changeFeedbackMessage("error", xhr.response);
+
+                    return false;
+                }
+
+                xhr.send(formData);
+                
+            });
+
+
+
+
+
+
+    var bank_address_submits = 0;
+    var return_address_submits = 0;
+    var bank_details_submits = 0;
+    function ShowAddNewAddressForm(e, divName, formName, saveButtonName) {
+
+
+        if (!$("#rma_CompanyId").val() && formName == "formCompanyBranchSave" ) {
+            //alert('Bank is not selected!');
+            changeFeedbackMessage("error", 'End User Company is not selected!')
+            return;
+        }
+        var cancelButtonName = "btnCancelDialog_" + saveButtonName;
+        var isMobile = '@IsMobile'.toLowerCase() == "false" ? false : true;
+
+        $('#' + divName).css('zIndex', 99999999999999);
+        $('#' + divName).dialog({
+            autoOpen: true,
+            position: { my: "center", at: !isMobile ? "top+" + $("#navigation").height : "", of: window },
+            //width: !isMobile ? $(window).width()/2 : $(window).width(),
+            resizable: true,
+            modal: true,
+            title: formName == "formCompanyBranchSave" ? "New Branch" : (formName == "formCompanyDetailsSave" ? "New End User Company" : "New Return Address"),
+            create: function (event) {
+
+                if (!isMobile)
+                    $(this).parent().css({ 'position': 'fixed' });
+            },
+            beforeClose: function (event, ui) {
+                if (!isMobile)
+                    $("body").css({ overflow: 'inherit' })
+            },
+            open: function () {
+                if (!isMobile) {
+                    var dialog = $(this).data("ui-dialog");
+                    dialog.option("width", $(window).width() / 2);
+                    $(window).resize(function () {
+                        var dialog = $('#' + divName).data("ui-dialog");
+                        dialog.option("position", dialog.options.position);
+                        dialog.option("width", $(window).width() / 2);
+
+                    });
+                    $("body").css({ overflow: 'hidden' })
+                }
+
+
+                if (formName == "formCompanyBranchSave") {
+                    $(this).find("#CompanyId").val($("#rma_CompanyId").val());
+                    $(this).find("#CompanyAddressUserId").val($("#rma_UserId").val());
+                    bank_address_submits = 0;
+                    CompanyAddressInitUSA();
+                }
+                else if (formName == "formCompanyDetailsSave") {
+                    bank_details_submits = 0;
+                    CompanyDetailsInitUSA();
+                }
+                else {
+                    return_address_submits = 0;
+                    ReturnAddressInitUSA();
+                }
+
+                $('#' + saveButtonName).attr('form', formName);
+                $('#' + saveButtonName).attr('class', "btn btn-primary");
+                $('#' + cancelButtonName).attr('class', "btn btn-primary");
+                $('.btn-primary').css('background-color', '#F57B20')
+                $("#" + formName).submit(function (e) {
+
+                    FixAutoCompleteValidation();
+                    e.preventDefault();
+                    if (!ValidateFormForKendo(formName))
+                            return;
+
+                    switch (formName) {
+                    case "formCompanyBranchSave":
+                        if (bank_address_submits > 0) {
+                            return;
+                        }
+                        break;
+                    case "formCompanyDetailsSave":
+                        if (bank_details_submits > 0) {
+                            return;
+                        }
+                        break;
+                    case "formReturnAddressSave":
+                        if (return_address_submits > 0) {
+                            return;
+                         }
+                         break;
+                    }
+
+                    if ($(this).find(".error:visible").length == 0 && $(this).find(".validate-error:visible").length == 0)
+                    SaveNewAddress(divName, formName);
+
+                });
+
+            },
+            close: function () {
+                //clear();
+                $('label.error').remove();
+                $('label.validate-error').remove();
+                $('#'+formName)[0].reset();
+            },
+            buttons: [
+                {
+                    style: "float:right",
+                    id: saveButtonName,
+                    text: "Save",
+                    click: function () {
+                        $("#" + formName).submit();
+                    }
+                },
+                {
+                    style: "float:right",
+                    id: cancelButtonName,
+                    text: "Cancel",
+                    click: function () {
+                        $(this).dialog("close");
+                        //$(this).remove();
+                    }
+                }
+
+            ]
+        });
+    }
+    function SaveNewAddress(divName, formName) {
+        var rmaParentDiv = $("div[id^=tabs-" + $('#TabId').val() + "]");
+        if (rmaParentDiv.length == 0) {
+            rmaParentDiv = $("div[id='rmaContainer']");
+        }
+
+        $.ajax({
+            url: $("#" + formName).attr('action'),
+            type: 'POST',
+            data: $("#" + formName).serialize(),
+            async:false,
+            success: function (result) {
+                var data = result.data;
+                switch (formName) {
+                    case "formCompanyBranchSave":
+                        break;
+                    case "formCompanyDetailsSave":
+                        break;
+                    case "formReturnAddressSave":
+                        break;
+                }
+
+                if (result.status == 1) {
+                    switch (formName) {
+                        case "formCompanyBranchSave":
+                            bank_address_submits++;
+                            LoadCompanyAddresses(data.SiteId);
+                            break;
+                        case "formCompanyDetailsSave":
+                            bank_details_submits++;
+                            var dataSource = $("#rma_CompanyId").data("kendoComboBox").dataSource;
+                            dataSource = dataSource.add({ Value: data.CompanyId, Text: $("#CompanyName").val() });
+                            var combobox = $("#rma_CompanyId").data("kendoComboBox");
+                            combobox.select(function (dataItem) {
+                                return dataItem.Value === data.CompanyId;
+                            });
+                            LoadCompanyAddresses(data.SiteId);
+                            break;
+                        case "formReturnAddressSave":
+                            return_address_submits++;
+                            var new_address = $("#divReturnAddresstemplate").find(".return-address-class:first").clone();
+                            $(new_address).find("#rdSelectedAdress").attr("checked", data.IsDefault);
+                            $(new_address).find("#rdSelectedAdress").attr("index", data.ReturnAddressId);
+                            $(new_address).find("#lblReturnAddress").text(data.FullAddress);
+
+                            $("#divReturnAddresses").append(new_address);
+                            break;
+                    }
+
+
+                    $('#' + divName).dialog("close");
+                    return true;
+                }
+                else {
+                    changeFeedbackMessage("error", result.message)
+                    return false;
+                }
+            },
+            error: function (request, status, error) {
+
+                changeFeedbackMessage("error", result.message)
+                return false;
+            }
+        });
+    }
+            function FixAutoCompleteValidation(errorLabelElements) {
+               
+                if (!errorLabelElements)
+                    errorLabelElements = $("label.error:visible");
+                errorLabelElements.each(function () {
+                    if ($(this).siblings('input.custom-combobox-input-left').length > 0) {
+                        var divParent = $(this).closest('div');
+                        var cloned_label = $(this).clone();
+                        $(this).remove();
+                        cloned_label.insertAfter(divParent);
+                    }
+                });
+            }
+            $("input[name*='Tracking']").each(function () {
+                $(this).rules('add', {
+                    maxlength: 12
+                }); $(this).rules('add', {
+                    number: true
+                });
+                $(this).rules('add', {
+                    number: true
+                });
+            });
+            $("input[name$='serial_no']").each(function () {
+                $(this).rules('add', {
+                    maxlength: 6
+                });
+            });
+            $("input[name$='SerialNumber']").each(function () {
+                $(this).rules('add', {
+                    number: true
+                });
+            });
+            $("input[name$='DispatchNumber']").each(function () {
+
+                $(this).rules('add', {
+                    maxlength: 14
+                });
+                $(this).rules('add', {
+                    number: true
+                });
+            });
+            
+
+                        </script>
+
+
+
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <script src="~/Scripts/ParabitScripts/serial_no_validation.js"></script>
+    @*<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>*@
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+    <script>
+        
+    </script>
+    <script>
+        function ValidateNumericField(e) {
+            e.value = e.value.replace(/[^0-9\.]/g, '');
+        }
+        function isNumberKey(evt) {
+            var charCode = (evt.which) ? evt.which : event.keyCode
+            if (charCode > 31 && (charCode < 48 || charCode > 57))
+                return false;
+            return true;
+        }
+
+        
+        var initProgressbar = generate_progressbar();
+        
+    
+
+    $(document).ready(function () {
+        var status = '@String.IsNullOrEmpty(ViewBag.RmaErrors)';
+        var message = '@ViewBag.RmaErrors';
+        if (status=='False') {
+            changeFeedbackMessage('error', message);
+        }
+
+         $('.btn-primary').css('background-color', '#F57B20');
+         var radioValue = $("input[tag='Yes']:checked").val();
+         if (radioValue == "true") {
+             $('#divCalledDate').show();
+         }
+         else {
+             $('#divCalledDate').hide();
+         }
+         ToggeleCreditRequestReason($("input[id='rmaType']:checked"));
+         GetReturnAddressId();
+
+         $(document).on('change', ".dropdown-return-type", function (e) {
+             $("input[name$='ReturnTypeDescription']").val($("#" + $(this).attr("id") + " option:selected").text());
+         });
+         $(document).on('change', ".dropdown-credit-reason", function (e) {
+             $("input[name$='CreditReasonDescription']").val($("#" + $(this).attr("id") + " option:selected").text());
+        });
+        
+        if (document.referrer.toLowerCase().indexOf('rmaform')>=0) {
+            history.pushState(null, null, window.location.href);
+            window.addEventListener('popstate', function () {
+                history.pushState(null, null, window.location.href);
+            });
+        }
+        destroy_progressbar(initProgressbar);
+    });
+    function WasParabitCalled(e) {
+        var radioValue = $("input[id='" + e.id + "']:checked").val();
+
+        if (radioValue == "true") {
+            $('#divCalledDate').show();
+        }
+        else {
+            $('#divCalledDate').hide();
+        }
+    }
+    function ToggeleCreditRequestReason(e) {
+        var val = $(e).val();
+        $("input[id$='RMATypeId']").val(val);
+
+        if (val== "1") {
+            $('#divCreditReason').show();
+        }
+        else {
+            $("select[id*='CreditReason']").prop('selectedIndex', 0);
+            $('#divCreditReason').hide();
+        }
+    }
+
+    
+    </script>

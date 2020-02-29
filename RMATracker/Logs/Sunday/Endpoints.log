@@ -1,0 +1,192 @@
+
+7/14/2019 12:06:54 AM
+http://rma.parabit.com:1340/api/v1/User/ValidateLogin/
+
+7/14/2019 12:06:59 AM
+http://rma.parabit.com:1340/api/v1/User/GetUserProfile/534/
+
+7/14/2019 12:07:06 AM
+http://rma.parabit.com:1340/api/v1/ReturnAddress/GetReturnAddress/534/
+
+7/14/2019 12:07:07 AM
+http://rma.parabit.com:1340/api/v1/User/GetUserProfile/534/
+
+7/14/2019 12:07:07 AM
+http://rma.parabit.com:1340/api/v1/ReturnAddress/GetReturnAddress/534/
+
+7/14/2019 12:07:07 AM
+http://rma.parabit.com:1340/api/v1/DispatchReason/
+
+7/14/2019 12:07:08 AM
+http://rma.parabit.com:1340/api/v1/CreditReason/
+
+7/14/2019 12:07:08 AM
+http://rma.parabit.com:1340/api/v1/Company/CompanyName/43/
+
+7/14/2019 12:07:08 AM
+http://rma.parabit.com:1340/api/v1/Faults/
+
+7/14/2019 12:07:08 AM
+http://rma.parabit.com:1340/api/v1/Parts/
+
+7/14/2019 12:07:17 AM
+http://rma.parabit.com:1340/api/v1/Country/
+
+7/14/2019 12:07:24 AM
+http://rma.parabit.com:1340/api/v1/States/
+
+7/14/2019 12:07:27 AM
+http://rma.parabit.com:1340/api/v1/Firm/FirmName/
+
+7/14/2019 12:07:28 AM
+http://rma.parabit.com:1340/api/v1/States/88/
+
+7/14/2019 12:08:44 AM
+http://rma.parabit.com:1340/api/v1/User/ValidateLogin/
+
+7/14/2019 12:08:44 AM
+http://rma.parabit.com:1340/api/v1/User/GetUserProfile/534/
+
+7/14/2019 12:08:44 AM
+http://rma.parabit.com:1340/api/v1/ReturnAddress/GetReturnAddress/534/
+
+7/14/2019 12:08:44 AM
+http://rma.parabit.com:1340/api/v1/User/GetUserProfile/534/
+
+7/14/2019 12:08:45 AM
+http://rma.parabit.com:1340/api/v1/ReturnAddress/GetReturnAddress/534/
+
+7/14/2019 12:08:45 AM
+http://rma.parabit.com:1340/api/v1/DispatchReason/
+
+7/14/2019 12:08:45 AM
+http://rma.parabit.com:1340/api/v1/CreditReason/
+
+7/14/2019 12:08:45 AM
+http://rma.parabit.com:1340/api/v1/Company/CompanyName/43/
+
+7/14/2019 12:08:45 AM
+http://rma.parabit.com:1340/api/v1/Faults/
+
+7/14/2019 12:08:45 AM
+http://rma.parabit.com:1340/api/v1/Parts/
+
+7/14/2019 12:08:45 AM
+http://rma.parabit.com:1340/api/v1/Firm/FirmName/
+
+7/14/2019 12:08:46 AM
+http://rma.parabit.com:1340/api/v1/States/88/
+
+7/14/2019 12:09:02 AM
+http://rma.parabit.com:1340/api/v1/Company/CompanyAddress/390/
+
+7/14/2019 12:12:16 AM
+http://rma.parabit.com:1340/api/v1/RMA/SubmitRMARequest/
+
+7/14/2019 12:12:42 AM
+http://rma.parabit.com:1340/api/v1/User/GetUserProfile/534/
+
+7/14/2019 12:12:42 AM
+http://rma.parabit.com:1340/api/v1/ReturnAddress/GetReturnAddress/534/
+
+7/14/2019 12:12:43 AM
+http://rma.parabit.com:1340/api/v1/DispatchReason/
+
+7/14/2019 12:12:43 AM
+http://rma.parabit.com:1340/api/v1/CreditReason/
+
+7/14/2019 12:12:43 AM
+http://rma.parabit.com:1340/api/v1/Company/CompanyName/43/
+
+7/14/2019 12:12:43 AM
+http://rma.parabit.com:1340/api/v1/Faults/
+
+7/14/2019 12:12:43 AM
+http://rma.parabit.com:1340/api/v1/Parts/
+
+7/14/2019 12:12:43 AM
+http://rma.parabit.com:1340/api/v1/Firm/FirmName/
+
+7/14/2019 12:12:43 AM
+http://rma.parabit.com:1340/api/v1/States/88/
+
+7/14/2019 12:12:44 AM
+http://rma.parabit.com:1340/api/v1/User/GetUserProfile/534/
+
+7/14/2019 12:12:44 AM
+http://rma.parabit.com:1340/api/v1/ReturnAddress/GetReturnAddress/534/
+
+7/14/2019 12:12:44 AM
+http://rma.parabit.com:1340/api/v1/DispatchReason/
+
+7/14/2019 12:12:44 AM
+http://rma.parabit.com:1340/api/v1/CreditReason/
+
+7/14/2019 12:12:44 AM
+http://rma.parabit.com:1340/api/v1/Company/CompanyName/43/
+
+7/14/2019 12:12:44 AM
+http://rma.parabit.com:1340/api/v1/Faults/
+
+7/14/2019 12:12:44 AM
+http://rma.parabit.com:1340/api/v1/Parts/
+
+7/14/2019 12:12:45 AM
+http://rma.parabit.com:1340/api/v1/Firm/FirmName/
+
+7/14/2019 12:12:45 AM
+http://rma.parabit.com:1340/api/v1/States/88/
+
+7/14/2019 12:12:56 AM
+http://rma.parabit.com:1340/api/v1/Company/CompanyAddress/381/
+
+7/14/2019 12:13:13 AM
+http://rma.parabit.com:1340/api/v1/Parts/PartDetails/231421/
+
+7/14/2019 12:13:18 AM
+http://rma.parabit.com:1340/api/v1/Parts/PartDetails/234512/
+
+7/14/2019 12:13:23 AM
+http://rma.parabit.com:1340/api/v1/Parts/PartDetails/234213/
+
+7/14/2019 12:13:28 AM
+http://rma.parabit.com:1340/api/v1/Parts/PartDetails/123423/
+
+7/14/2019 12:13:40 AM
+http://rma.parabit.com:1340/api/v1/Parts/PartDetails/321423/
+
+7/14/2019 12:13:51 AM
+http://rma.parabit.com:1340/api/v1/Parts/PartDetails/123412/
+
+7/14/2019 12:14:01 AM
+http://rma.parabit.com:1340/api/v1/Parts/PartDetails/345123/
+
+7/14/2019 12:21:20 AM
+http://rma.parabit.com:1340/api/v1/RMA/SubmitRMARequest/
+
+7/14/2019 12:25:03 AM
+http://rma.parabit.com:1340/api/v1/User/GetUserProfile/534/
+
+7/14/2019 12:25:03 AM
+http://rma.parabit.com:1340/api/v1/ReturnAddress/GetReturnAddress/534/
+
+7/14/2019 12:25:03 AM
+http://rma.parabit.com:1340/api/v1/DispatchReason/
+
+7/14/2019 12:25:03 AM
+http://rma.parabit.com:1340/api/v1/CreditReason/
+
+7/14/2019 12:25:03 AM
+http://rma.parabit.com:1340/api/v1/Company/CompanyName/43/
+
+7/14/2019 12:25:03 AM
+http://rma.parabit.com:1340/api/v1/Faults/
+
+7/14/2019 12:25:03 AM
+http://rma.parabit.com:1340/api/v1/Parts/
+
+7/14/2019 12:25:03 AM
+http://rma.parabit.com:1340/api/v1/Firm/FirmName/
+
+7/14/2019 12:25:03 AM
+http://rma.parabit.com:1340/api/v1/States/88/

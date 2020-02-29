@@ -1,0 +1,136 @@
+﻿@{
+    ViewBag.Title = "RMA TRACS System";
+    ViewBag.SubTitle = "Verify Code";
+    Layout = "~/Views/Home/_HomeLayout.cshtml";
+    var IsMobile = (ViewBag.IsMobile ?? ViewContext.HttpContext.GetOverriddenBrowser().IsMobileDevice);
+    var wPercent = IsMobile ? "100" : "40";
+    var ColSpan = IsMobile ? "3" : "3";
+}
+<style>
+    .m-y10p5 {
+        margin-top: 10.5% !important;
+        margin-bottom: 10.5% !important;
+    }
+</style>
+@using (Html.BeginForm("VerifyCode", "Home", FormMethod.Post, new { @class = "center mx-auto m-bot10 m-top3", @id = "frmVerifyCode" }))
+{
+    <div id="divVerify" class="m-y10p5" align="center">
+
+
+        <table style="width:25%">
+
+            <tr>
+                <td align="center" style="width:@wPercent%">
+                    <label style="font-size:large; ">Enter Code To Verify</label>
+                </td>
+            </tr>
+            @*<tr>
+                    <td align="center" style="width:@wPercent%">
+                        <label style="font-size:medium;">E-Mail:&nbsp;</label>
+                        <a style="font-size:medium;color:blue;text-decoration:underline " href="mailto:@ViewBag.Email">@ViewBag.Email</a>
+                    </td>
+                </tr>*@
+            <tr class="blank_row">
+                <td colspan="2">&nbsp;</td>
+            </tr>
+            <tr>
+                <td align="right" style="width:20%">
+                    @Html.TextBox("txtCode", null, new { @maxlength = "6", @class = "wpcf7-form-control wpcf7-text rma-textfield form-control", @placeholder = "Verification Code", @required = "", @autofocus = "" })
+                </td>
+            </tr>
+            <tr class="p-5"></tr>
+
+            <tr class="blank_row">
+                <td colspan="2">&nbsp;</td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button class="btn btn-lg btn-primary btn-block" type="submit" id="btnVerify">Verify</button>
+                </td>
+            </tr>
+        </table>
+        <br />
+        <a id="hrefResend" href="~/Home/ResendCode">Resend Code</a>
+        <br />
+        <a href="~/Home/Login">Login</a>
+    </div>
+
+
+}
+
+
+<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+<script src="~/Scripts/toastr.js"></script>
+<script src="~/Scripts/ParabitScripts/toastr_alert.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.btn-primary').css('background-color', '#F57B20')
+        $("input").each(function () {
+            $(this).attr("autocomplete", "none");
+        });
+    });
+    $("#frmVerifyCode").validate({ errorClass: 'validate-error', });
+    $("#txtCode").rules('add', {
+            number: true
+     });
+
+    $("#frmVerifyCode").submit(function (e) {
+        e.preventDefault();
+        if ($(this).find(".error:visible").length > 0 || $(this).find(".validate-error:visible").length > 0)
+            return;
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("VerifyCodeUpdate", "Home")',
+            data: { VerificationCode: $('#txtCode').val(), UserId : '@ViewBag.UserId', Email:'@ViewBag.Email' },
+            async: false,
+            success: function (result) {
+                var status = result.status;
+                var message = result.message;
+                if (status == 0)
+                    changeFeedbackMessage("error", message);
+                else {
+                    var location = '@Url.Action("Login", "Home")';
+                    changeToTapToDismissToastr();
+                    changeFeedbackMessage('success', message, '',
+                        '<br /><br /><br /><button onclick = "href" type="button" class="para-btn clear">Login</button>'.replace('href', 'window.location.href = \'' + location +'\'')
+                    );
+                }
+            },
+            error: function (request, status, error) {
+                changeFeedbackMessage("error", error);
+            }
+
+        });
+
+
+    });
+
+    $("#hrefResend").click(function (e) {
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("ResendCode", "Home")',
+            data: { UserId : '@ViewBag.UserId' },
+            async: false,
+            success: function (result) {
+                var status = result.status;
+                var message = result.message;
+                if (status == 0)
+                    changeFeedbackMessage("error", message);
+                else
+                    changeFeedbackMessage("success", message);
+            },
+            error: function (request, status, error) {
+                changeFeedbackMessage("error", error);
+            }
+
+        });
+
+
+    });
+
+
+
+</script>

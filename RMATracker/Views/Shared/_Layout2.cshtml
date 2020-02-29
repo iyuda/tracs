@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html class="k-@ViewBag.Theme">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="@ViewBag.Meta">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title>@(ViewBag.Title ?? "Telerik UI for ASP.NET MVC Demos")</title>
+    <link href='//fonts.googleapis.com/css?family=Roboto+Slab:400,700' rel='stylesheet'>
+    <link rel="shortcut icon" href="@Url.Content("~/favicon.ico")" />
+    <link rel="canonical" href="@(Request.Url.Scheme + "://" + Request.Url.Authority + Request.Url.AbsolutePath)" />
+  
+
+    <link href="@Url.Content("~/content/shared/examples.css")" rel="stylesheet" />
+
+
+   
+    <script src="@Url.Content("~/bundles/demo")"></script>
+    <!--GDPR and Cookies Consent Message  -->
+    <script src="https://cdn.cookielaw.org/consent/2fffb1c2-c64a-4fcc-bc19-a4adecbc5ebf.js" type="text/javascript" charset="UTF-8"></script>
+    <!--script to enable GDPR and Cookies Consent Message on live -->
+    <script src="https://d29pqwjodcr0n2.cloudfront.net/toggle-optanon-consent.js" type="text/javascript" charset="UTF-8"></script>
+
+    <script>
+        function resizeContainers() {
+            var headerHeight = $("#header").outerHeight() + $("aside.TK-Hat").outerHeight(),
+                searchWrapper = $("#example-search-wrapper").outerHeight(),
+                navbarWrapper = $("#example-nav-bar").height(),
+                webinarBarHeight = $("#webinar-banner:visible").outerHeight() + 2 || 0,
+                htmlHeight = (kendo.support.mobileOS) ? parseFloat(window.innerHeight) : $('html').height(),
+                sidebarHeight = htmlHeight - headerHeight - webinarBarHeight,
+                borderSize = 2,
+                navHeight = sidebarHeight - (searchWrapper + navbarWrapper + borderSize);
+
+            $("#example-sidebar").height(sidebarHeight);
+            $("#nav-wrapper").height(navHeight);
+            $("#main").height(sidebarHeight);
+        }
+
+        $(function () {
+            if (kendo.support.mobileOS) {
+                $(document.documentElement).addClass("k-hover-enabled");
+            }
+        });
+
+        $(document).ready(resizeContainers);
+        $(window).resize(resizeContainers);
+    </script>
+
+    @RenderSection("HeadContent", false)
+</head>
+<body>
+    
+    @RenderBody()
+</body>
+</html>

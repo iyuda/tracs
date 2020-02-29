@@ -1,0 +1,114 @@
+﻿@using RMATracker.Models
+@using DataLayer
+@model List<ReturnAddress>
+@{
+    ViewBag.QueryMode = (ViewBag.QueryMode ?? false);
+    //    ViewBag.Title = "Home Page";
+    string is_asterik = ViewBag.QueryMode ? ": " : "*";
+    var SectionClass = (ViewBag.IsMobile ?? ViewContext.HttpContext.GetOverriddenBrowser().IsMobileDevice) ? "section-mobile" : "section1";
+}
+<fieldset>
+    <div id="divReturnAddresstemplate" style="width:100%; border:solid; display:none">
+        <div class="return-address-class">
+            <div style="border:none;border-width:thin;width:100%">
+                &nbsp;
+                @Html.RadioButton("rdSelectedAdress", "", false, new { @aria_invalid = "false", @aria_required = "true", @required = "", @index = 0, @onchange = "GetReturnAddressId(this)" })
+                &nbsp;
+                @*@Html.Label("lblReturnAddress", "", new { @id = "lblReturnAddress", @style = "font-weight: normal" })*@
+                <label for="lblReturnAddress" id="lblReturnAddress" class="capitalize" style="font-weight: normal"></label>
+                <br />
+
+            </div>
+        </div>
+    </div>
+    <legend>Return Address</legend>
+    <div class="container" style="border:solid;border-bottom:none">
+        <div class="form-group @SectionClass" style="width:100%;padding-left:10px" id="divReturnAddresses">
+            @{
+               
+                int i = 0;
+                foreach (ReturnAddress returnAddress in Model ?? new List<ReturnAddress>())
+                {
+
+                    {
+                        @:<div class="return-address-class">
+                            @:<div style="border:none;border-width:thin;width:100%">
+                                @:&nbsp;
+                                @Html.RadioButton("rdSelectedAdress", "", (Boolean)returnAddress.IsDefault, new { @aria_invalid = "false", @aria_required = "true", @required = "", @index = returnAddress.id, @onchange = "GetReturnAddressId(this)" });
+                                @:&nbsp;
+                                @Html.Label("lblReturnAddress", returnAddress?.FullAddress, new { @class = "capitalize", @id = "lblReturnAddress", @style = "font-weight: normal" })
+                                @:<br />
+                            @:</div>
+
+
+
+
+                        @:</div>
+                    }
+                }
+            }
+        </div>
+    </div>
+
+
+
+
+    
+    <div class="container" style="border:solid;border-top:none">
+        <div align="right" style="padding-right:20px">
+            <button type="button" class="btn btn-primary" id="btnAddNewAddress" onclick="ShowAddNewAddressForm(this, 'divAddReturnAddress','formReturnAddressSave', 'btnSaveReturnAddress')" style="background-color: rgb(245, 123, 32);">
+                Add Return Address
+            </button>
+        </div>
+       <br />
+    </div>
+
+
+</fieldset>
+
+<script>
+    
+    function GetReturnAddressId() {
+        $("input[name$='.ReturnAddressId']").val($("#rdSelectedAdress:checked").attr('index'));
+    }
+
+    
+
+    function clear() {
+        $('label.error').remove();
+        $('label.validate-error').remove();
+        $('#formReturnAddressSave')[0].reset();
+    }
+    function LoadReturnAddresses(e)
+    {
+        $.ajax({
+        type: "GET",
+        url: '@Url.Action("ReturnAddressListViewGet", "RMAForm")',
+        async: false,
+        success: function(data) {
+            $("#divReturnAddressesContainer").html(data);
+        },
+        error: function(request, status, error) {
+            changeFeedbackMessage("error", error);
+        }
+        });
+    }
+    function LoadReturnAddresses(e)
+    {
+        $.ajax({
+        type: "GET",
+        url: '@Url.Action("ReturnAddressListViewGet", "RMAForm")',
+        async: false,
+        success: function(data) {
+            $("#divReturnAddressesContainer").html(data);
+        },
+        error: function(request, status, error) { 
+            changeFeedbackMessage("error", error)
+            //alert(error);
+        }
+        });
+    }
+    
+</script>
+
+

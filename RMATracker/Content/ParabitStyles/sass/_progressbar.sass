@@ -1,0 +1,69 @@
+﻿
+.ldBar-label
+    display: none !important
+
+.ldBar
+    width: 300px
+    height: 300px
+    margin: 0px auto
+
+#blackout
+    height: 100%
+    width: 100%
+    position: fixed
+    z-index: 10
+    left: 0
+    top: 0
+    background-color: $light_grey
+    opacity: .4
+    filter: alpha(opacity=40)
+
+.below
+    z-index: -999 !important
+
+#loading-banner
+    width: inherit !important
+    font-family: Plaquette, Heading, Helvetica, "Arial Black" !important
+    font-size: 5em !important
+    padding-top: 10px
+    margin-top: 5px
+
+.mainline
+    fill: $para_orange
+    width: 100%
+    height: 100%
+
+svg:not(:root)
+    overflow: overlay !important
+
+svg
+    overflow: overlay
+    display: block
+    margin: auto
+    max-height: 50%
+
+.solid
+    margin: 0px auto !important
+    text-align: center
+    width: 300px
+    height: 300px
+
+.loading-container
+    text-align: center
+    width: inherit
+    height: inherit
+    z-index: 9999
+    position: fixed
+    margin: 0px auto
+
+.opaque
+    position: fixed
+    z-index: 1000
+    display: none
+    background-color: black
+    filter: alpha(opacity=30)
+    opacity: 0.3
+
+html
+    .opaque
+        position: absolute

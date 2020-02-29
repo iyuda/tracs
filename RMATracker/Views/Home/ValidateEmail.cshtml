@@ -1,0 +1,143 @@
+﻿
+@{ 
+    ViewBag.Title = "RMA TRACS System";
+    ViewBag.SubTitle = "Forgot Password";
+    Layout = "~/Views/Home/_HomeLayout.cshtml";
+    var IsMobile = (ViewBag.IsMobile ?? ViewContext.HttpContext.GetOverriddenBrowser().IsMobileDevice);
+    var wPercent = IsMobile ? "100" : "40";
+    var ColSpan = IsMobile ? "3" : "3";
+}
+
+    @using (Html.BeginForm("ValidateEmailUpdate", "Home", FormMethod.Post, new { @class = "center", @id = "frmValidateEmail" }))
+    {
+
+<div id="divForgotPassword" class="m-y12" align="center">
+
+    <br />
+    
+    <table style="width:@wPercent%; align:center">
+        @*<tr>
+            <td colspan="3" align="center">
+                <h1 class="h3 mb-3 font-weight-bold" style="font-size:large;text-decoration:underline ">Validate E-Mail</h1>
+            </td>
+
+        </tr>*@
+        <tr class="blank_row">
+            <td colspan="2">&nbsp;</td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <p id="lblReturnMessage" style="text-align:center;font-style:italic;color:white;background-color:red; display:none;">  </p>
+            </td>
+        </tr>
+        <tr>
+            <td width="20%" align="left">
+                <label style="display:block;text-align:left"><span>E-Mail:</span> </label>
+            </td>
+            <td width="60%" align="right">
+                @Html.TextBox("txtEmail", null, new { @style = "float:right; width:100%", @type = "email", @class = "wpcf7-form-control wpcf7-text rma-textfield form-control", @placeholder = "email", @required = "", @autofocus = "" })
+            </td>
+            <td align="left">
+               
+            </td>
+
+        </tr>
+        <tr class="blank_row">
+            <td colspan="2">&nbsp;</td>
+        </tr>
+
+        <tr>
+            <td>&nbsp;</td>
+            <td align="right">
+                <button class="btn btn-lg btn-primary btn-block" type="submit" id="btnValidateEmail">Request Temporary Password</button>
+            </td>
+
+        </tr>
+        <tr class="blank_row">
+            <td colspan="2">&nbsp;</td>
+        </tr>
+        
+        <tr>
+            <td colspan="@ColSpan" align="center">
+                <a id="btnLogin" href="~/Home/Login">Login</a>
+            </td>
+
+        </tr>
+    </table>
+</div>
+
+      
+    }
+
+
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+
+<script>
+    $("#frmValidateEmail").validate({
+        errorClass: 'validate-error',
+        errorPlacement: function (error, element) {
+            var newCell = $('<td> </td>');
+            var newRow = $('<tr> </tr>');
+            newCell.appendTo(newRow);
+            newCell = $('<td align="right"> </td>')
+            error.css("width", "90%");
+            error.attr("align", "left");
+            error.appendTo(newCell);
+            newCell.appendTo(newRow);
+            newRow.insertAfter(element.closest('tr'));
+
+
+        }
+    });
+    
+
+       
+    $(document).ready(function () {
+        $('.btn-primary').css('background-color', '#F57B20')
+        $("input").each(function () {
+            $(this).attr("autocomplete", "none");
+        });
+    });
+    $("#frmValidateEmail").submit(function (e) {
+        e.preventDefault();
+        if ($("#frmValidateEmail").find(".error:visible").length > 0 || $(this).find(".validate-error:visible").length > 0)
+            return;
+        $("#lblReturnMessage").hide();
+        $("#btnLogin").hide();
+        var sEmail = $('#txtEmail').val();
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("ValidateEmailUpdate", "Home")',
+            data: { email: $('#txtEmail').val()},
+            async: false,
+            success: function (result) {
+                var message = result.message;
+                var status = result.status;
+                if (status == 1) {
+                    //$("#lblReturnMessage").css('background-color', 'forestgreen');
+                    var location = '@Url.Action("Login", "Home")';
+                    changeToTapToDismissToastr();
+                    changeFeedbackMessage('success', message, '',
+                        '<br /><br /><br /><button onclick = "href" type="button" class="para-btn clear">Login</button>'.replace('href', 'window.location.href = \'' + location + '\'')
+                    );
+                }
+                else
+                    $("#lblReturnMessage").text(message);
+                    $("#lblReturnMessage").css('background-color', 'red');
+                    $("#lblReturnMessage").show();
+                    //changeFeedbackMessage('error', message)
+                
+            },
+            error: function (request, status, error) {
+                alert(error);
+            }
+
+        });
+
+       
+    });
+
+
+</script>

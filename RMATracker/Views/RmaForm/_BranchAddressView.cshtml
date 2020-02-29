@@ -1,0 +1,44 @@
+﻿@using RMATracker.Models
+@using DataLayer;
+@model List<BankBranch>
+@{
+    ViewBag.QueryMode = (ViewBag.QueryMode ?? false);
+    //    ViewBag.Title = "Home Page";
+    string is_asterik = ViewBag.QueryMode ? ": " : "*";
+
+}
+<div class="form-group bank-street-address" style="padding-left:10px;padding-right:10px">
+    <label class="">Branch Address: <span class="required">@is_asterik</span></label>
+    @if (!ViewBag.QueryMode)
+    {
+        SelectList selBankBranchList = new SelectList(Model, "Id", "FullAddress", ViewBag.BankBranchId);
+        @(Html.Kendo().ComboBox()
+                            .Name("rma.BankBranchId")
+                            .Filter("contains")
+                            .Placeholder("-- Select Bank Address --")
+                            .DataTextField("Text")
+                            .DataValueField("Value")
+                            .BindTo(selBankBranchList)
+                            //.SelectedIndex(3)
+                            .Suggest(true)
+                            .HtmlAttributes(new { id = "rma_BankBranchId", style = "width:100%;", onchange = "GetBranchAddresses(this)" }))
+    //ViewBag.DropDownList = selBankBranchList;
+        //ViewBag.DropDownTextAlign = "left";
+        //ViewBag.DropDownListID = "rma_BankBranchId";
+        //ViewBag.DropDownListName = "rma.BankBranchId";
+        ////ViewBag.DropwDownClass = "Attribute_" + Model?.attribute?.id;
+        //ViewBag.DropDownWidth = "500%";
+        //ViewBag.MaxLength = 255;
+        //ViewBag.ControlElement = "";
+        //ViewBag.Required = true;
+        //Html.RenderPartial("~/Views/Shared/AutoComplete.cshtml");
+
+    }
+    else
+    {
+        var branchAddress = Model.FirstOrDefault(m => m.id == ViewBag.BankBranchId).FullAddress;
+        @Html.Display(branchAddress)
+        @Html.Hidden(branchAddress)
+    }
+</div>
+        

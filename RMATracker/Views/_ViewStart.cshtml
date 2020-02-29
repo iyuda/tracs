@@ -1,0 +1,4 @@
+﻿@{
+    //Layout ="~/Views/Shared/_Layout.cshtml";
+    Layout = @ViewContext.Controller.ViewBag.NoLayout != null ? null : "~/Views/Shared/_Layout.cshtml";
+}

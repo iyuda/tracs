@@ -1,0 +1,55 @@
+﻿@model RMATracker.Models.RMATrackerViewModel
+<div class="container" style="width:98%">
+    <table style="width:100%" class="table table-striped" id="tblData">
+        <thead>
+            <tr>
+                <th>ID #</th>
+                <th>Person Name</th>
+                <th>Address1</th>
+                <th>Address2</th>
+                <th>City</th>
+                <th>State</th>
+                <th>Zip</th>
+                <th>Phone</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                if (Model.lstPersons != null)
+                {
+                    foreach (var item in Model.lstPersons)
+                    {
+                        <tr>
+                            <td>@item.ID</td>
+                            <td>@item.FullName</td>
+                            <td>@item.Address1</td>
+                            <td>@item.Address2</td>
+                            <td>@item.City</td>
+                            <td>@item.State</td>
+                            <td>@item.Zip</td>
+                            <td>@item.Phone</td>
+                        </tr>
+                    }
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $("#spanTotal").text('@Model.TotalRecords');
+        $('#tblData').paging({
+            limit:12,
+            rowDisplayStyle: 'block',
+            activePage: 1,
+            rows: []
+        });
+
+    });
+
+
+
+</script>

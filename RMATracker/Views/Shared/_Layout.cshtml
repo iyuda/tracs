@@ -1,0 +1,732 @@
+﻿<!DOCTYPE html>
+
+<style>
+    .show-password {
+        background-color: Transparent;
+        background-repeat: no-repeat;
+        border: none;
+        cursor: pointer;
+        overflow: hidden;
+        margin-left: -10%;
+    }
+
+    .buttonwrapper {
+        display: inline-block;
+        width: 100%;
+    }
+
+    /*input[type="password"] {
+        flex-grow: 2;
+    }*/
+
+        input[type="password"]:focus, .show-password:focus {
+            outline: none;
+        }
+
+    .flex-container {
+        display: flex;
+        flex-direction: row;
+        /*border: inset 1px #EBE9ED;*/
+        padding: 2px;
+    }
+    textarea {
+        resize: none;
+    }
+
+
+
+        select.form-control, textarea.rma-textarea, input[role="combobox"], input[data-role="combobox"], input[type="text"], input[type="password"], input[type="email"], input[type="date"] {
+            font-size: initial;
+        }
+
+    .fixed-dialog {
+        position: fixed;
+        top: 50px;
+        left: 50px;
+    }
+
+    .para-input-group {
+        position: relative;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        -webkit-box-align: stretch;
+        -ms-flex-align: stretch;
+        align-items: stretch;
+        width: 100%;
+    }
+
+    .center {
+        margin: auto;
+        width: 100%;
+        border: 3px solid #73AD21;
+        padding: 10px;
+    }
+
+    .ui-dialog-title {
+        float: none !important;
+        display: block;
+        text-align: center;
+    }
+
+    .ui-dialog-titlebar {
+        background-color: #F57B20
+    }
+
+    .validate-error {
+        color: red;
+    }
+
+    .capitalize {
+        text-transform: capitalize;
+    }
+    /*textarea:first-letter {
+            text-transform: capitalize;
+        }*/
+    .dropdown-header {
+        border-width: 0 0 1px 0;
+        text-transform: uppercase;
+    }
+
+        .dropdown-header > span {
+            display: inline-block;
+            padding: 10px;
+        }
+
+            .dropdown-header > span:first-child {
+                width: 50px;
+            }
+
+    .selected-value {
+        display: inline-block;
+        vertical-align: middle;
+        width: 24px;
+        height: 24px;
+        background-size: 100%;
+        margin-right: 5px;
+        border-radius: 50%;
+    }
+
+    #customers-list .k-item {
+        line-height: 1em;
+        min-width: 300px;
+    }
+
+    /* Material Theme padding adjustment*/
+
+    .k-material #customers-list .k-item,
+    .k-material #customers-list .k-item.k-state-hover,
+    .k-materialblack #customers-list .k-item,
+    .k-materialblack #customers-list .k-item.k-state-hover {
+        padding-left: 5px;
+        border-left: 0;
+    }
+
+    #customers-list .k-item > span {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        display: inline-block;
+        vertical-align: top;
+        margin: 20px 10px 10px 5px;
+    }
+
+        #customers-list .k-item > span:first-child {
+            -moz-box-shadow: inset 0 0 30px rgba(0,0,0,.3);
+            -webkit-box-shadow: inset 0 0 30px rgba(0,0,0,.3);
+            box-shadow: inset 0 0 30px rgba(0,0,0,.3);
+            margin: 10px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-size: 100%;
+            background-repeat: no-repeat;
+        }
+
+    #customers-list h3 {
+        font-size: 1.2em;
+        font-weight: normal;
+        margin: 0 0 1px 0;
+        padding: 0;
+    }
+
+    #customers-list p {
+        margin: 0;
+        padding: 0;
+        font-size: .8em;
+    }
+</style>
+<html class=" js flexbox flexboxlegacy canvas canvastext webgl no-touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients no-cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths" style="height: 100%;">
+
+<head>
+    
+
+    
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=11">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
+    <title>@ViewBag.Title | Parabit Systems</title>
+
+    <link rel="stylesheet" href="~/Content/ParabitStyles/css/parabit_styles.css" />
+
+    <link rel="stylesheet" href="~/Content/toastr.css" />
+    <link rel='stylesheet' id='bootstrap-css-css' href='~/WordPress/wp-content/themes//css/bootstrap.min.css?ver=3.3.4' type='text/css' media='all' />
+    <link rel='stylesheet' id='jquery-ui-css-css' href='~/WordPress/wp-content/plugins/contact-form-7-datepicker-fix/css/jquery-ui.css?ver=4.9.7' type='text/css' media='all' />
+    <script type='text/javascript' src='~/WordPress/wp-content/themes//js/bootstrap.min.js'></script>
+
+    <style type="text/css">
+        .recentcomments a {
+            display: inline !important;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+    </style>
+    <style type="text/css">
+        .ui-widget-content {
+            border: none !important;
+        }
+    </style>
+    <style type="text/css" id="wp-custom-css">
+        select.wpcf7-form-control.wpcf7-select.wpcf7-validates-as-required.rma-called.form-control {
+            width: 10%;
+        }
+
+        input.wpcf7-form-control.wpcf7-text.rma-smalltext.form-control, input.wpcf7-form-control.wpcf7-date.wpcf7-validates-as-date.rma-calendar.form-control, input.wpcf7-form-control.wpcf7-text.rma-zip-code.form-control, input.wpcf7-form-control.wpcf7-text.wpcf7-validates-as-required.rma-calendar.form-control {
+            width: 22%;
+        }
+
+        textarea.wpcf7-form-control.wpcf7-textarea.rma-textarea.form-control, select.wpcf7-form-control.wpcf7-select.wpcf7-validates-as-required.rma-dropdown.form-control, input.wpcf7-form-control.wpcf7-text.wpcf7-validates-as-required.rma-textfield.form-control {
+            width: 75%;
+        }
+
+        input.wpcf7-form-control.wpcf7-text.rma-file-description.form-control {
+            width: 50%;
+        }
+
+
+
+
+        #left {
+            width: 47%;
+            float: left;
+            margin-right: 6%;
+        }
+
+        #right {
+            width: 47%;
+            float: left;
+        }
+
+        .clearfix:after {
+            content: "\0020";
+            display: block;
+            height: 0;
+            clear: both;
+            visibility: hidden;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .clearfix {
+            display: block;
+        }
+
+        .container1:after { /*clear float*/
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        .section1 {
+            float: left;
+            width: 33.3333%;
+            border: 0px;
+            box-sizing: border-box;
+            padding: 10px 20px 10px 0px;
+        }
+
+        .section-mobile {
+            float: left;
+            width: 100%;
+            border: 0px;
+            box-sizing: border-box;
+            padding: 10px 20px 10px 0px;
+        }
+
+
+        .imgsize {
+            width: 250px !important;
+        }
+    </style>
+    <link rel="shortcut icon" href="~/images/favicon.ico" />
+    <link href="~/WordPress/wp-content/themes/css/animate.css" rel="stylesheet" type="text/css">
+    <link href="~/WordPress/wp-content/themes/style.css" rel="stylesheet" type="text/css">
+    <link href="~/WordPress/wp-content/themes/responsive.css" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic|Montserrat:400,700' rel='stylesheet' type='text/css'>
+
+
+</head>
+<body style="width: 100%; margin: 0; padding: 0;" class="page-template-default page page-id-1677 gecko">
+
+  
+
+    <div class="head-top hidden">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-xs-5 col-sm-3 social-icons">
+                    <ul class="list-unstyled list-inline lead">
+                        <li><a href="https://www.facebook.com/ParabitSystems/" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="https://twitter.com/ParabitSystems" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="https://www.linkedin.com/company/1325563?trk=prof-0-ovw-curr_pos" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+                        <li><a href="https://www.pinterest.com/ParabitSystems/" target="_blank"><i class="fa fa-pinterest-p"></i></a></li>
+                        <li><a href="https://plus.google.com/+ParabitSystemsIncRoosevelt" target="_blank"><i class="fa fa-google-plus"></i></a></li>
+                    </ul>
+                </div>
+
+                <div class="col-xs-7 col-sm-9 top-links">
+
+                    <ul class="list-unstyled list-inline pull-right">
+
+                        <li><a href="https://parabit.com/tradeshows">Tradeshows</a></li>
+                        <li><a href="https://parabit.com/catalogs-warranty">Catalogs / Warranty</a></li>
+                        <li><a href="https://parabit.com/partners-resellers">Partners / Resellers</a></li>
+                        <li><a href="https://parabit.com/careers">Careers</a></li>
+                        <li><a href="https://parabit.com/blog/">Blog</a></li>
+                        <li><a href="https://parabit.com/press/">Press</a></li>
+                        <li style="color: #fff;">&nbsp;  &nbsp; 1 (888) 3-<span style="color: #EE661A;">PARABIT</span></li>
+                    </ul>
+
+
+
+
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+    <div id="navigation" style="z-index:100">
+        <table style="width:100%">
+            <tr>
+                <td style="width:85%">
+                    <div class="navbar yamm navbar-default">
+                        <div class="container">
+
+                            <div class="navbar-header">
+                                <button type="button" data-toggle="collapse" data-target="#navbar-collapse-1" class="navbar-toggle collapsed" aria-expanded="false"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+
+                                <a href="https://parabit.com" class="navbar-brand">
+                                    <div class="svg-logo">
+                                        @{var IsMobile = (ViewBag.IsMobile ?? ViewContext.HttpContext.GetOverriddenBrowser().IsMobileDevice);
+                                            var style = IsMobile ? "" : "height:75px"; }
+                                        <object data="~/WordPress/wp-content/themes/img/parabit-logo.svg" type="image/svg+xml" style="@style">
+                                            <img src="~/WordPress/wp-content/themes/img/logo.png">
+                                        </object>
+                                    </div>
+                                </a>
+                            </div>
+
+                            
+                            @RenderPage("~/Views/Shared/Settings.cshtml")
+                            
+
+                        </div>
+                    </div>
+                </td>
+
+            </tr>
+        </table>
+    </div><!-- navbar yamm -->
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(window).scroll(function () {
+            var scroll = $(window).scrollTop();
+
+            if (scroll >= 200) {
+                $("#navigation").addClass("sticky");
+                $(".navbar").addClass("stick-logo");
+                $("body").addClass("stick-padd");
+            } else {
+                $("#navigation").removeClass("sticky");
+                $(".navbar").removeClass("stick-logo");
+                $("body").removeClass("stick-padd");
+            }
+        });
+    </script>
+    <div class="page-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+
+                    <header>
+                        <h1>@ViewBag.Title@ViewBag.SubTitle</h1>
+                        <br />
+                        <p id="breadcrumbs">
+                            <span xmlns:v="http://rdf.data-vocabulary.org/#">
+                                <span typeof="v:Breadcrumb">
+                                    
+                                    @{
+                                        var url = (ViewBag.HomeLogin ?? 0) == 1 ? Url.Action("Login", "Home") : Url.Action("GetRMAForm", "RmaForm");
+                                        if ((ViewBag.BankIncludeType ?? 0) > 0 || (ViewBag.Securitas ?? false) == true)
+                                        {
+                                            url = Url.Action("Securitas", "Home");
+                                        }
+                                    }
+                                    <a style="font-size:large" href="@url" rel="v:url" property="v:title">Home</a> <span rel="v:child" typeof="v:Breadcrumb">
+                                    </span>
+                                </span>
+                            </span>
+                        </p>
+                    </header>
+
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="container body-content">
+
+        @RenderBody()
+        <hr />
+        <footer style="  text-align: center;  ">
+            <p style="font-size:medium;font-weight:normal">&copy; @DateTime.Now.Year TRACS SYSTEM V.@ViewContext.Controller.GetType().Assembly.GetName().Version</p>
+        </footer>
+    </div>
+
+
+    @*@{Html.RenderPartial("Footer");}*@
+
+
+    <style>
+        .trans {
+            width: 100%;
+            padding: 10px 0;
+            text-align: left;
+        }
+
+        .goog-logo-link img {
+            width: 70px;
+        }
+
+        .sign-btm {
+            margin-top: 45px;
+        }
+    </style>
+
+    <!-- ngg_resource_manager_marker -->
+    <script type="text/javascript" src="~/WordPress/wp-includes/js/jquery/ui/datepicker.min.js?ver=1.11.4"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function (jQuery) { jQuery.datepicker.setDefaults({ "closeText": "Close", "currentText": "Today", "monthNames": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"], "monthNamesShort": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], "nextText": "Next", "prevText": "Previous", "dayNames": ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], "dayNamesShort": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"], "dayNamesMin": ["S", "M", "T", "W", "T", "F", "S"], "dateFormat": "MM d, yy", "firstDay": 1, "isRTL": false }); });
+    </script>
+    
+    <script type="text/javascript" src="~/WordPress/wp-content/plugins/contact-form-7-datepicker-fix/js/cf7-datepicker-ie-fixer.js?ver=4.9.6"></script>
+
+    <script type="text/javascript">
+        var sessionTimeoutWarning = @Session.Timeout;
+        var sTimeout = parseInt(sessionTimeoutWarning) * 60 * 1000;
+        setTimeout('SessionEnd()', sTimeout);
+
+        function SessionEnd() {
+            window.location.reload(); // = "~/Home/LogOff";
+        }
+    </script>
+
+
+    <div id="divUserProfile" style="overflow-x:hidden;border:solid;display:none">
+        @{Html.RenderAction("UserProfileGet", "Home");}
+    </div>
+
+</body>
+
+</html>
+
+<script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+<script src="~/Scripts/toastr.js"></script>
+<script src="~/Scripts/ParabitScripts/toastr_alert.js"></script>
+<script>
+    $(document).ready(function () {
+        if ($('[type="date"]').prop('type') != 'date') {
+            $('[type="date"]').datepicker();
+        }
+        if (typeof String.prototype.endsWith !== 'function') {
+            String.prototype.endsWith = function (suffix) {
+                return this.indexOf(suffix, this.length - suffix.length) !== -1;
+            };
+        }
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1; //January is 0!
+        var yyyy = today.getFullYear();
+        if (dd < 10) {
+            dd = '0' + dd
+        }
+        if (mm < 10) {
+            mm = '0' + mm
+        }
+
+        today = yyyy + '-' + mm + '-' + dd;
+         $('[type="date"]').attr("max", today);
+        $('[type="date"]').attr("min", '2000-01-01');
+        $("input[id*='assword']").each(function () {
+            ToggleEyeButtonDisplay($(this));
+        });
+        $("input").each(function () {
+            $(this).attr("autocomplete", "none");
+            
+        });
+        $("textarea").each(function () {
+            $(this).attr("autocomplete", "none");
+        });
+        ResizeForMobile();
+        
+        fixBootstrapModalZoomBug();
+
+    });
+
+    function ResizeForMobile() {
+        var resize = function () {
+            var height = $(window).height();  // Get the height of the browser window area.
+            var element = $("body");          // Find the element to resize.
+            element.height(height);           // Set the element's height.
+        }
+        resize();
+        $(window).bind("resize", resize);
+    }
+</script>
+<script type="text/javascript">
+    $('.show-password').click(function show() {
+
+        $(this).find('.icon').hasClass('fa fa-eye-slash')
+            ?
+            $(this).find('.icon').removeClass('fa fa-eye-slash').addClass('fa fa-eye')
+            :
+            $(this).find('.icon').removeClass('fa fa-eye').addClass('fa fa-eye-slash');
+        var PasswordField = $(this).closest('tr,div').find("input[id*='assword']");
+        if (!PasswordField)
+            PasswordField = $(this).closest("input[id*='Password']");
+        if (PasswordField)
+            PasswordField.attr('type', $(this).find('.icon').hasClass('fa-eye-slash') ? 'text' : 'password');
+    });
+
+    $("input[id*='assword']").on('keyup keypress blur change paste', function (e) {
+        ToggleEyeButtonDisplay($(this))
+    });
+    $("input[type='password']").attr('maxlength', '20');
+    function ToggleEyeButtonDisplay(e) {
+        var ShowPasswordField = $(e).closest('tr,div').find(".show-password");
+        ShowPasswordField.css('display', $.trim($(e).val()) == '' ? 'none' : '');
+    }
+</script>
+
+<script>
+    function ComboChangeEvent(e, freeText) {
+        var divParent = $(e).closest('div');
+        $(divParent).find("label.error:visible, label.validate-error:visible").each(function () {
+            $(this).remove();
+        });
+        var combobox = $(e).data("kendoComboBox") || $(e).data("kendoDropDownList");
+        if (combobox.selectedIndex === -1 && combobox.value()) {
+            if (combobox.dataSource.view().length > 0) {
+                combobox.select(0);
+            }
+            else {
+                if (!freeText) {
+                    combobox.value("");
+                    var $label = $("<label class='error' for='" + $(e).id + "'>");
+                    $label.attr('id', $(e).id + "-error");
+                    $label.text("This field is required."); $label.css("color", "red");
+                    $label.appendTo(divParent);
+                }
+            }
+        }
+        
+    }
+</script>
+<script>
+    $('textarea').blur(function (e) {
+
+        var sentences = $(this).val().split(".");
+        var out_text = "";
+        if (sentences.length <= 1) {
+            $(this).val(ucFirst($(this).val()));
+            return;
+        }
+        var text = $(this).val();
+        
+        for (var index = 0; index < sentences.length; index++) {
+            var sentence = sentences[index];
+            var cp_value = ucFirst(sentence);
+            out_text += cp_value;
+            //if (index < $(this).length-1)
+            if (!sentence.endsWith(".") && $.trim(cp_value).length > 0 && !(index >= sentences.length - 1 && !$.trim(text).endsWith(".")))
+                out_text += '.';
+        }
+        $(this).val(out_text);
+    });
+    function ucFirst(str, force) {
+        str = force ? str.toLowerCase() : str;
+        
+        return str.replace(/(?:^|(?:^\s+)|(?:\.\s))([a-zA-Z])/,
+        
+            function (firstLetter) {
+                return firstLetter.toUpperCase();
+            });
+    }
+</script>
+<script src="~/Scripts/ParabitScripts/fix_zoom.js"></script>
+<script>
+    var profile_submits = 0;
+    function ShowUserProfile(e) {
+
+
+        if (!$('.navbar-toggle').hasClass('collapsed'))
+            $('.navbar-toggle').click();
+        var divName = "divUserProfile";
+        var formName = "frmUserProfile";
+        var saveButtonName = "btnUpdateUserProfile";
+        var cancelButtonName = "btnCancelUserProfile";
+        var changePasswordButtonName = "btnChangePassword";
+        var isMobile = '@(ViewBag.IsMobile ?? ViewContext.HttpContext.GetOverriddenBrowser().IsMobileDevice)'.toLowerCase() == "false" ? false : true;
+
+
+        $('#' + divName).css('zIndex', 99999999999999);
+        $('#' + divName).css('overflow', 'auto');
+        $('#' + divName).dialog({
+            autoOpen: true,
+            position: { my: "center", at: "", of: window },
+            
+            resizable: true,
+            modal: true,
+            title: "Profile",
+            create: function (event) {
+                
+                if (!isMobile)
+                    $(this).parent().css({ 'position': 'fixed' });
+            },
+            beforeClose: function (event, ui) {
+                if (!isMobile)
+                    $("body").css({ overflow: 'inherit' })
+                //else
+                //    $("body").css("overflow-y", 'auto');
+            },
+            open: function () {
+                if (!isMobile) {
+                    var dialog = $(this).data("ui-dialog");
+                    dialog.option("width", $(window).width() / 2);
+                    $(window).resize(function () {
+                        var dialog = $('#' + divName).data("ui-dialog");
+                        dialog.option("position", dialog.options.position);
+                        dialog.option("width", $(window).width() / 2);
+                        if (!$('.navbar-toggle').hasClass('collapsed'))
+                            $('.navbar-toggle').click();
+                    });
+                    $("body").css({ overflow: 'hidden' })
+                }
+                else {
+                    $('input').css("font-size", "initial");
+                    $(window).resize(function () {
+                        var dialog = $('#' + divName).data("ui-dialog");
+                        dialog.option("position", dialog.options.position);
+                        dialog.option("width", $(window).width());
+                    });
+                }
+                profile_submits = 0;
+                CountryChangeEvent();
+                $('#' + saveButtonName).attr('form', formName);
+                $('#' + saveButtonName).parent().css("width", "100%")
+                $('#' + saveButtonName).attr('class', "btn btn-primary");
+                $('#' + cancelButtonName).attr('class', "btn btn-primary");
+                $('#' + changePasswordButtonName).attr('class', "btn btn-primary");
+                $('.btn-primary').css('background-color', '#F57B20')
+
+                $("#navEditAddress").removeClass("active");
+                $("#edit-address").removeClass("active");
+                $("#navEditProfile").addClass("active");
+                $("#edit-profile").addClass("active");
+
+                $("#" + formName).submit(function (e) {
+                    e.preventDefault();
+                    if (profile_submits > 0)
+                        return;
+                    var status1 = ValidateProfile(formName);
+                    var status2 = ValidatePhoneNumber($("#prof-phone-txt"));
+                    if (!status1 || !status2)
+                        return;
+                    if ($(this).find(".error:visible").length == 0 && $(this).find(".validate-error:visible").length == 0) {
+                        SaveUserProfile(divName, formName);
+                    }
+                });
+
+            },
+            close: function () {
+                $('label.error').remove();
+                $('label.validate-error').remove();
+                $('#' + formName)[0].reset();
+                CheckIsContractor();
+
+                $("#" + formName).find("input[data-role='combobox'][optional!='true']").each(function () {
+                    var comboBox = $(this).data("kendoComboBox");
+                    var comboValue = comboBox.value();
+                    comboBox.select(function (dataItem) {
+                        return dataItem.Value === parseInt(comboValue);
+                    });
+                });
+
+
+            },
+            buttons: [
+                {
+                    id: changePasswordButtonName,
+                    text: "Change Password",
+                    click: function () {
+                        ShowChangePassword();
+                    }
+                },
+                {
+                    style: "float:right",
+                    id: saveButtonName,
+                    text: "Update",
+                    click: function () {
+                        $("#" + formName).submit();
+                    }
+                },
+                {
+                    style: "float:right",
+                    id: cancelButtonName,
+                    text: "Cancel",
+                    click: function () {
+                        $(this).dialog("close");
+                    }
+                }
+
+            ]
+        });
+    }
+</script>
+<script src="~/Scripts/ParabitScripts/error_handling.js"></script>
+<script>
+    JSErrorHandler('@Url.Action("JSErrorHandler", "Error")');
+</script>

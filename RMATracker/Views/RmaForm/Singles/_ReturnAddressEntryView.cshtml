@@ -1,0 +1,37 @@
+﻿@using RMATracker.Models
+@using DataLayer
+@model ReturnAddress
+@{
+    ViewBag.QueryMode = (ViewBag.QueryMode ?? false);
+    //    ViewBag.Title = "Home Page";
+    string is_asterik = ":"; // ViewBag.QueryMode ? ": " : "*";
+
+}
+@{var i = int.Parse(ViewData["index"].ToString());
+    Html.HiddenFor(m => m.id);
+    var displayRemove = (i == 0) ? "display:none" : "";}
+
+
+<div class="return-address-class" id="address_entry_@i">
+    <div style="border:none;border-width:thin;width:200%">
+        &nbsp;
+        @Html.RadioButton("rdSelectedAdress", "", Model.IsDefault, new { @aria_invalid = "false", @aria_required = "true", @required = "", @index = Model.id, @onchange = "GetReturnAddressId(this)" })
+        &nbsp;
+        @Html.Label("lblReturnAddress", Model?.FullAddress, new { @id = "lblReturnAddress", @style = "font-weight: normal" })
+        <br />
+
+    </div>
+    
+</div>
+                    
+<script>
+    function RemoveReturnAddressEntry(e) {
+        var AddressIndex = $(e).attr("index");
+
+        var sURL = '@Url.Action("RemoveReturnAddress", "RmaForm", new { index = "param1" })'.replace("param1", AddressIndex);
+        $.get(sURL, function (data) {
+            $("#address_entry_" + AddressIndex).replaceWith(data);
+            $("#address_entry_" + AddressIndex).hide();
+        });
+    }
+</script>

@@ -1,0 +1,93 @@
+﻿@model RMATracker.Models.SurveyModel
+@{
+
+    var className = ViewData["ClassName"];
+    var propertyName = ViewData["PropertyName"];
+    var index = ViewData["Index"];
+    var FirstValue = ViewData["FirstValue"];
+    var SecondValue = ViewData["SecondValue"];
+    var QueryMode = ViewData["QueryMode"] ;
+    if (QueryMode==null)
+    {
+        QueryMode = false;
+    }
+    if (FirstValue == null) {
+        FirstValue = "Yes";
+    }
+    if (SecondValue == null)
+    {
+        SecondValue = "No";
+    }
+
+    string AddToID = "";
+    string AddToName = "";
+    if (index!=null)
+    {
+        AddToID = index.ToString() + "__";
+        AddToName = "[" + index.ToString() + "]";
+    }
+    dynamic WorkClass;
+    switch (className)
+    {
+        case "SurveyIntegrityChecks":
+            WorkClass = Model.SurveyIntegrityChecks;
+            break;
+        case "SurveyObstructions":
+            WorkClass = Model.SurveyObstructions;
+            break;
+        case "SurveyReaderArrivalStates":
+            WorkClass = Model.SurveyReaderArrivalStates;
+            break;
+        case "SurveySiteInspection":
+            WorkClass = Model.SurveySiteInspection;
+            break;
+        default:
+            WorkClass = Model.Survey;
+            break;
+    }
+    if (index != null)
+    {
+        WorkClass = WorkClass[Int32.Parse(index.ToString())];
+    }
+    var text = WorkClass?.GetType().GetProperty(propertyName.ToString()).GetValue(WorkClass, null);
+}
+@if (!(bool) QueryMode)
+{
+    <div class="container1">
+        <div class="section1">
+            @{
+            <div class="radio-jquery-ui">
+                @*@Html.RadioButtonFor(m => m.GetValue(className, propertyName, index), "true", new { @tag = FirstValue })*@
+                @*@Html.LabelFor(m => m.GetValue(className, propertyName, index), FirstValue)*@
+                @*<div class="radio-jquery-ui">
+                    <input id="SurveySiteInspection_is_mounted" name="SurveySiteInspection.is_mounted" tag="No" value="false" type="radio">
+                    <label for="SurveySiteInspection_is_mounted">No</label>
+                </div>*@
+
+                @Html.RadioButton(className + "_" + AddToID + propertyName, "true", new { @Name = className + AddToName + "." + propertyName, @tag = FirstValue })
+                @Html.Label("", FirstValue.ToString())
+            </div>
+            <div class="radio-jquery-ui">
+                @*@Html.RadioButtonFor(m => m.GetValue(className, propertyName, index), "false", new { @tag = SecondValue })
+                @Html.LabelFor(m => m.GetValue(className, propertyName, index), SecondValue)*@
+                @Html.RadioButton(className + "_" + AddToID + propertyName, "false", new { @Name = className + AddToName + "." + propertyName, @tag = SecondValue })
+                @Html.Label("", SecondValue.ToString())
+            </div>
+            }
+        </div>
+
+    </div>
+}
+else
+{
+    <div>
+        @{
+
+//var text = ((@Model.GetValue(className, propertyName, index) ?? false) ? FirstValue : SecondValue);
+            @*@Html.LabelFor(m => m.GetValue(className, propertyName, index), text.ToString(), new { @style = "font-weight:normal" })
+            @Html.HiddenFor(m => m.GetValue(className, propertyName, index), text.ToString())*@
+            @Html.Label(className + "_" + AddToID + propertyName, text.ToString(), new { @style = "font-weight:normal" })
+            @Html.Hidden(className + "_" + AddToID + propertyName, text.ToString())
+        }
+    </div>
+}

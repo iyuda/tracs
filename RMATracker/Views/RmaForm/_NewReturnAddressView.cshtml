@@ -1,0 +1,121 @@
+﻿@using RMATracker.Models
+@model DataLayer.ReturnAddress
+
+@using DataLayer
+@{
+    //var stateList = State.GetStates(userInfo: ClientDetection.GetUserEnvironment(Request), parameters: new List<string>() { "GetAll" });
+    var stateList = new List<State>();
+    var countryList = ((Country.fullList?.Count ?? 0) == 0 ? Country.GetCountries() : Country.fullList) ?? new List<Country>();
+}
+
+
+@{
+    ViewBag.QueryMode = (ViewBag.QueryMode ?? false);
+    string is_asterik = ViewBag.QueryMode ? ": " : "*";
+    var Customize = ViewData["Customize"] ?? false;
+    var SectionClass = (ViewBag.IsMobile ?? ViewContext.HttpContext.GetOverriddenBrowser().IsMobileDevice) ? "section-mobile" : "section1";
+}
+<form id="formReturnAddressSave" action="~/RmaForm/SubmitReturnAddress" method="post" class="wpcf7-form" enctype="multipart/form-data" novalidate="novalidate" runat="server">
+    <fieldset>
+        @Html.HiddenFor(m => m.id)
+        <div class="form-group street-address" style="padding-left:10px">
+            <label class="">Street Address<span class="required">@is_asterik</span></label>
+            @if (!ViewBag.QueryMode)
+            {
+                @Html.TextBoxFor(m => m.Street, new { @style = "width:98%", @maxlength = "255", @aria_invalid = "false", @aria_required = "true", @required = "", @class = "capitalize wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" })
+            }
+            else
+            {
+                @Html.DisplayFor(m => m.Street)
+                @Html.HiddenFor(m => m.Street)
+            }
+        </div>
+        <div class="container1" style="padding-left:10px">
+            <div class=" section1 country">
+                <div><label class="" for="CompanyDetailsCountryId">Country<span class="required">@is_asterik</span></label></div>
+                @(Html.Kendo().DropDownListFor(m => m.ReturnCountryId)
+                                          .BindTo(new SelectList(countryList, "CountryId", "Name", Model == null ? 0 : Model?.ReturnCountryId))
+                                          .HtmlAttributes(new { @id = "ReturnAddressCountryId", @class = "", @style = "width:100%; min-height: 36px;", onchange = "NewReturnAddressCountryChangeEvent(this); ComboChangeEvent(this)" }))
+            </div>
+        </div>
+        <div class="container1" style="padding-left:10px">
+            <div class="@SectionClass">
+                <div class="form-group city">
+                    <label class="">City<span class="required">@is_asterik</span></label>
+                    @*    <input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" name="city" type="text" value="" aria-invalid="false" aria-required="true" required="">*@
+                    @if (!ViewBag.QueryMode)
+                    {
+                        @Html.TextBoxFor(m => m.City, new { @maxlength = "50", @aria_invalid = "false", @aria_required = "true", @required = "", @class = "capitalize wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" })
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(m => m.City)
+                        @Html.HiddenFor(m => m.City)
+                    }
+                </div>
+            </div>
+            <div class="@SectionClass">
+                <div class="form-group state">
+                    <label class="">State<span class="required">@is_asterik</span></label>
+                    @(Html.Kendo().DropDownListFor(m => m.ReturnStateId)
+                        .BindTo(new SelectList(stateList, "StateId", "Name"))
+                        .HtmlAttributes(new { @id = "ReturnStateId", @class = "", @style = "width: 100%; height: 36px;" }))
+
+                </div>
+            </div>
+            <div class="@SectionClass">
+                <div class="form-group zip">
+                    <label class="">Zip Code<span class="required">@is_asterik</span></label>
+                    @*<input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" name="zip" type="text" value="" aria-invalid="false" aria-required="true" required="">*@
+                    @if (!ViewBag.QueryMode)
+                    {
+                        @Html.TextBoxFor(m => m.ZipCode, new { @pattern = "[0-9]{3} [0-9]{2}|[0-9]{5}|[0-9]{5}-[0-9]{4}|[0-9]{5} [0-9]{4}", @maxlength = "10", @aria_invalid = "false", @aria_required = "true", @required = "", @class = "zipcode wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" })
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(m => m.ZipCode)
+                        @Html.HiddenFor(m => m.ZipCode)
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="section1" id="divIsDefault">
+            @Html.CheckBoxFor(m => m.IsDefault)
+            <label>Default</label>
+        </div>
+    </fieldset>
+</form>
+<script>
+    $(document).ready(function () {
+        
+    })
+    function ReturnAddressInitUSA() {
+        var combobox = $("#ReturnAddressCountryId").data("kendoDropDownList");
+        combobox.select(function (dataItem) {
+            return dataItem.Value === "240";
+        });
+        NewReturnAddressCountryChangeEvent();
+    }
+    function NewReturnAddressCountryChangeEvent(e) {
+        //$("#combobox").data("kendoComboBox").value("");
+        var chosenId = $("#ReturnAddressCountryId").data('kendoDropDownList').value();
+        if (!chosenId) return;
+        
+        $("#ReturnStateId").kendoDropDownList({
+            dataTextField: "Text",
+            dataValueField: "Value",
+            dataSource: {
+                transport: {
+                    read: {
+                        cache: false,
+                        serverFiltering: true,
+                        async: false,
+                        dataType: "json",
+                        url: '@Url.Action("GetStatesByCountryJson", "Home")?countryId=' + chosenId,
+                    }
+                }
+            },
+        });
+
+    }
+</script>

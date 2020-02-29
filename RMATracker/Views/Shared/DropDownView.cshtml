@@ -1,0 +1,75 @@
+﻿@{
+
+    var className = ViewData["ClassName"];
+    var propertyName = ViewData["PropertyName"];
+    var index = ViewData["Index"];
+    IEnumerable<SelectListItem> selectList = (IEnumerable<SelectListItem>) ViewData["SelectList"];
+    var QueryMode = ViewData["QueryMode"];
+    var SelectedValue = ViewData["CurrentValue"];
+    var divClass = ViewData["divClass"];
+    string Label = ViewData["Label"] + "";
+
+    if (QueryMode == null)
+    {
+        QueryMode = false;
+    }
+
+
+    string AddToID = "";
+    string AddToName = "";
+
+    dynamic WorkObject;
+    switch (className)
+    {
+        case "SurveyIntegrityChecks":
+            WorkObject = Model.SurveyIntegrityChecks;
+            break;
+        case "SurveyObstructions":
+            WorkObject = Model.SurveyObstructions;
+            break;
+        case "SurveyReaderArrivalStates":
+            WorkObject = Model.SurveyReaderArrivalStates;
+            break;
+        case "SurveySiteInspection":
+            WorkObject = Model.SurveySiteInspection;
+            break;
+        default:
+            WorkObject = Model.Survey;
+            break;
+    }
+    if (index != null)
+    {
+        AddToID = index.ToString() + "__";
+        AddToName = "[" + index.ToString() + "]";
+        WorkObject = WorkObject[Int32.Parse(index.ToString())];
+    }
+    var value = WorkObject?.GetType().GetProperty(propertyName.ToString())?.GetValue(WorkObject, null);
+    string text = value == null ? "" : value.ToString();
+
+    }
+
+
+    <div class="section1">
+
+
+
+        <div class="@divClass">
+
+            @if (!ViewBag.QueryMode)
+            {
+                @Html.Raw(@Label);
+                @Html.DropDownList(className + "_" + AddToID + propertyName,new SelectList(selectList
+                       , "Value", "Text", text), "--", new { @Name = className + AddToName + "." + propertyName, @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control " })
+
+
+            }
+            else
+            {
+                <label style="width:@(Label.Length+2)ch;font-weight:normal">@(Label + (Label.ToString().EndsWith(":") ? "" : ":"))</label>
+                @Html.Label(className + "_" + AddToID + propertyName, text, new { @style = "font-weight:bold" })
+                @Html.Hidden(className + "_" + AddToID + propertyName, text)
+
+            }
+
+        </div>
+    </div>

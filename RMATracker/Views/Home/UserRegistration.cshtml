@@ -1,0 +1,335 @@
+﻿@using DataLayer
+@model DataLayer.UserRegistration
+@{
+    Layout = "~/Views/Home/_HomeLayout.cshtml";
+    ViewBag.LoginFailed = (ViewBag.LoginFailed ?? false);
+    ViewBag.HideLogin = (ViewBag.HideLogin ?? false);
+    ViewBag.Title = "RMA TRACS System";
+    ViewBag.SubTitle = "User Registration";
+    var IsMobile = (ViewBag.IsMobile ?? ViewContext.HttpContext.GetOverriddenBrowser().IsMobileDevice);
+    var styleTextWidth = String.Format("width:{0}%", IsMobile ? "100" : "100");
+    var leftDistance = IsMobile ? "" : "m-left10";
+    var widthPassswordDiv = IsMobile ? "" : "width:110%";
+    var widthPassswordInput = IsMobile ? "width:85%" : "width:90%";
+    var widthPassswordButton = IsMobile ? "width:15%" : "width:10%";
+}
+@using Kendo.Mvc.UI
+<head>
+
+    <link href="~/content/web/kendo.common-material.min.css" rel="stylesheet" />
+    <link href="~/content/web/kendo.rtl.min.css" rel="stylesheet" />
+    <link href="~/content/web/kendo.material.min.css" rel="stylesheet" />
+    <link href="~/content/web/kendo.material.mobile.min.css" rel="stylesheet" />
+    <link href="~/content/shared/examples.css" rel="stylesheet" />
+
+    <script src="~/Scripts/Kendo/jquery.min.js"></script>
+    <script src="~/Scripts/Kendo/kendo.all.min.js"></script>
+    <script src="~/Scripts/Kendo/kendo.aspnetmvc.min.js"></script>
+    <script src="~/Scripts/Kendo/kendo.timezones.min.js"></script>
+
+</head>
+<style>
+    .m-y11p5 {
+        margin-top: 11.5% !important;
+        margin-bottom: 11.5% !important;
+    }
+</style>
+
+
+
+@using (Html.BeginForm("UserRegistrationUpdate", "Home", FormMethod.Post, new { @autocomplete = "none", @style = String.Format("width:{0}%", IsMobile ? "100" : "65") + ";border:none", @class = "container", @id = "frmUserRegistration" }))
+{
+
+    <div id="divLogin" @*style="@DisplayLogin;"*@>
+        <div>
+            <div class="m-top3 @leftDistance card-body">
+                <h1 class="h1" style="font-weight:bold; font-size:large;text-decoration: underline">Personal Information</h1>
+            </div>
+            <div class="m-top3 @leftDistance card-body">
+                <div class="row p-px-y5">
+                    <div class="col-md-8">
+                        <label for="first-name-txt" style="text-align:right;"><span>First Name</span> </label>
+                        @Html.TextBox("FirstName", null, new { @id = "first-name-txt", @maxlength = "30", @style = @styleTextWidth, @class = "capitalize wpcf7-form-control wpcf7-text rma-textfield form-control", @placeholder = "First Name", @required = "", @autofocus = "" })
+                    </div>
+                </div>
+                <div class="row p-px-y5">
+                    <div class="col-md-8">
+                        <label for="last-name-txt" style="text-align:right;"><span>Last Name</span> </label>
+                        @Html.TextBox("LastName", null, new { @id = "last-name-txt", @maxlength = "30", @style = @styleTextWidth, @class = "capitalize wpcf7-form-control wpcf7-text rma-textfield form-control pb-2", @placeholder = "Last Name", @required = "", @autofocus = "" })
+                    </div>
+                </div>
+                <div class="row p-px-y5">
+                    <div class="col-md-8">
+                        <label for="email-txt" style="text-align:right;"><span>E-Mail</span> </label>
+                        @Html.TextBox("Email", null, new { @id = "email-txt", @maxlength = "100", @type = "email", @style = @styleTextWidth, @class = "wpcf7-form-control wpcf7-text rma-textfield form-control", @placeholder = "E-Mail Address", @required = "", @autofocus = "" })
+                    </div>
+                </div>
+                <div class="row p-px-y5">
+                    <div class="col-md-8">
+                        <label for="phone-txt" style="text-align:right;"><span>Phone</span> </label>
+                        @*@Html.TextBoxFor(model => Model.Phone, null, new { @data_mask = "(___) ___-____", @id = "phone-txt", @pattern = "^[0-9-+s()]*$", @maxlength = "15", @type = "tel", @style = "width:55%", @class = "wpcf7-form-control wpcf7-text rma-textfield form-control", @placeholder = "Phone Number", @required = "", @autofocus = "" })
+                            @Html.ValidationMessageFor(model => Model.Phone)*@
+                        @*@Html.TextBox("Phone", null, new { @id = "phone-txt", @onFocus = "if(this.value==this.defaultValue)this.value='';", @onkeyup = "javascript:getPhoneFormat(this, event)", @pattern = "^[0-9-+s()]*$", @style = "width:55%", @maxlength = "13", @type = "tel", @class = "wpcf7-form-control wpcf7-text rma-textfield form-control reg-phone", @placeholder = "Phone Number", @required = "", @autofocus = "" })*@
+                        @Html.TextBox("Phone", null, new { @id = "phone-txt", @onkeypress = "javascript:phoneKeyPress(this, event)", @onkeyup = "javascript:getPhoneFormat(this, event)", @pattern = "^[0-9-+s()]*$", @style = @styleTextWidth, @maxlength = "13", @type = "tel", @class = "wpcf7-form-control wpcf7-text rma-textfield form-control reg-phone", @placeholder = "Phone Number", @required = "", @autofocus = "" })
+                    </div>
+                </div>
+                <div class="row p-px-y5">
+                    <div class="col-md-8">
+                        <label for="firm-txt" style="text-align:right;"><span>Company</span> </label><br />
+                        @{SelectList selFirmList = new SelectList(DataLayer.Firm.fullList, "Id", "FirmName");}
+                        @(Html.Kendo().ComboBoxFor(m => m.FirmId)
+                                                                                                                        .Filter("contains")
+                                                                                                                        .Placeholder("-- Select Company Name --")
+                                                                                                                        .DataTextField("Text")
+                                                                                                                        .DataValueField("Value")
+                                                                                                                        .BindTo(selFirmList)
+                                                                                                                        .Suggest(true)
+                                                                                                                        .HtmlAttributes(new
+                                                                                                                        {
+                                                                                                                            @class = "capitalize wpcf7-form-control wpcf7-text rma-textfield form-control",
+                                                                                                                            id = "firm-txt",
+                                                                                                                            style = @styleTextWidth,
+                                                                                                                            required = "required",
+                                                                                                                            onchange = "ComboChangeEvent(this); LoadContractorFirms(this)"
+                                                                                                                        }))
+                    </div>
+                </div>
+                <div class="row p-px-y5">
+                    <div class="col-md-3" id="divIsContractor">
+                        @Html.CheckBoxFor(m => m.IsSubcontractor, new { @class = "is-subcontractor" })
+                        <label>Subcontractor? </label>
+                    </div>
+                    <div class="col-md-5" style="display:none" id="divContractor">
+                        <label for="prof-contractor-txt" style="text-align:right;"><span>Prime Contractor:</span> </label>
+                        @(Html.Kendo().ComboBoxFor(m => m.PrimecontractorId)
+                                                                                                            .Filter("contains")
+                                                                                                            .Placeholder("-- Select Subcontractor --")
+                                                                                                            .DataTextField("Text")
+                                                                                                            .DataValueField("Value")
+                                                                                                            .BindTo(selFirmList)
+                                                                                                            .Suggest(true)
+                                                                                                            .HtmlAttributes(new
+                                                                                                            {
+                                                                                                                @class = "profile-updatable form-control",
+                                                                                                                @id = "prof-contractor-txt",
+                                                                                                                @style = "width:100%;",
+                                                                                                                @required = "required",
+                                                                                                                onchange = "ComboChangeEvent(this)"
+                                                                                                            }))
+
+                    </div>
+                </div>
+                <div class="row p-px-y5">
+                    <div class="col-md-8">
+                        <label for="password-txt" style="text-align:right;"><span>Password</span> </label>
+                        <div style="@widthPassswordDiv" class="pwd-field para-input-group">
+                            @Html.Password("Password", null, new { @minlength = "8", @maxlength = "50", @id = "password-txt", @style = @widthPassswordInput, @class = "wpcf7-form-control wpcf7-text rma-textfield form-control", @placeholder = "Password", @required = "", @autofocus = "" })
+                            <button class="show-password" style="@widthPassswordButton; display:none" type="button">
+                                <span class="fa fa-eye icon"></span>
+                            </button>
+                            <div id="password-details" class="hidden">
+                                <p>Password must have the following:</p>
+                                <ul class="indent">
+                                    <li>At least 8 characters</li>
+                                    <li>1 uppercase letter, i.e. A</li>
+                                    <li>1 lowercase letter, i.e. a</li>
+                                    <li>1 digit, i.e. 1</li>
+                                    <li>1 special character (#?!@@$%^&*_)</li>
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row p-px-y5">
+                    <div class="col-md-8">
+                        <label for="confirm-password-txt" style="text-align:right"><span>Confirm Password</span></label>
+                        <div style="@widthPassswordDiv" class="pwd-field para-input-group">
+                            @Html.Password("ConfirmPassword", null, new { @id = "confirm-password-txt", @style = @widthPassswordInput, @class = "wpcf7-form-control wpcf7-text rma-textfield form-control", @placeholder = "Confirm Password", @required = "", @autofocus = "" })
+                            <button class="show-password" style="@widthPassswordButton; display:none" type="button">
+                                <span class="fa fa-eye icon"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br /><br />
+
+        </div>
+        <div class="m-top10 m-bot10">
+            <div class="m-top3 @leftDistance card-body">
+                <h1 class="h1" style="font-weight:bold; font-size:large;text-decoration: underline">Default Return Address</h1>
+            </div>
+            <div class="m-top3 @leftDistance card-body">
+                @{Html.RenderPartial("_UserProfileAddress", Model);}
+            </div>
+
+            <div class="m-top3 @leftDistance card-body">
+                <div class="p-px-y5 row">
+                    <div class="col-md-8">
+                        <button class="btn btn-lg btn-primary btn-block" type="submit" id="btnUserRegistration">Register</button>
+                    </div>
+                </div>
+            </div>
+            <br />
+            @*<div class="float-right m-top3" style="font-size:larger" align="center">*@
+            <div class="m-top3 @leftDistance card-body">
+                <div class="p-px-y5 row">
+                    <div class="col-md-8" style="font-size:larger" align="center">
+                        <a id="btnLogin" href="~/Home/Login">Login</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1"
+        crossorigin="anonymous"></script>
+<script src="~/Scripts/Login/bootbox.min.js"></script>
+
+<script src="~/Scripts/toastr.js"></script>
+<script src="~/Scripts/ParabitScripts/toastr_alert.js"></script>
+<script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+<script src="~/Scripts/ParabitScripts/password_validation.js"></script>
+<script src="~/Scripts/ParabitScripts/phone_validation.js"></script>
+
+<script>
+    $('.btn-primary').css('background-color', '#F57B20')
+    $(document).ready(function () {
+        $("input[name$='ZipCode']").each(function () {
+            $(this).rules('add', {
+                number: true
+            });
+        });
+        $('.btn-primary').css('background-color', '#F57B20')
+        $("input").each(function () {
+            $(this).attr("autocomplete", "none");
+        });
+        var combobox = $("#ProfileCountryId").data("kendoDropDownList");
+        combobox.select(function (dataItem) {
+            return dataItem.Value === "240";
+        });
+        CountryChangeEvent(combobox);
+        //ValidatePasswordMain();
+    });
+    $("#frmUserRegistration").validate({
+        errorClass: 'validate-error',
+        errorPlacement: function (error, element) {
+            var passRules = element.closest('div').parent().find(".password-rules");
+            if (element.attr('name').indexOf('assword')>0) {
+                error.appendTo(element.closest('div.pwd-field'));
+            }
+            else if (element.attr("data-role") != "combobox")
+                error.appendTo(element.closest('div'));
+            else {
+                //'<br/>'.prependTo(error);
+                error.appendTo(element.closest('div'));
+            }
+        }
+
+    });
+
+
+    $("#frmUserRegistration").submit(function (e) {
+        e.preventDefault();
+        var status1 = ValidateProfile("frmUserRegistration");
+        var status2 = ValidatePassword();
+        var status3 = ValidatePhoneNumber($("#phone-txt"));
+        if (!( status1 && status2 && status3))
+            return;
+
+        var new_pass = $('#password-txt').val();
+        var confirm_pass = $('#confirm-password-txt').val();
+        if (new_pass.length == 0 || confirm_pass.length == 0) {
+            changeFeedbackMessage('error', 'Password cannot be blank');
+            return;
+        }
+        if (new_pass != confirm_pass) {
+            changeFeedbackMessage('error', 'Passwords do not match');
+            return;
+        }
+        $("#error_msg").hide();
+        $("#success_msg").hide();
+        if ($(this).find(".error:visible").length > 0 || $(this).find(".validate-error:visible").length > 0)
+            return;
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("UserRegistrationUpdate", "Home")',
+            data: $("#frmUserRegistration").serialize(),
+            //async: false,
+            success: function (result) {
+                var status = result.status;
+                var message = result.message;
+                if (status == 0) {
+                    changeFeedbackMessage('error', message);
+                }
+                else {
+
+                    var location = '@Url.Action("VerifyCodeGet", "Home")';
+                    changeToTapToDismissToastr();
+                    changeFeedbackMessage('success', message, '',
+                        //'<br /><br /><br /><button onclick = "href" type="button" class="para-btn clear">Ok</button>'.replace('href', 'window.location.href = \'/Home/Login/?Email=' + email + '\'')
+                        '<br /><br /><br /><button onclick = "href" type="button" class="para-btn clear">Verify</button>'.replace('href', 'window.location.href = \'' + location +'\'')
+                    );
+                }
+
+            },
+            error: function (request, status, error) {
+                //$("#error_msg").text(error);
+                changeFeedbackMessage('error', error);
+            }
+
+        });
+    });
+</script>
+<script>
+    Array.prototype.forEach.call(document.body.querySelectorAll("*[data-mask]"), applyDataMask);
+
+    function applyDataMask(field) {
+        var mask = field.dataset.mask.split('');
+
+        // For now, this just strips everything that's not a number
+        function stripMask(maskedData) {
+            function isDigit(char) {
+                return /\d/.test(char);
+            }
+            return maskedData.split('').filter(isDigit);
+        }
+
+        // Replace `_` characters with characters from `data`
+        function applyMask(data) {
+            return mask.map(function (char) {
+                if (char != '_') return char;
+                if (data.length == 0) return char;
+                return data.shift();
+            }).join('')
+        }
+
+        function reapplyMask(data) {
+            return applyMask(stripMask(data));
+        }
+
+        function MaskText() {
+            var oldStart = field.selectionStart;
+            var oldEnd = field.selectionEnd;
+
+            field.value = reapplyMask(field.value);
+
+            field.selectionStart = oldStart;
+            field.selectionEnd = oldEnd;
+        }
+        MaskText();
+    }
+</script>
+
+
+}

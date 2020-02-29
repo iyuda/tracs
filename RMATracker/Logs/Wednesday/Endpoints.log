@@ -1,0 +1,36 @@
+
+6/26/2019 11:36:23 PM
+http://rma.parabit.com:1340/api/v1/User/ValidateLogin/
+
+6/26/2019 11:36:26 PM
+http://rma.parabit.com:1340/api/v1/User/GetUserProfile/534/
+
+6/26/2019 11:36:28 PM
+http://rma.parabit.com:1340/api/v1/ReturnAddress/GetReturnAddress/534/
+
+6/26/2019 11:36:30 PM
+http://rma.parabit.com:1340/api/v1/Company/CompanyName/43/
+
+6/26/2019 11:36:31 PM
+http://rma.parabit.com:1340/api/v1/Parts/
+
+6/26/2019 11:36:49 PM
+http://rma.parabit.com:1340/api/v1/States/
+
+6/26/2019 11:36:50 PM
+http://rma.parabit.com:1340/api/v1/Parts/FirmwareVersion/
+
+6/26/2019 11:36:51 PM
+http://rma.parabit.com:1340/api/v1/Firm/FirmName/
+
+6/26/2019 11:36:53 PM
+http://rma.parabit.com:1340/api/v1/States/GetAll/
+
+6/26/2019 11:36:54 PM
+http://rma.parabit.com:1340/api/v1/Country/
+
+6/26/2019 11:36:56 PM
+http://rma.parabit.com:1340/api/v1/States/88/
+
+6/26/2019 11:37:00 PM
+http://rma.parabit.com:1340/api/v1/States/88/

@@ -1,0 +1,135 @@
+﻿@using RMATracker.Models
+@using DataLayer
+@model RMAModel
+@{
+    ViewBag.QueryMode = (ViewBag.QueryMode ?? false);
+    //    ViewBag.Title = "Home Page";
+    string is_asterik = ViewBag.QueryMode ? ": " : "*";
+    var SectionClass = (ViewBag.IsMobile ?? ViewContext.HttpContext.GetOverriddenBrowser().IsMobileDevice) ? "section-mobile" : "section1";
+    var SectionClassAlt = (ViewBag.IsMobile ?? ViewContext.HttpContext.GetOverriddenBrowser().IsMobileDevice) ? "section-mobile" : "";
+}
+@*<form id="formRMAMain" action="~/RmaForm/SaveRMAMain" method="post" class="wpcf7-form" enctype="multipart/form-data" novalidate="novalidate" runat="server">*@
+<div class="container1">
+
+    <div class="form-group call-number @SectionClass">
+        @{
+            @Html.HiddenFor(m => m.rma.UserId)
+            @Html.HiddenFor(m => m.rma.id)
+            //if ((ViewData["AttributeName"] ?? "").ToString().ToLower().Contains("internal")) //ViewBag.ViewType == "rmaparabittech" || ViewBag.ViewType == "rmaparabitsub")
+            if (Model?.FirmTypeId == 2)
+            {
+                <label class="">ESC Dispatch #<span class="required">@is_asterik</span></label>
+            }
+            else
+            {
+                <label class="">Vendor Call # (TR #)<span class="required">@is_asterik</span></label>
+            }
+            if (!ViewBag.QueryMode)
+            {
+                @Html.TextBoxFor(m => m.rma.TrackingNumber, new { @type = "text", @maxlength = "12", @data_validation = "required", @required = "", @aria_invalid = "false", @aria_required = "true", @class = "required wpcf7-form-control wpcf7-text wpcf7-validates-as-required wpcf7-not-valid form-control" })
+            }
+            else
+            {
+                @Html.DisplayFor(m => m.rma.TrackingNumber)
+                @Html.HiddenFor(m => m.rma.TrackingNumber)
+            }
+        }
+
+
+    </div>
+    <div class="form-group service-call-date @SectionClass">
+        <label class="">Date of Service Call<span class="required">@is_asterik</span></label>
+        @{
+            var CaseDate = (Model?.rma?.ServiceCallDate == null ? "" : DateTime.Parse(Model?.rma?.ServiceCallDate).ToString("yyyy-MM-dd"));
+        }
+        @if (!ViewBag.QueryMode)
+        {
+            @*@Html.TextBoxFor(m => m.rma.ServiceCallDate, new { @Value = @CaseDate, @type = "date", @min = "", @max = "", @step = "", @aria_required = "true", @required = "", @aria_invalid = "false", @class = "wpcf7-form-control wpcf7-date wpcf7-validates-as-date form-control" })*@
+            // Changed on 7/12/2019
+            @(Html.Kendo().DatePicker() 
+                .Name("rma.ServiceCallDate")
+
+                .Start(CalendarView.Month)
+                .Depth(CalendarView.Year)
+                .Format("MMMM dd, yyyy")
+                .DateInput()
+                .Max(DateTime.Today)
+                .Min("2000-01-01")
+                .HtmlAttributes(new { id ="rma_ServiceCallDate", style = "width: 100%",  @required = "", @aria_invalid = "false", @class = "wpcf7-form-control wpcf7-date wpcf7-validates-as-date form-control" }))
+        }
+        else
+        {
+            @Html.LabelFor(m => m.rma.ServiceCallDate, @CaseDate, new { @style = "font-weight: normal;" })
+            @Html.HiddenFor(m => m.rma.ServiceCallDate, @CaseDate)
+        }
+    </div>
+</div>
+
+@{
+
+            if (Model?.FirmTypeId == 2)
+            {
+        @:<div style="display:none">
+        }
+        else
+        {
+            @:<div>
+            }
+}
+<div class="container1">
+    <label class="form-group TypeofRMA section1">Type of RMA: <span class="required">@is_asterik</span></label><br /><br />
+</div>
+<div class="container1">
+    @Html.HiddenFor(m => m.rma.RMATypeId)
+    @{ var rmaTypes = RMAType.fullList;
+        foreach (RMAType rmaType in rmaTypes)
+        {
+
+
+            <div class="form-group TypeofRMA section1">
+
+
+                @if (!ViewBag.QueryMode)
+                {
+                    @Html.RadioButton("rmaType", rmaType.id, (Model?.rma?.rmaType?.id ?? 0) == rmaType.id, new { @aria_required = "true", @required = "", @name = "rma.rmaTypeId", @tag = (rmaType.id == 1 ? "CreditRequest" : ""), @onchange = "ToggeleCreditRequestReason(this)" })
+                    @:&nbsp;
+                    @Html.Label(" ", rmaType.Description)
+                    <br />
+                }
+                else if (Model?.rma?.CreditReasonId == null)
+                {
+                    @Html.Display(rmaType.Description)
+                }
+
+
+            </div>
+
+            if (rmaType.id == 1)
+            {
+                string style = (Model?.rma?.rmaType?.id ?? 0) != 1 ? "display:none" : "";
+                <div id="divCreditReason" class ="@SectionClassAlt" style="@style">
+                    <fieldset id="fstCreditReason">
+                        <label class="">Credit Request Reason<span class="required">@is_asterik</span></label>
+
+                        @{ var creditReasons = CreditReason.fullList; }
+                        @if (!ViewBag.QueryMode)
+                        {
+                            @Html.DropDownListFor(m => m.rma.CreditReasonId, new SelectList(creditReasons, "id", "Description"), "-- Pick One --", new { @style = "padding:4px", @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control" })
+                        }
+                        else
+                        {
+                            @Html.Display(Model.rma.creditReason.Description)
+                        }
+                    </fieldset>
+                </div>
+            }
+        }
+    }
+
+
+
+</div>
+</div>
+<b>
+    
+

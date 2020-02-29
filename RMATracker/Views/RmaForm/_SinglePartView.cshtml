@@ -1,0 +1,129 @@
+﻿@using RMATracker.Models
+@model List<DataLayer.ReturnedPart>
+@*@model RMAModel*@
+@*@model Tuple<List<DataLayer.Part>, List<DataLayer.ReturnedPart>>*@
+
+@{
+    ViewBag.QueryMode = (ViewBag.QueryMode ?? false);
+    //    ViewBag.Title = "Home Page";
+    string is_asterik = ViewBag.QueryMode ? ": " : "*";
+
+}
+@{int i = ViewBag.PartNumber; var Parts = Globals.parts;}
+@*<form id="formSingleRMAPart" action="~/RmaForm/SaveRMAMain" method="post" class="wpcf7-form" enctype="multipart/form-data" novalidate="novalidate" runat="server">*@
+
+                <div class="part_details_class" id="part_details">
+                    <div class="section1" style="padding-left: 10px">
+                        @{
+                            @Html.HiddenFor(m => m[i].id)
+                            if (!ViewBag.QueryMode)
+                            {
+
+                                if (i == 0)
+                                {
+                                    @:<strong id="part_number_heading">Part Number @(i + 1):* </strong>
+                                    @:<div class="form-group part-menu">
+                                        //ViewBag
+                                        @Html.DropDownListFor(m => m[i].PartId, new SelectList(Globals.parts ?? new List<DataLayer.Part>(), "id", "PartNumber", Model[i].PartId), "-- Select Part --", new
+                                           {
+                                               @aria_invalid = "false",
+                                               @aria_required = "true",
+                                               @required = "",
+                                               @class = "wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control",
+                                               @onchange = "GetPartID(this)"
+                                           })
+                                    }
+                                    else
+                                    {
+                                        @:<strong id="part_number_heading">Part Number @(i + 1): </strong>
+                                        @:<div class="form-group part-menu">
+                                            @Html.DropDownListFor(m => m[i].PartId, new SelectList(Globals.parts, "id", "PartNumber", Model[i].PartId), "-- Select Part --", new
+                                               {
+                                                   @aria_invalid = "false",
+                                                   @class = "wpcf7-form-control wpcf7-select form-control",
+                                                   @onchange = "GetPartID(this)"
+                                               })
+                                        }
+                                        @*@Html.DropDownListFor(m => m.part.Description, new SelectList(Parts ?? new List<DataLayer.Part>(), "PartDescription", "PartDescription", Model[i].Description), "--", new
+                                            {
+                                                @style = "display:none"
+                                            })*@
+                                        @*@Html.DropDownListFor(m => m.RmaParts.part_types_id, new SelectList(PartTypes, "id", "id", Model[i].RmaParts.part_types_id), "--", new
+                                            {
+                                                @style = "display:none"
+                                            })*@
+                                    @:</div>
+                                }
+                                else
+                                {
+                                    @:<strong>Part @(i + 1):</strong>
+                                    @Html.DisplayFor(m => m[i].part.PartNumber);
+                                    @Html.HiddenFor(m => m[i].part.PartNumber);
+                                }
+                        }
+
+                    </div>
+
+                    <div class="section1">
+                        @{
+                            if (!ViewBag.QueryMode)
+                            {
+                                if (i == 0)
+                                {
+                                    @:<strong id="description_heading">Description @(i + 1):* </strong>
+                                    @:<div class="form-group description-1">
+                                        @Html.TextBoxFor(m => m[i].part.PartName, new { @maxlength = "100", @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-validates-as-required form-control" })
+                                    }
+                                    else
+                                    {
+                                        @:<strong>Description @(i + 1): </strong>
+                                        @:<div class="form-group description-1">
+                                            @Html.TextBoxFor(m => m[i].part.PartName, new { @maxlength = "100", @aria_invalid = "false", @class = "wpcf7-form-control form-control" })
+                                        }
+                                    @:</div>
+                                }
+                                else
+                                {
+
+                                }
+                        }
+                    </div>
+
+
+                    <div class="section1">
+                        @{
+                            if (!ViewBag.QueryMode)
+                            {
+                                if (i == 0)
+                                {
+                                    @:<strong id="serial_number_heading">Serial Number @(i + 1):* </strong>
+                                    @:<div class="form-group serial-number">
+                                        @Html.TextBoxFor(m => m[i].part.SerialNumber, new { @maxlength = "6", @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-validates-as-required form-control" })
+                                    }
+                                    else
+                                    {
+                                        @:<strong>Serial Number @(i + 1): </strong>
+                                        @:<div class="form-group serial-number">
+                                            @Html.TextBoxFor(m => m[i].part.SerialNumber, new { @maxlength = "6", @aria_invalid = "false", @class = "wpcf7-form-control form-control" })
+                                        }
+                                    @:</div>
+                                }
+                                else
+                                {
+                                    @:<strong>Serial Number @(i + 1): </strong>
+                                    @Html.DisplayFor(m => m[i].part.SerialNumber)
+                                    @Html.HiddenFor(m => m[i].part.SerialNumber)
+                                }
+                        }
+                    </div>
+                </div>
+          
+          
+
+
+
+
+        <br>
+        @*  }*@
+@*</form>*@
+

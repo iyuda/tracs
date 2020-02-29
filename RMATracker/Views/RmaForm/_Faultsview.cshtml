@@ -1,0 +1,67 @@
+﻿@using RMATracker.Models
+@using DataLayer
+@model RMAModel
+
+@{
+    ViewBag.QueryMode = (ViewBag.QueryMode ?? false);
+    string is_asterik = ViewBag.QueryMode ? ": " : "*";
+
+}
+
+@*<form id="formFaults" action="~/RmaForm/SaveFaults" method="post" class="wpcf7-form" enctype="multipart/form-data" novalidate="novalidate" runat="server">*@
+<fieldset>
+    <legend>Technician Findings/Diagnosis</legend>
+    <div class="container" style="border:solid">
+        <div id="divFaults">
+            @{ if (Model?.rma?.rel_RMA_Faults == null)
+                {
+                    Model.rma.rel_RMA_Faults = new List<REL_RMA_Fault>();
+                }
+                if (Model?.rma?.rel_RMA_Faults?.Count == 0)
+                {
+                    Model.rma.rel_RMA_Faults.Add(new REL_RMA_Fault());
+                }
+            }
+            @for (int i = 0; i < (Model != null ? Model?.rma?.rel_RMA_Faults?.Count : 0); i++)
+            {
+                Html.RenderAction("FaultEntry", "RMAForm", new { index = i });
+            }
+        </div>
+        <br />
+        <div align="right" style="padding-right:20px">
+            <button type="button" class="btn btn-primary" id="btnAddFault" onclick="AddFault()">
+                Add Problem
+            </button>
+        </div><br>
+    </div>
+</fieldset>
+<script>
+       
+        function AddFault() {
+            var rmaParentDiv = $("div[id^=tabs-" + $('#TabId').val() + "]");
+            if (rmaParentDiv.length == 0) {
+                rmaParentDiv = $("div[id='rmaContainer']");
+            }
+
+
+            var visible_count = rmaParentDiv.find(".fault_details_class:visible").length;
+            if (visible_count >= 7) {
+                changeFeedbackMessage("error", "You have reached the maximum number of faults!");
+                return;
+            }
+            var new_number = rmaParentDiv.find(".fault_details_class").length;
+            var sURL = '@Url.Action("FaultEntry", "RmaForm", new { index = "param1", DynamicAdd="true" })'.replace("param1", new_number);
+            $.get(sURL, function (data) {
+                rmaParentDiv.find("#divFaults").append(data);
+                $(".remove-problem-button").show();
+                $('.btn-primary').css('background-color', '#F57B20')            
+            });
+            
+    }
+    $(document).ready(function () {
+        if ('@(Model?.rma?.rel_RMA_Faults?.Count)' <= "1")
+            $(".remove-problem-button").hide();
+        else
+            $(".remove-problem-button").show();
+    });
+</script>

@@ -1,0 +1,93 @@
+﻿@using RMATracker.Models
+@model RMAModel
+@{
+    ViewBag.QueryMode = (ViewBag.QueryMode ?? false);
+    //    ViewBag.Title = "Home Page";
+    string is_asterik = ViewBag.QueryMode ? ": " : "*";
+    var SectionClass = (ViewBag.IsMobile ?? ViewContext.HttpContext.GetOverriddenBrowser().IsMobileDevice) ? "section-mobile" : "section1";
+}
+    <fieldset>
+        @Html.HiddenFor(m => m.rma.parabitCall.id)
+        <legend>Parabit Call</legend>
+        <div class="container" style="border:solid" id="divParabitCallContainer">
+            <div class="@SectionClass" style="padding-left:10px">
+                @Html.CheckBoxFor(m=>m.rma.parabitCall.WasParabitCalled) @*, Model?.rma?.parabitCall?.CallDate != null)*@
+                <label>Was Parabit Called?</label>
+            </div>
+
+            <div id="div-called-date" class="@SectionClass" style="display:none;padding-left:10px">
+                @{
+                    @:<strong>Parabit Call Date @is_asterik</strong>
+                    @:<div  class="form-group call-date">
+
+
+                        @:<div class="form-group service-call-date">
+    var ParabitCalledDate = (Model?.rma?.parabitCall?.CallDate == null ? "" : DateTime.Parse(Model?.rma?.parabitCall?.CallDate).ToString("yyyy-MM-dd"));
+    if (!ViewBag.QueryMode)
+    {
+        @*@Html.TextBoxFor(m => m.rma.parabitCall.CallDate, new { @Value = @ParabitCalledDate, @type = "date", @min = "", @max = "", @step = "", @aria_required = "true", @required = "", @aria_invalid = "false", @class = "wpcf7-form-control wpcf7-date wpcf7-validates-as-date form-control" })*@
+        // Changed on 7/12/2019
+        @(Html.Kendo().DatePicker()
+        .Name("rma.parabitCall.CallDate")
+
+        .Start(CalendarView.Month)
+        .Depth(CalendarView.Year)
+        .Format("MMMM dd, yyyy")
+        .DateInput()
+        .Max(DateTime.Today)
+        .Min("2000-01-01")
+        .HtmlAttributes(new { id = "rma_parabitCall_CallDate", style = "width: 100%", @required = "", @aria_invalid = "false", @class = "wpcf7-form-control wpcf7-date wpcf7-validates-as-date form-control" }))
+    }
+    else
+    {
+        @Html.LabelFor(m => m.rma.parabitCall.CallDate, @ParabitCalledDate, new { @style = "font-weight: normal;" })
+        @Html.HiddenFor(m => m.rma.parabitCall.CallDate, @ParabitCalledDate)
+    }
+@:</div>
+                    @:</div>
+                }
+                @*</div>*@
+            </div>
+
+            <div class="@SectionClass" id="div-parabit-dispatch"style="display:none;padding-left:10px" >
+                <strong>Service Dispatch # @is_asterik</strong>
+                <div class="form-group dispatch-number">
+                    @if (!ViewBag.QueryMode)
+                    {
+                        @Html.TextBoxFor(m => m.rma.parabitCall.DispatchNumber, new { @maxlength = "14", @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-text form-control" })
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(m => m.rma.parabitCall.DispatchNumber)
+                        @Html.HiddenFor(m => m.rma.parabitCall.DispatchNumber)
+                    }
+
+                </div>
+            </div>
+        </div>
+
+
+    
+</fieldset>
+<script>
+    $(document).ready(function () {
+        CheckWasParabitCalled();
+    });
+    function CheckWasParabitCalled() {
+        
+        var checkValue = $("input[name$='WasParabitCalled']").is(":checked");
+        
+        if (checkValue) {
+            $("#div-called-date").show();
+            $("#div-parabit-dispatch").show();
+        } else {
+            $("#div-called-date").hide();
+            $("#div-parabit-dispatch").hide();
+        }
+    };
+    $('#divParabitCallContainer :checkbox').change(function () {
+        CheckWasParabitCalled();
+    });
+
+
+</script>

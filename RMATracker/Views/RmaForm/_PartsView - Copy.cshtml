@@ -1,0 +1,306 @@
+﻿@using RMATracker.Models
+@using DataLayer
+@model RMAModel
+@*@model RMAModel*@
+@*@model Tuple<List<DataLayer.Part>, List<DataLayer.ReturnedPart>>*@
+
+@{
+
+    ViewBag.QueryMode = (ViewBag.QueryMode ?? false);
+    //    ViewBag.Title = "Home Page";
+    string is_asterik = ViewBag.QueryMode ? ": " : "*";
+
+}
+@*<form id="formParts" action="~/RmaForm/SaveParts" method="post" class="wpcf7-form" enctype="multipart/form-data" novalidate="novalidate" runat="server">*@
+    <fieldset>
+        <legend>Returned Parts</legend>
+        @{
+            if (!ViewBag.QueryMode)
+            {
+                @*<i>*Only the 1st Part Number &amp; Serial Number is required</i> <br> <br>*@
+            }
+            var partTypes = PartType.fullList;
+            var selectList = Enumerable.Empty<SelectListItem>();
+            if (partTypes != null) {
+                selectList = from p in partTypes
+                             select new SelectListItem
+                             {
+                                 Value = p.id.ToString(),
+                                 Text = p.PartNumber + " -- " + p.PartName
+                             };
+            }
+            }
+
+        <div class="container1" style="border:solid">
+            <div id="divParts">
+                @{ if (Model?.rma?.returnedParts == null)
+                    {
+                        Model.rma.returnedParts = new List<ReturnedPart>();
+                    }
+                    if (Model?.rma?.returnedParts?.Count == 0)
+                    {
+                        Model?.rma?.returnedParts.Add(new ReturnedPart());
+                    }
+                }
+                @for (int i = 0; i < (Model != null ? Model?.rma?.returnedParts?.Count : 0); i++)
+                {
+                    //ViewBag.PartNumber = i;
+                    //Html.RenderPartial("_SinglePartView", Model, new ViewDataDictionary() { { "PartNumber", i }, { "Parts", Parts } });
+                    var strControlElement = "hiddenPartId";
+                    
+                    <div class="container part_details_class" id="part_details">
+                        <div class="section1" style="padding-left: 10px">
+                            @{
+                                @Html.HiddenFor(m => m.rma.returnedParts[i].id)
+                                if (!ViewBag.QueryMode)
+                                {
+
+                                    if (i == 0)
+                                    {
+                                        @:<strong id="part_number_heading">Part @(i + 1):* </strong>
+                                        @:<div class="form-group part-menu">
+                                            //ViewBag
+
+                                        SelectList selBankList = new SelectList(selectList, "Id", "Name", Model?.rma?.returnedParts[i].PartId);
+                                        ViewBag.DropDownList = selBankList;
+                                        ViewBag.DropDownTextAlign = "left";
+                                        ViewBag.DropDownListID = String.Format("rma_returnedParts_{0}__PartId", i);
+                                        ViewBag.DropDownListName = String.Format("rma.returnedParts[{0}].PartId", i);
+                                        ViewBag.DropwDownClass = "wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control";
+                                        ViewBag.DropDownWidth = "500%";
+                                        ViewBag.MaxLength = 100;
+                                        ViewBag.ControlElement = strControlElement;
+                                        //ViewBag.OnChangeEvent = "LoadBankBranches(this)";
+                                        Html.RenderPartial("~/Views/Shared/AutoComplete.cshtml");
+
+                                            @Html.DropDownListFor(m => m.rma.returnedParts[i].PartId, new SelectList(selectList, "Value", "Text", Model?.rma?.returnedParts[i].PartId), "-- Select Part --", new
+                                               {
+                                                   @aria_invalid = "false",
+                                                   @aria_required = "true",
+                                                   @required = "",
+                                                   @class = "wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control",
+                                                   @onchange = "GetPartDetails(this)"
+                                               })
+                                        }
+                                        else
+                                        {
+                                            @:<strong id="part_number_heading">Part @(i + 1): </strong>
+                                            @:<div class="form-group part-menu">
+                                                @Html.DropDownListFor(m => m.rma.returnedParts[i].PartId, new SelectList(selectList, "Value", "Text", Model?.rma?.returnedParts[i].PartId), "-- Select Part --", new
+                                                   {
+                                                       @aria_invalid = "false",
+                                                       @class = "wpcf7-form-control wpcf7-select form-control",
+                                                       @onchange = "GetPartDetails(this)"
+                                                   })
+                                            }
+                                            @*@Html.DropDownListFor(m => m.rma.returnedParts[i].part.Description, new SelectList(Parts ?? new List<DataLayer.Part>(), "PartDescription", "PartDescription", Model.Description), "--", new
+                                    {
+                                        @style = "display:none"
+                                    })*@
+                                            @*@Html.DropDownListFor(m => m.RmaParts.returnedParts[i].part_types_id, new SelectList(PartTypes, "id", "id", Model.RmaParts.returnedParts[i].part_types_id), "--", new
+                                    {
+                                        @style = "display:none"
+                                    })*@
+                                        @:</div>
+                                    }
+                                    else
+                                    {
+                                        @:<strong>Part @(i + 1):</strong>
+                                        @*@Html.DisplayFor(m => m.rma.returnedParts[i].part.PartNumber);
+                                        @Html.HiddenFor(m => m.rma.returnedParts[i].part.PartNumber);*@
+                                    }
+                            }
+
+                        </div>
+                        <div class="section1"></div>
+                        @*<div class="section1">
+                    @{
+                        if (!ViewBag.QueryMode)
+                        {
+                            if (i == 0)
+                            {
+                                @:<strong id="description_heading">Description @(i + 1):* </strong>
+                                @:<div class="form-group description-1">
+                                    @Html.TextBoxFor(m => m.rma.returnedParts[i].part.PartName, new { @id = "PartNumber", @readonly = "", @maxlength = "100", @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-validates-as-required form-control" })
+                               }
+                                else
+                                {
+                                    @:<strong>Description @(i + 1): </strong>
+                                    @:<div class="form-group description-1">
+                                        @Html.TextBoxFor(m => m.rma.returnedParts[i].part.PartName, new { @readonly = "", @maxlength = "100", @aria_invalid = "false", @class = "wpcf7-form-control form-control" })
+                                    }
+                                @:</div>
+                            }
+                            else
+                            {
+
+                            }
+                    }
+                </div>*@
+
+
+                        <div class="section1">
+                            @{
+                                if (!ViewBag.QueryMode)
+                                {
+                                    if (i == 0)
+                                    {
+                                        @:<strong id="serial_number_heading">Serial Number @(i + 1):* </strong>
+                                        @:<div class="form-group serial-number">
+                                            @Html.TextBoxFor(m => m.rma.returnedParts[i].SerialNumber, new { @type = "text", @maxlength = "6", @aria_invalid = "false", @aria_required = "true", @required = "", @class = "serial wpcf7-form-control wpcf7-validates-as-required form-control" })
+                                       }
+                                        else
+                                        {
+                                            @:<strong>Serial Number @(i + 1): </strong>
+                                            @:<div class="form-group serial-number">
+                                                @Html.TextBoxFor(m => m.rma.returnedParts[i].SerialNumber, new { @type="text",  @maxlength = "6", @aria_invalid = "false", @class = "serial wpcf7-form-control form-control" })
+                                            }
+                                        @:</div>
+                                    }
+                                    else
+                                    {
+                                        @:<strong>Serial Number @(i + 1): </strong>
+                                        @Html.DisplayFor(m => m.rma.returnedParts[i].SerialNumber)
+                                        @Html.HiddenFor(m => m.rma.returnedParts[i].SerialNumber)
+                                    }
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="section1"></div><div class="section1"></div>
+            <div class="section1">
+                <div align="right">
+                    <button type="button" class="btn btn-primary" id="btnAddPart" onclick="AddPart()">
+                        Add Part
+                    </button>
+                </div>
+            </div>
+
+            </div>
+
+
+
+            <br>
+            @*  }*@
+
+</fieldset>
+@*</form>*@
+<script>
+    function GetPartDetails(e) {
+
+        var DescriptionName = e.name.replace("PartId", "PartName");
+        var SerialNumberName = e.name.replace("PartId", "SerialNumber");
+        $("name=[" + DescriptionName + "]").val($("#" + e.id + "  option:selected").text()); // prop('value', $("#" + e.id + "  option:selected").index());
+
+    }
+    //$("#btnAddPart").click(
+    @*function clickAddPart(e) {
+        var rmaParentDiv = $("div[id^=tabs-" + $('#TabId').val() + "]");
+        var itemIndex = rmaParentDiv.find('.part_details_class').length;
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("NewReturnedPartRecord", "RMAForm")/' + itemIndex,
+            data: JSON.stringify(rmaParentDiv.find('#formParts').serialize()),
+            async: false,
+            success: function (data) {
+                AddPart();
+                //$("#divParts").append(data);
+            },
+            error: function (request, status, error) {
+                alert(error);
+            }
+
+        });*@
+        @*.each(function () {
+            if ($(this).css('display') != 'none') {
+                var itemIndex = $(this).find('.part_details_class').length;
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("NewReturnedPartRecord", "RMAForm")/' + itemIndex,
+                    data: JSON.stringify($(this).find('#formParts').serialize()),
+                    async: false,
+                    success: function (data) {
+                        AddPartHtml();
+                        //$("#divParts").append(data);
+                    },
+                    error: function (request, status, error) {
+                        alert(error);
+                    }
+
+                });
+
+            }
+        });
+
+    } //);*@
+
+    function AddPart() {
+        var rmaParentDiv = $("div[id^=tabs-" + $('#TabId').val() + "]");
+        if (rmaParentDiv.length == 0) {
+            rmaParentDiv = $("div[id='rmaContainer']");
+        }
+
+           
+        var new_part = rmaParentDiv.find(".part_details_class:first").clone();
+        
+        var new_number = rmaParentDiv.find(".part_details_class").length + 1
+        if (new_number > 7) {
+            alert("You have reached the maximum number of parts!");
+            return;
+        }
+        $(new_part).find("input, select").each(function () {
+            $(this).removeAttr("required");
+            $(this).removeAttr("aria-required");
+            $(this).removeClass("wpcf7-validates-as-required");
+        });
+        $(new_part).find("[id$='-error']").remove();
+
+        $(new_part).find("#part_number_heading").text("Part " + new_number);
+        $(new_part).find("#description_heading").text("Description " + new_number);
+        $(new_part).find("#serial_number_heading").text("Serial Number " + new_number);
+        //    $("input[name^='upload-file-']").change(function (event) {
+        //$(new_part).find("input[name$='.SerialNumber']").prop('name', $(this).attr('name').replace('0', new_number - 1));
+
+        $(new_part).find("select[name$='.PartId'],input[name$='.id'],input[name$='.PartName'],input[name$='.SerialNumber']").each(function () {
+            this.name = this.name.replace('0', new_number - 1);
+            this.id = this.id.replace('0', new_number - 1);
+            if (this.name.endsWith('PartId')) {
+
+                $(this).prop('selectedIndex', 0);
+            }
+            else {
+
+                $(this).prop('value', '');
+            }
+        });
+        rmaParentDiv.find("#divParts").append(new_part);
+        //var rmaParentDiv = $("div[id^=tabs-]").each(function () {
+        //    if ($(this).css('display') != 'none') {
+        //        var new_part = $(this).find("#part_details").clone();
+        //        var new_number = $(this).find(".part_details_class").length + 1
+
+        //        $(new_part).find("#part_number_heading").text("Part Number " + new_number);
+        //        $(new_part).find("#description_heading").text("Description " + new_number);
+        //        $(new_part).find("#serial_number_heading").text("Serial Number " + new_number);
+        //        //    $("input[name^='upload-file-']").change(function (event) {
+        //        //$(new_part).find("input[name$='.SerialNumber']").prop('name', $(this).attr('name').replace('0', new_number - 1));
+
+        //        $(new_part).find("select[name$='.PartId'],input[name$='.id'],input[name$='.PartName'],input[name$='.SerialNumber']").each(function () {
+        //            this.name = this.name.replace('0', new_number - 1);
+        //            this.id = this.id.replace('0', new_number - 1);
+        //            if (this.name.endsWith('PartId')) {
+
+        //                $(this).prop('selectedIndex', 0);
+        //            }
+        //            else {
+
+        //                $(this).prop('value', '');
+        //            }
+        //        });
+        //        $(this).find("#divParts").append(new_part);
+        //    }
+        //});
+    }
+
+</script>

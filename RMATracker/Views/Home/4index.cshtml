@@ -1,0 +1,1264 @@
+﻿@model RMATracker.Models.RMATrackerViewModel
+@model RMATracker.Models.RMATrackerViewModel
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<!DOCTYPE html>
+
+<html class=" js flexbox flexboxlegacy canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths" style="height: 100%;">
+<head>
+
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="http://parabit.com/wp-content/themes/parabit-2015/yamm/yamm.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <script async="" src="//www.google-analytics.com/analytics.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+
+
+    <!-- This site is optimized with the Yoast SEO plugin v7.6.1 - https://yoast.com/wordpress/plugins/seo/ -->
+    <title>RMA - Securitas -Bank of America | Parabit Systems</title>
+    <link rel="canonical" href="http://parabit.com/securitas/rma-boa/">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="RMA - Securitas -Bank of America | Parabit Systems">
+    <meta property="og:url" content="http://parabit.com/securitas/rma-boa/">
+    <meta property="og:site_name" content="Parabit Systems">
+    <meta property="article:publisher" content="https://www.facebook.com/ParabitSystems/">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="RMA - Securitas -Bank of America | Parabit Systems">
+    <meta name="twitter:site" content="ParabitSystems">
+    <meta name="twitter:creator" content="ParabitSystems">
+    <script type="application/ld+json">
+        {"@@context":"https:\/\/schema.org","@@type":"Organization","url":"http:\/\/parabit.com\/","sameAs":["https:\/\/www.facebook.com\/ParabitSystems\/","https:\/\/www.linkedin.com\/company\/1325563?trk=prof-0-ovw-curr_pos","https:\/\/www.youtube.com\/channel\/UCzytGKr1LWF6caDmXIVt2Ng","https:\/\/www.pinterest.com\/ParabitSystems\/","https:\/\/twitter.com\/ParabitSystems"],"@@id":"http:\/\/parabit.com\/#organization","name":"Parabit Systems","logo":"http:\/\/parabit.com\/wp-content\/uploads\/2015\/12\/logo.png"}
+    </script>
+    <!-- / Yoast SEO plugin. -->
+
+    <link rel="dns-prefetch" href="//ajax.googleapis.com">
+    <link rel="dns-prefetch" href="//maxcdn.bootstrapcdn.com">
+    <link rel="dns-prefetch" href="//s.w.org">
+    <script type="text/javascript">
+        window._wpemojiSettings = { "baseUrl": "https:\/\/s.w.org\/images\/core\/emoji\/2.4\/72x72\/", "ext": ".png", "svgUrl": "https:\/\/s.w.org\/images\/core\/emoji\/2.4\/svg\/", "svgExt": ".svg", "source": { "concatemoji": "http:\/\/parabit.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.9.6" } };
+        !function (a, b, c) { function d(a, b) { var c = String.fromCharCode; l.clearRect(0, 0, k.width, k.height), l.fillText(c.apply(this, a), 0, 0); var d = k.toDataURL(); l.clearRect(0, 0, k.width, k.height), l.fillText(c.apply(this, b), 0, 0); var e = k.toDataURL(); return d === e } function e(a) { var b; if (!l || !l.fillText) return !1; switch (l.textBaseline = "top", l.font = "600 32px Arial", a) { case "flag": return !(b = d([55356, 56826, 55356, 56819], [55356, 56826, 8203, 55356, 56819])) && (b = d([55356, 57332, 56128, 56423, 56128, 56418, 56128, 56421, 56128, 56430, 56128, 56423, 56128, 56447], [55356, 57332, 8203, 56128, 56423, 8203, 56128, 56418, 8203, 56128, 56421, 8203, 56128, 56430, 8203, 56128, 56423, 8203, 56128, 56447]), !b); case "emoji": return b = d([55357, 56692, 8205, 9792, 65039], [55357, 56692, 8203, 9792, 65039]), !b }return !1 } function f(a) { var c = b.createElement("script"); c.src = a, c.defer = c.type = "text/javascript", b.getElementsByTagName("head")[0].appendChild(c) } var g, h, i, j, k = b.createElement("canvas"), l = k.getContext && k.getContext("2d"); for (j = Array("flag", "emoji"), c.supports = { everything: !0, everythingExceptFlag: !0 }, i = 0; i < j.length; i++)c.supports[j[i]] = e(j[i]), c.supports.everything = c.supports.everything && c.supports[j[i]], "flag" !== j[i] && (c.supports.everythingExceptFlag = c.supports.everythingExceptFlag && c.supports[j[i]]); c.supports.everythingExceptFlag = c.supports.everythingExceptFlag && !c.supports.flag, c.DOMReady = !1, c.readyCallback = function () { c.DOMReady = !0 }, c.supports.everything || (h = function () { c.readyCallback() }, b.addEventListener ? (b.addEventListener("DOMContentLoaded", h, !1), a.addEventListener("load", h, !1)) : (a.attachEvent("onload", h), b.attachEvent("onreadystatechange", function () { "complete" === b.readyState && c.readyCallback() })), g = c.source || {}, g.concatemoji ? f(g.concatemoji) : g.wpemoji && g.twemoji && (f(g.twemoji), f(g.wpemoji))) }(window, document, window._wpemojiSettings);
+    </script>
+    <script src="http://parabit.com/wp-includes/js/wp-emoji-release.min.js?ver=4.9.6" type="text/javascript" defer=""></script>
+    <style type="text/css">
+        img.wp-smiley,
+        img.emoji {
+            display: inline !important;
+            border: none !important;
+            box-shadow: none !important;
+            height: 1em !important;
+            width: 1em !important;
+            margin: 0 .07em !important;
+            vertical-align: -0.1em !important;
+            background: none !important;
+            padding: 0 !important;
+        }
+    </style>
+    <link rel="stylesheet" id="jquery-ui-css-css" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.min.css?ver=4.9.6" type="text/css" media="all">
+    <link rel="stylesheet" id="font-awesome-smarty-css" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css?ver=4.9.6" type="text/css" media="all">
+    <link rel="stylesheet" id="cdm-style-css" href="http://parabit.com/wp-content/plugins/sp-client-document-manager/style.css?ver=3.0.9" type="text/css" media="all">
+    <link rel="stylesheet" id="cdm_reverse_order-css" href="http://parabit.com/wp-content/plugins/sp-client-document-manager/css/breadcrumbs.css?ver=4.9.6" type="text/css" media="all">
+    <link rel="stylesheet" id="bootstrap-css-css" href="http://parabit.com/wp-content/themes/parabit-2015/css/bootstrap.min.css?ver=3.3.4" type="text/css" media="all">
+    <link rel="stylesheet" id="bst-css-css" href="http://parabit.com/wp-content/themes/parabit-2015/css/bst.css" type="text/css" media="all">
+    <script type="text/javascript" src="http://parabit.com/wp-includes/js/jquery/jquery.js?ver=1.12.4"></script>
+    <script type="text/javascript" src="http://parabit.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.1"></script>
+    <script type="text/javascript" src="http://parabit.com/wp-content/plugins/sp-client-document-manager/js/jquery.remodal.js?ver=4.9.6"></script>
+    <script type="text/javascript" src="http://parabit.com/wp-content/plugins/sp-client-document-manager/js/jquery.responsive.tabs.js?ver=4.9.6"></script>
+    <script type="text/javascript" src="http://parabit.com/wp-includes/js/jquery/ui/core.min.js?ver=1.11.4"></script>
+    <script type="text/javascript" src="http://parabit.com/wp-includes/js/jquery/ui/widget.min.js?ver=1.11.4"></script>
+    <script type="text/javascript" src="http://parabit.com/wp-includes/js/jquery/ui/button.min.js?ver=1.11.4"></script>
+    <script type="text/javascript" src="http://parabit.com/wp-includes/js/jquery/ui/mouse.min.js?ver=1.11.4"></script>
+    <script type="text/javascript" src="http://parabit.com/wp-includes/js/jquery/ui/resizable.min.js?ver=1.11.4"></script>
+    <script type="text/javascript" src="http://parabit.com/wp-includes/js/jquery/ui/draggable.min.js?ver=1.11.4"></script>
+    <script type="text/javascript" src="http://parabit.com/wp-includes/js/jquery/ui/position.min.js?ver=1.11.4"></script>
+    <script type="text/javascript" src="http://parabit.com/wp-includes/js/jquery/ui/dialog.min.js?ver=1.11.4"></script>
+    <script type="text/javascript">
+        var mejsL10n = { "language": "en", "strings": { "mejs.install-flash": "You are using a browser that does not have Flash player enabled or installed. Please turn on your Flash player plugin or download the latest version from https:\/\/get.adobe.com\/flashplayer\/", "mejs.fullscreen-off": "Turn off Fullscreen", "mejs.fullscreen-on": "Go Fullscreen", "mejs.download-video": "Download Video", "mejs.fullscreen": "Fullscreen", "mejs.time-jump-forward": ["Jump forward 1 second", "Jump forward %1 seconds"], "mejs.loop": "Toggle Loop", "mejs.play": "Play", "mejs.pause": "Pause", "mejs.close": "Close", "mejs.time-slider": "Time Slider", "mejs.time-help-text": "Use Left\/Right Arrow keys to advance one second, Up\/Down arrows to advance ten seconds.", "mejs.time-skip-back": ["Skip back 1 second", "Skip back %1 seconds"], "mejs.captions-subtitles": "Captions\/Subtitles", "mejs.captions-chapters": "Chapters", "mejs.none": "None", "mejs.mute-toggle": "Mute Toggle", "mejs.volume-help-text": "Use Up\/Down Arrow keys to increase or decrease volume.", "mejs.unmute": "Unmute", "mejs.mute": "Mute", "mejs.volume-slider": "Volume Slider", "mejs.video-player": "Video Player", "mejs.audio-player": "Audio Player", "mejs.ad-skip": "Skip ad", "mejs.ad-skip-info": ["Skip in 1 second", "Skip in %1 seconds"], "mejs.source-chooser": "Source Chooser", "mejs.stop": "Stop", "mejs.speed-rate": "Speed Rate", "mejs.live-broadcast": "Live Broadcast", "mejs.afrikaans": "Afrikaans", "mejs.albanian": "Albanian", "mejs.arabic": "Arabic", "mejs.belarusian": "Belarusian", "mejs.bulgarian": "Bulgarian", "mejs.catalan": "Catalan", "mejs.chinese": "Chinese", "mejs.chinese-simplified": "Chinese (Simplified)", "mejs.chinese-traditional": "Chinese (Traditional)", "mejs.croatian": "Croatian", "mejs.czech": "Czech", "mejs.danish": "Danish", "mejs.dutch": "Dutch", "mejs.english": "English", "mejs.estonian": "Estonian", "mejs.filipino": "Filipino", "mejs.finnish": "Finnish", "mejs.french": "French", "mejs.galician": "Galician", "mejs.german": "German", "mejs.greek": "Greek", "mejs.haitian-creole": "Haitian Creole", "mejs.hebrew": "Hebrew", "mejs.hindi": "Hindi", "mejs.hungarian": "Hungarian", "mejs.icelandic": "Icelandic", "mejs.indonesian": "Indonesian", "mejs.irish": "Irish", "mejs.italian": "Italian", "mejs.japanese": "Japanese", "mejs.korean": "Korean", "mejs.latvian": "Latvian", "mejs.lithuanian": "Lithuanian", "mejs.macedonian": "Macedonian", "mejs.malay": "Malay", "mejs.maltese": "Maltese", "mejs.norwegian": "Norwegian", "mejs.persian": "Persian", "mejs.polish": "Polish", "mejs.portuguese": "Portuguese", "mejs.romanian": "Romanian", "mejs.russian": "Russian", "mejs.serbian": "Serbian", "mejs.slovak": "Slovak", "mejs.slovenian": "Slovenian", "mejs.spanish": "Spanish", "mejs.swahili": "Swahili", "mejs.swedish": "Swedish", "mejs.tagalog": "Tagalog", "mejs.thai": "Thai", "mejs.turkish": "Turkish", "mejs.ukrainian": "Ukrainian", "mejs.vietnamese": "Vietnamese", "mejs.welsh": "Welsh", "mejs.yiddish": "Yiddish" } };
+    </script>
+    <script type="text/javascript" src="http://parabit.com/wp-includes/js/mediaelement/mediaelement-and-player.min.js?ver=4.2.6-78496d1"></script>
+    <script type="text/javascript" src="http://parabit.com/wp-includes/js/mediaelement/mediaelement-migrate.min.js?ver=4.9.6"></script>
+    <script type="text/javascript">
+        /* <![CDATA[ */
+        var _wpmejsSettings = { "pluginPath": "\/wp-includes\/js\/mediaelement\/", "classPrefix": "mejs-", "stretching": "responsive" };
+        /* ]]> */
+    </script>
+    <script type="text/javascript" src="http://parabit.com/wp-content/plugins/sp-client-document-manager/js/jquery.validate.js?ver=4.9.6"></script>
+    <script type="text/javascript" src="http://parabit.com/wp-content/plugins/sp-client-document-manager/js/jquery.cookie.js?ver=4.9.6"></script>
+    <script type="text/javascript">
+        /* <![CDATA[ */
+        var sp_vars = { "ajax_url": "http:\/\/parabit.com\/wp-admin\/admin-ajax.php", "plugin_url": "http:\/\/parabit.com\/wp-content\/plugins\/sp-client-document-manager\/", "uid": "0", "sp_cu_user_projects_required": "0" };
+        /* ]]> */
+    </script>
+    <script type="text/javascript" src="http://parabit.com/wp-content/plugins/sp-client-document-manager/upload.js?ver=4.9.6"></script>
+    <script type="text/javascript" src="http://parabit.com/wp-content/plugins/sp-client-document-manager/js/jquery.modal.responsive.js?ver=4.9.6"></script>
+    <script type="text/javascript" src="http://parabit.com/wp-content/plugins/sp-client-document-manager/js/reverse.js?ver=4.9.6"></script>
+    <script type="text/javascript">
+        /* <![CDATA[ */
+        var sp_cdm_link = { "ajax": "http:\/\/parabit.com\/wp-admin\/admin-ajax.php" };
+        /* ]]> */
+    </script>
+    <script type="text/javascript" src="http://parabit.com/wp-content/plugins/sp-client-document-manager/integrated/sp-cdm-link/js/scripts.js?ver=4.9.6"></script>
+    <script type="text/javascript">
+        /* <![CDATA[ */
+        var sp_cdm_media = { "ajax": "http:\/\/parabit.com\/wp-admin\/admin-ajax.php" };
+        /* ]]> */
+    </script>
+    <script type="text/javascript" src="http://parabit.com/wp-content/plugins/sp-client-document-manager/integrated/sp-cdm-media/js/scripts.js?ver=4.9.6"></script>
+    <link rel="https://api.w.org/" href="http://parabit.com/wp-json/">
+    <link rel="alternate" type="application/json+oembed" href="http://parabit.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fparabit.com%2Fsecuritas%2Frma-boa%2F">
+    <link rel="alternate" type="text/xml+oembed" href="http://parabit.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fparabit.com%2Fsecuritas%2Frma-boa%2F&amp;format=xml">
+    <!-- <meta name="NextGEN" version="3.0.1" /> -->
+    <link rel="stylesheet" id="dashicons-css" href="http://parabit.com/wp-includes/css/dashicons.min.css?ver=4.9.6" type="text/css" media="all">
+    <link rel="stylesheet" id="thickbox-css" href="http://parabit.com/wp-includes/js/thickbox/thickbox.css?ver=4.9.6" type="text/css" media="all">
+    <style type="text/css">
+        div.wpcf7 .screen-reader-response {
+            position: absolute;
+            overflow: hidden;
+            clip: rect(1px, 1px, 1px, 1px);
+            height: 1px;
+            width: 1px;
+            margin: 0;
+            padding: 0;
+            border: 0;
+        }
+
+        div.wpcf7 .form-inline img.ajax-loader {
+            display: inline;
+        }
+
+        div.wpcf7 .ajax-loader {
+            visibility: hidden;
+            display: inline-block;
+            background-image: url('http://parabit.com/wp-content/plugins/contact-form-7/images/ajax-loader.gif');
+            width: 16px;
+            height: 16px;
+            border: none;
+            padding: 0;
+            margin: 0 0 0 4px;
+            vertical-align: middle;
+        }
+
+            div.wpcf7 .ajax-loader.is-active {
+                visibility: visible;
+            }
+
+        div.wpcf7 div.ajax-error {
+            display: none;
+        }
+
+        div.wpcf7 .wpcf7-display-none {
+            display: none;
+        }
+
+        div.wpcf7 .placeheld {
+            color: #888;
+        }
+
+        div.wpcf7 .wpcf7-recaptcha iframe {
+            margin-bottom: 0;
+        }
+
+        div.wpcf7 input[type="file"] {
+            cursor: pointer;
+        }
+
+            div.wpcf7 input[type="file"]:disabled {
+                cursor: default;
+            }
+
+        div.wpcf7 .form-inline .form-group {
+            max-width: 250px;
+        }
+
+        div.wpcf7 .input-group-addon img {
+            height: 100%;
+            width: auto;
+            max-width: none !important;
+            border-radius: 5px;
+        }
+
+        div.wpcf7 .input-group-addon.input-group-has-image {
+            padding: 0;
+        }
+    </style>
+    <style type="text/css">
+        .recentcomments a {
+            display: inline !important;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+    </style>
+    <style type="text/css" id="wp-custom-css">
+        select.wpcf7-form-control.wpcf7-select.wpcf7-validates-as-required.rma-called.form-control {
+            width: 10%;
+        }
+
+        input.wpcf7-form-control.wpcf7-text.rma-smalltext.form-control, input.wpcf7-form-control.wpcf7-date.wpcf7-validates-as-date.rma-calendar.form-control, input.wpcf7-form-control.wpcf7-text.rma-zip-code.form-control, input.wpcf7-form-control.wpcf7-text.wpcf7-validates-as-required.rma-calendar.form-control {
+            width: 22%;
+        }
+
+        textarea.wpcf7-form-control.wpcf7-textarea.rma-textarea.form-control, select.wpcf7-form-control.wpcf7-select.wpcf7-validates-as-required.rma-dropdown.form-control, input.wpcf7-form-control.wpcf7-text.wpcf7-validates-as-required.rma-textfield.form-control {
+            width: 75%;
+        }
+
+        input.wpcf7-form-control.wpcf7-text.rma-file-description.form-control {
+            width: 50%;
+        }
+
+
+
+
+        #left {
+            width: 47%;
+            float: left;
+            margin-right: 6%;
+        }
+
+        #right {
+            width: 47%;
+            float: left;
+        }
+
+        .clearfix:after {
+            content: "\0020";
+            display: block;
+            height: 0;
+            clear: both;
+            visibility: hidden;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .clearfix {
+            display: block;
+        }
+
+        .container1:after { /*clear float*/
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        .section1 {
+            float: left;
+            width: 33.3333%;
+            border: 0px;
+            box-sizing: border-box;
+            padding: 10px 20px 10px 0px;
+        }
+
+        @@media (max-width: 768px) { /*breakpoint*/
+            .section1 {
+                float: none;
+                width: auto;
+            }
+        }
+
+        .imgsize {
+            width: 250px !important;
+        }
+    </style>
+    <link rel="shortcut icon" href="http://parabit.com/wp-content/uploads/2017/09/favicon.ico">
+    <link href="http://parabit.com/wp-content/themes/parabit-2015/css/animate.css" rel="stylesheet" type="text/css">
+    <link href="http://parabit.com/wp-content/themes/parabit-2015/style.css" rel="stylesheet" type="text/css">
+    <link href="http://parabit.com/wp-content/themes/parabit-2015/responsive.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic|Montserrat:400,700" rel="stylesheet" type="text/css">
+
+    <script>
+        (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-25232888-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+
+    <link rel="stylesheet" id="jquery-remodal-css" href="http://parabit.com/wp-content/plugins/sp-client-document-manager/css/jquery.remodal.css?ver=4.9.6" type="text/css" media="all">
+    <link rel="stylesheet" id="jquery-responsive-tabs-css" href="http://parabit.com/wp-content/plugins/sp-client-document-manager/css/jquery.responsive.tabs.css?ver=4.9.6" type="text/css" media="all">
+    <link type="text/css" rel="stylesheet" charset="UTF-8" href="https://translate.googleapis.com/translate_static/css/translateelement.css">
+    <script type="text/javascript" charset="UTF-8" src="https://translate.googleapis.com/translate_static/js/element/main.js"></script>
+    <script type="text/javascript" charset="UTF-8" src="https://translate.googleapis.com/element/TE_20180625_00/e/js/element/element_main.js"></script>
+</head>
+
+<body class="page-template-default page page-id-1434 page-child parent-pageid-1425 chrome" style="position: relative; min-height: 100%; top: 0px;">
+
+    <!--[if lt IE 8]>
+    <div class="alert alert-warning">
+    You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.
+    </div>
+    <![endif]-->
+
+
+    <div class="head-top">
+        <div class="container">
+            <div class="row">
+
+
+
+
+
+
+
+
+
+                <div class="col-xs-5 col-sm-3 social-icons">
+                    <ul class="list-unstyled list-inline lead">
+                        <li><a href="https://www.facebook.com/ParabitSystems/" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="https://twitter.com/ParabitSystems" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="https://www.linkedin.com/company/1325563?trk=prof-0-ovw-curr_pos" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+                        <li><a href="https://www.pinterest.com/ParabitSystems/" target="_blank"><i class="fa fa-pinterest-p"></i></a></li>
+                        <li><a href="https://plus.google.com/+ParabitSystemsIncRoosevelt" target="_blank"><i class="fa fa-google-plus"></i></a></li>
+                    </ul>
+                </div>
+
+                <div class="col-xs-7 col-sm-9 top-links">
+
+                    <ul class="list-unstyled list-inline pull-right">
+
+                        <li><a href="http://parabit.com/tradeshows">Tradeshows</a></li>
+                        <li><a href="http://parabit.com/catalogs-warranty">Catalogs / Warranty</a></li>
+                        <li><a href="http://parabit.com/partners-resellers">Partners / Resellers</a></li>
+                        <li><a href="http://parabit.com/careers">Careers</a></li>
+                        <li><a href="http://parabit.com/blog/">Blog</a></li>
+                        <li><a href="http://parabit.com/press/">Press</a></li>
+                        <li style="color: #fff;">&nbsp;  &nbsp; 1 (888) 3-<span style="color: #EE661A;">PARABIT</span></li>
+                    </ul>
+
+
+
+
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+    <div id="navigation" class="">
+        <div class="navbar yamm navbar-default">
+            <div class="container">
+
+                <div class="navbar-header">
+                    <button type="button" data-toggle="collapse" data-target="#navbar-collapse-1" class="navbar-toggle"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+
+                    <a href="http://parabit.com/index.php" class="navbar-brand">
+                        <div class="svg-logo">
+                            <object data="http://parabit.com/wp-content/themes/parabit-2015/img/parabit-logo.svg" type="image/svg+xml">
+                                <img src="http://parabit.com/wp-content/themes/parabit-2015/img/logo.png">
+                            </object>
+                        </div>
+                    </a>
+                </div>
+
+
+
+
+
+
+
+                <div id="navbar-collapse-1" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-right">
+
+
+                        <li><a href="http://parabit.com/">Home</a></li>
+
+                        <li><a href="http://parabit.com/about">About</a></li>
+
+
+                        <!-- Tab demo -->
+                        <li class="dropdown yamm-fw">
+                            <a href="#" data-toggle="dropdown" class="dropdown-toggle">Solutions <b class="caret"></b></a>
+
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <div class="yamm-content">
+
+
+                                        <div class="container">
+                                            <div class="row">
+
+                                                <div class="col-sm-4 border-rt">
+                                                    <div class="row">
+
+                                                        <div class="col-xs-12">
+                                                            <h3 class="no-top">Security Products</h3>
+                                                            <p class="no-top"><small>Total security solutions to fit any budget.</small></p>
+                                                            <ul>
+                                                                <li><a href="http://parabit.com/solutions/access-control">ATM Lobby Access Control</a></li>
+                                                                <li><a href="http://parabit.com/solutions/building-access-control">Building/Telephone Access Control</a></li>
+                                                                <li><a href="http://parabit.com/solutions/telephones">Courtesy/Emergency Telephones</a></li>
+                                                                <li><a href="http://parabit.com/solutions/surveillance">HD Surveillance</a></li>
+
+                                                                <li><a href="http://parabit.com/solutions/light-sensor/light-sensor">Light Sensor</a></li>
+                                                                <li><a href="http://parabit.com/solutions/kiosks/visitor-management-kiosks/">Visitor Management Solutions</a></li>
+                                                                <li><a href="http://parabit.com/solutions/access-control/custom-door-hardware/"> Door Lock/Exit Hardware</a></li>
+                                                                <li><a href="http://parabit.com/solutions/surveillance/">Specialty Cameras/Camera Enclosures</a></li>
+
+                                                            </ul>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+
+
+                                                <div class="col-sm-4 border-rt">
+                                                    <div class="row">
+
+                                                        <div class="col-xs-12">
+                                                            <h3 class="no-top">Self Service</h3>
+                                                            <p class="no-top"><small>Provide on-demand information and increase revenue.</small></p>
+                                                            <ul>
+                                                                <li><a href="http://parabit.com/solutions/atm-accessories">ATM Surrounds, Toppers &amp; Accessories</a></li>
+                                                                <li><a href="http://parabit.com/solutions/kiosks/mobile-device-charging-stations">Charging Stations</a></li>
+                                                                <li><a href="http://parabit.com/solutions/software-solutions/">Digital Signage Software</a></li>
+                                                                <li><a href="http://parabit.com/solutions/kiosks">Kiosks</a></li>
+                                                                <li><a href="http://parabit.com/solutions/welcome-centers/visitor-welcome-centers">Welcome Centers</a></li>
+
+
+                                                            </ul>
+                                                        </div>
+
+
+                                                    </div>
+                                                </div>
+
+
+
+                                                <div class="col-sm-4">
+                                                    <div class="row">
+
+                                                        <div class="col-xs-12">
+                                                            <h3 class="no-top">Fabrication &amp; Design</h3>
+                                                            <p class="no-top"><small>Custom, American-made work.</small></p>
+                                                            <ul>
+                                                                <li><a href="http://parabit.com/solutions/surveillance/custom-camera-enclosures/">Custom Camera Enclosures</a></li>
+                                                                <li><a href="http://parabit.com/solutions/access-control/custom-mounting-hardware-installations">Custom Door Hardware &amp; Access Control Enclosures</a></li>
+                                                                <li><a href="http://parabit.com/solutions/fabrication-design-services">Design &amp; Fabrication</a></li>
+                                                                <li><a href="http://parabit.com/solutions/fabrication-design-services/stainless-steel-glass-railings/">Stainless Steel &amp; Glass Railings</a></li>
+
+                                                            </ul>
+
+                                                        </div>
+
+
+                                                    </div>
+                                                </div>
+
+
+
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </li>
+                            </ul>
+
+
+                        </li><!-- solutions -->
+
+
+
+
+
+                        <li><a href="http://parabit.com/integration">Integration</a></li>
+
+
+
+
+                        <li class="dropdown">
+                            <a href="#" data-toggle="dropdown" class="dropdown-toggle" aria-expanded="false">Industries <b class="caret"></b></a>
+                            <ul role="menu" class="dropdown-menu classic">
+                                <div class="yamm-content">
+                                    <li><a href="http://parabit.com/tag/aviation-transit">Aviation / Transit</a></li>
+                                    <li><a href="http://parabit.com/tag/banking-credit-union">Banking</a></li>
+                                    <li><a href="http://parabit.com/tag/corporate">Corporate</a></li>
+                                    <li><a href="http://parabit.com/tag/correctional-facilities">Correctional Facilities</a></li>
+                                    <li><a href="http://parabit.com/tag/education">Education</a></li>
+                                    <li><a href="http://parabit.com/tag/events-tradeshows">Event &amp; Tradeshows</a></li>
+                                    <li><a href="http://parabit.com/tag/government">Government</a></li>
+                                    <li><a href="http://parabit.com/tag/healthcare">Healthcare</a></li>
+                                    <li><a href="http://parabit.com/tag/hospitality">Hospitality</a></li>
+                                    <li><a href="http://parabit.com/tag/museums">Museums</a></li>
+                                    <li><a href="http://parabit.com/tag/retail">Retail</a></li>
+                                    <li><a href="http://parabit.com/tag/security">Security</a></li>
+                                </div>
+                            </ul>
+                        </li>
+
+
+
+
+
+
+                        <li class="dropdown">
+                            <a href="#" data-toggle="dropdown" class="dropdown-toggle" aria-expanded="false">Media <b class="caret"></b></a>
+                            <ul role="menu" class="dropdown-menu classic">
+                                <div class="yamm-content">
+                                    <li><a href="http://parabit.com/gallery">Gallery</a></li>
+                                    <li><a href="http://parabit.com/presentations">Presentations</a></li>
+                                    <li><a href="http://parabit.com/webinars">Webinars</a></li>
+
+                                    <li><a href="http://parabit.com/white-papers">White Papers</a></li>
+                                </div>
+                            </ul>
+                        </li>
+
+                        <li><a href="http://parabit.com/clients">Clients</a></li>
+
+
+                        <li class="mobi-x"><a href="http://parabit.com/tradeshows">Tradeshows</a></li>
+                        <li class="mobi-x"><a href="http://parabit.com/catalogs-warranty">Catalogs / Warranty</a></li>
+                        <li class="mobi-x"><a href="http://parabit.com/partners-resellers">Partners / Resellers</a></li>
+                        <li class="mobi-x"><a href="http://parabit.com/careers">Careers</a></li>
+                        <li class="mobi-x"><a href="http://parabit.com/blog/">Blog</a></li>
+
+
+                        <li><a href="http://parabit.com/contact">Contact Us</a></li>
+
+
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#myModal">
+                                <i class="fa fa-search"></i>
+                            </a>
+                        </li>
+
+
+
+
+                    </ul>
+                </div>
+
+
+
+            </div>
+        </div><!-- navbar yamm -->
+    </div><!-- #navigation -->
+
+
+
+
+
+
+
+
+    <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?lang=css"></script>
+    <script type="text/javascript">
+        jQuery(function () {
+            window.prettyPrint && prettyPrint()
+            jQuery(document).on('click', '.yamm .dropdown-menu', function (e) {
+                e.stopPropagation()
+            })
+        })
+    </script>
+
+
+    <!-- Modal -->
+    <div class="modal fade modal-search" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+
+
+
+
+                    <form role="search" method="get" id="searchform" class="wp-search" action="http://parabit.com/">
+
+
+                        <div>
+                            <input type="text" value="" name="s" id="s" class="big-search form-control" placeholder="Enter a search term ...">
+
+
+
+                            <button type="submit" id="searchsubmit" class="pull-right search-but">
+                                <i class="fa fa-search"></i>
+                            </button>
+
+
+                        </div>
+                    </form>
+
+
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+
+
+    <script type="text/javascript">
+        $(window).scroll(function () {
+            var scroll = $(window).scrollTop();
+
+            if (scroll >= 200) {
+                $("#navigation").addClass("sticky");
+                $(".navbar").addClass("stick-logo");
+                $("body").addClass("stick-padd");
+            } else {
+                $("#navigation").removeClass("sticky");
+                $(".navbar").removeClass("stick-logo");
+                $("body").removeClass("stick-padd");
+            }
+        });
+    </script>
+    <div class="page-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+
+                    <header>
+                        <h1>RMA – Securitas -Bank of America</h1>
+                        <p id="breadcrumbs"><span xmlns:v="http://rdf.data-vocabulary.org/#"><span typeof="v:Breadcrumb"><a href="http://parabit.com/" rel="v:url" property="v:title">Home</a> / <span rel="v:child" typeof="v:Breadcrumb"><a href="http://parabit.com/securitas/" rel="v:url" property="v:title">Securitas</a> / <strong class="breadcrumb_last">RMA – Securitas -Bank of America</strong></span></span></span></p>
+                    </header>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="container">
+        <div class="row">
+
+            <div class="col-xs-12 col-sm-8">
+                <div id="content" role="main">
+                    <article role="article" id="post_1434" class="post-1434 page type-page status-publish hentry">
+
+                        <div role="form" class="wpcf7" id="wpcf7-f1433-p1434-o1" lang="en-US" dir="ltr">
+                            
+                            <form action="/securitas/rma-boa/#wpcf7-f1433-p1434-o1" method="post" class="wpcf7-form invalid" enctype="multipart/form-data" novalidate="novalidate">
+                                <div style="display: none;">
+                                    <input type="hidden" name="_wpcf7" value="1433">
+                                    <input type="hidden" name="_wpcf7_version" value="5.0.1">
+                                    <input type="hidden" name="_wpcf7_locale" value="en_US">
+                                    <input type="hidden" name="_wpcf7_unit_tag" value="wpcf7-f1433-p1434-o1">
+                                    <input type="hidden" name="_wpcf7_container_post" value="1434">
+                                </div>
+                                <font color="red">
+                                    When returning PC Boards or exposed electronics, always place in anti-static pink or silver bags. Failure to place exposed electronics (pc boards) in anti-static packaging voids all warranties. Static destroys electronics.
+                                    All items should be shipped inside boxes with the Case# marked on the box.
+                                    Items received damaged due to improper packaging are the responsibility of the shipper.
+                                    Always provide RMA documentation / Case Numbers with ALL returns (print the email received after submitting the form on the website).
+                                    Please process only one site per RMA form. Do not return equipment from multiple sites on a single RMA form.
+                                    <br><br>
+                                    Equipment to be returned with Case # to<br>
+                                    Parabit Systems <br>
+                                    35 Debevoise Ave<br>
+                                    Roosevelt, NY 11575<br>
+                                    Attention RMA Depatment<br>
+                                    Attention: George Koebel, Paul Vitoria<br>
+
+                                </font>
+                                <br><br>
+
+
+                                * Required Fields <br> <br>
+                                <strong>Problem Description:*</strong>  <br>
+                                <div class="form-group call-number has-error"><label class="">Vendor Call # (TR #): <span class="required">*</span></label><input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required wpcf7-not-valid rma-calendar form-control" name="call-number" type="text" value="" aria-invalid="false" aria-required="true" required=""><span class="help-block"><div class="wpcf7-not-valid-tip alert alert-warning">The field is required.</div></span></div> <br>
+
+                                <div class="container1">
+                                    <strong>Type of RMA:*</strong>  <br>
+                                    <div class="form-group TypeofRMA"><select class="wpcf7-form-control wpcf7-select wpcf7-validates-as-required section1 form-control" id="TypeofRMA" name="TypeofRMA" aria-invalid="false" aria-required="true" required=""><option value="Pick One" selected="">Pick One</option><option value="Service request">Service request</option><option value="Credit request">Credit request</option></select></div><br><br>
+
+                                    <strong>If Credit then reason for:</strong>  <br>
+                                    <div class="form-group IfCreditReason"><select class="wpcf7-form-control wpcf7-select wpcf7-validates-as-required section1 form-control" id="IfCreditReason" name="IfCreditReason" aria-invalid="false" aria-required="true" required=""><option value="Pick One" selected="">Pick One</option><option value="Job cancelled">Job cancelled</option><option value="No longer required (excess inventory)">No longer required (excess inventory)</option><option value="Wrong part ordered">Wrong part ordered</option><option value="Wrong color">Wrong color</option></select></div><br><br>
+
+                                </div>
+                                <br>
+
+                                <div class="form-group firm-name"><label class="">Firm Name</label><input class="wpcf7-form-control wpcf7-text rma-textfield form-control" name="firm-name" type="text" value="" placeholder="Securitas" aria-invalid="false"></div>
+
+                                <div class="container1">
+                                    <div class="section1"><div class="form-group tech-name has-error"><label class="">Tech Name <span class="required">*</span></label><input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required wpcf7-not-valid form-control" name="tech-name" type="text" value="" aria-invalid="false" aria-required="true" required=""><span class="help-block"><div class="wpcf7-not-valid-tip alert alert-warning">The field is required.</div></span></div></div>
+                                    <div class="section1"><div class="form-group tech-email has-error"><label class="">Tech Email <span class="required">*</span></label><input class="wpcf7-form-control wpcf7-text wpcf7-email wpcf7-validates-as-required wpcf7-validates-as-email wpcf7-not-valid form-control" name="tech-email" type="email" value="" aria-invalid="false" aria-required="true" required=""><span class="help-block"><div class="wpcf7-not-valid-tip alert alert-warning">The field is required.</div></span></div></div>
+                                    <div class="section1"><div class="form-group tech-phone has-error"><label class="">Tech Phone <span class="required">*</span></label><input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required wpcf7-not-valid form-control" name="tech-phone" type="text" value="" aria-invalid="false" aria-required="true" required=""><span class="help-block"><div class="wpcf7-not-valid-tip alert alert-warning">The field is required.</div></span></div></div>
+                                </div>
+
+                                <br><br>
+                                <fieldset>
+                                    <legend>Return Address</legend>
+                                    <div class="form-group return-street-address has-error"><label class="">Street Address <span class="required">*</span></label><input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required wpcf7-not-valid rma-textfield form-control" name="return-street-address" type="text" value="" aria-invalid="false" aria-required="true" required=""><span class="help-block"><div class="wpcf7-not-valid-tip alert alert-warning">The field is required.</div></span></div>
+
+                                    <div class="container1">
+                                        <div class="section1"><div class="form-group return-city has-error"><label class="">City <span class="required">*</span></label><input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required wpcf7-not-valid form-control" name="return-city" type="text" value="" aria-invalid="false" aria-required="true" required=""><span class="help-block"><div class="wpcf7-not-valid-tip alert alert-warning">The field is required.</div></span></div></div>
+                                        <div class="section1"><div class="form-group return-state has-error"><label class="">State <span class="required">*</span></label><input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required wpcf7-not-valid rma-short form-control" name="return-state" type="text" value="" aria-invalid="false" aria-required="true" required=""><span class="help-block"><div class="wpcf7-not-valid-tip alert alert-warning">The field is required.</div></span></div></div>
+                                        <div class="section1"><div class="form-group return-zip has-error"><label class="">Zip Code <span class="required">*</span></label><input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required wpcf7-not-valid form-control" name="return-zip" type="text" value="" aria-invalid="false" aria-required="true" required=""><span class="help-block"><div class="wpcf7-not-valid-tip alert alert-warning">The field is required.</div></span></div></div>
+                                    </div>
+                                </fieldset>
+                                <br><br>
+                                <fieldset>
+                                    <legend>Bank Name &amp; Address</legend>
+                                    <div class="form-group bank-name"><label class="">Bank Name</label><input class="wpcf7-form-control wpcf7-text rma-textfield form-control" name="bank-name" type="text" value="" placeholder="Bank of America" aria-invalid="false"></div><br>
+
+                                    <div class="form-group bank-street-address has-error"><label class="">Service Call Street Address <span class="required">*</span></label><input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required wpcf7-not-valid rma-textfield form-control" name="bank-street-address" type="text" value="" aria-invalid="false" aria-required="true" required=""><span class="help-block"><div class="wpcf7-not-valid-tip alert alert-warning">The field is required.</div></span></div>
+
+                                    <div class="container1">
+                                        <div class="section1"><div class="form-group bank-city has-error"><label class="">City <span class="required">*</span></label><input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required wpcf7-not-valid form-control" name="bank-city" type="text" value="" aria-invalid="false" aria-required="true" required=""><span class="help-block"><div class="wpcf7-not-valid-tip alert alert-warning">The field is required.</div></span></div></div>
+                                        <div class="section1"><div class="form-group bank-state has-error"><label class="">State <span class="required">*</span></label><input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required wpcf7-not-valid rma-short form-control" name="bank-state" type="text" value="" aria-invalid="false" aria-required="true" required=""><span class="help-block"><div class="wpcf7-not-valid-tip alert alert-warning">The field is required.</div></span></div></div>
+                                        <div class="section1"><div class="form-group bank-zip has-error"><label class="">Zip Code <span class="required">*</span></label><input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required wpcf7-not-valid form-control" name="bank-zip" type="text" value="" aria-invalid="false" aria-required="true" required=""><span class="help-block"><div class="wpcf7-not-valid-tip alert alert-warning">The field is required.</div></span></div></div>
+                                    </div>
+                                </fieldset>
+
+
+
+
+                                <strong>Date of Service Call:*</strong> <div class="form-group service-call-date has-error"><input class="wpcf7-form-control wpcf7-date wpcf7-validates-as-required wpcf7-validates-as-date wpcf7-not-valid rma-calendar form-control" name="service-call-date" type="date" value="" min="" max="" step="" aria-invalid="false" aria-required="true" required=""><span class="help-block"><div class="wpcf7-not-valid-tip alert alert-warning">The field is required.</div></span></div>  <br>
+                                <strong>Problem Description:*</strong>  <br>
+                                <div class="form-group problem-menu has-error"><select class="wpcf7-form-control wpcf7-select wpcf7-validates-as-required wpcf7-not-valid rma-dropdown form-control" name="problem-menu" aria-invalid="false" aria-required="true" required=""><option value="" selected="">---</option><option value="Card swipe not reading cards">Card swipe not reading cards</option><option value="Reader flashing red/ access denied">Reader flashing red/ access denied</option><option value="Phones/Contactless cards not being read">Phones/Contactless cards not being read</option><option value="False skimming/overlay alarm">False skimming/overlay alarm</option><option value="Tamper alarm active">Tamper alarm active</option><option value="CableCut alarm active">CableCut alarm active</option><option value="Reader LED not working">Reader LED not working</option><option value="Trouble loading firmware">Trouble loading firmware</option><option value="Controller unresponsive">Controller unresponsive</option><option value="Doors not locking">Doors not locking</option><option value="Doors not opening">Doors not opening</option><option value="Can't connect to controller">Can't connect to controller</option><option value="Other">Other</option></select><span class="help-block"><div class="wpcf7-not-valid-tip alert alert-warning">The field is required.</div></span></div> <br>
+                                <div class="form-group additional-info"><label class="">Additional Information:</label><textarea class="wpcf7-form-control wpcf7-textarea rma-textarea form-control" name="additional-info" rows="4" aria-invalid="false"></textarea></div> <br>
+                                <div class="form-group steps-taken"><label class="">Steps undertaken to Resolve Issues:</label><textarea class="wpcf7-form-control wpcf7-textarea rma-textarea form-control" name="steps-taken" rows="4" aria-invalid="false"></textarea></div> <br>
+
+
+                                <fieldset>
+                                    <legend>Part Number and Serial Number Returns</legend>
+
+
+                                    <i>*Only the 1st Part Number &amp; Serial Number is required</i> <br> <br>
+                                    <div class="container1">
+                                        <div class="section1">
+                                            <strong>Part Number 1:* </strong><div class="form-group part-menu has-error"><select class="wpcf7-form-control wpcf7-select wpcf7-validates-as-required wpcf7-not-valid form-control" name="part-menu" aria-invalid="false" aria-required="true" required=""><option value="" selected="">---</option><option value="V1 Controller PCB 200-10102">V1 Controller PCB 200-10102</option><option value="Reader - MMR 200-10095">Reader - MMR 200-10095</option><option value="Reader - Skimgard 200-10092">Reader - Skimgard 200-10092</option><option value="2nd Card Reader PCB 200-10103">2nd Card Reader PCB 200-10103</option><option value="Power Booster PCB 200-10205">Power Booster PCB 200-10205</option><option value="Modem PC Board 200-10137">Modem PC Board 200-10137</option><option value="I/O PC Board 200-10110">I/O PC Board 200-10110</option><option value="Power Supply">Power Supply</option><option value="Older Controllers">Older Controllers</option><option value="Other">Other</option></select><span class="help-block"><div class="wpcf7-not-valid-tip alert alert-warning">The field is required.</div></span></div>
+                                        </div>
+                                        <div class="section1"><strong>Serial Number 1:* </strong><div class="form-group serial-number has-error"><input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required wpcf7-not-valid form-control" name="serial-number" type="text" value="" aria-invalid="false" aria-required="true" required=""><span class="help-block"><div class="wpcf7-not-valid-tip alert alert-warning">The field is required.</div></span></div></div>
+                                    </div>
+
+                                    <div class="container1">
+                                        <div class="section1">
+                                            <strong>Part Number 2: </strong><div class="form-group part-menu2"><select class="wpcf7-form-control wpcf7-select form-control" name="part-menu2" aria-invalid="false"><option value="" selected="">---</option><option value="V1 Controller PCB 200-10102">V1 Controller PCB 200-10102</option><option value="Reader - MMR 200-10095">Reader - MMR 200-10095</option><option value="Reader - Skimgard 200-10092">Reader - Skimgard 200-10092</option><option value="2nd Card Reader PCB 200-10103">2nd Card Reader PCB 200-10103</option><option value="Power Booster PCB 200-10205">Power Booster PCB 200-10205</option><option value="Modem PC Board 200-10137">Modem PC Board 200-10137</option><option value="I/O PC Board 200-10110">I/O PC Board 200-10110</option><option value="Power Supply">Power Supply</option><option value="Older Controllers">Older Controllers</option><option value="Other">Other</option></select></div>
+                                        </div>
+                                        <div class="section1"><strong>Serial Number 2: </strong><div class="form-group serial-number2"><input class="wpcf7-form-control wpcf7-text form-control" name="serial-number2" type="text" value="" aria-invalid="false"></div></div>
+                                    </div>
+
+                                    <div class="container1">
+                                        <div class="section1">
+                                            <strong>Part Number 3: </strong><div class="form-group part-menu3"><select class="wpcf7-form-control wpcf7-select form-control" name="part-menu3" aria-invalid="false"><option value="" selected="">---</option><option value="V1 Controller PCB 200-10102">V1 Controller PCB 200-10102</option><option value="Reader - MMR 200-10095">Reader - MMR 200-10095</option><option value="Reader - Skimgard 200-10092">Reader - Skimgard 200-10092</option><option value="2nd Card Reader PCB 200-10103">2nd Card Reader PCB 200-10103</option><option value="Power Booster PCB 200-10205">Power Booster PCB 200-10205</option><option value="Modem PC Board 200-10137">Modem PC Board 200-10137</option><option value="I/O PC Board 200-10110">I/O PC Board 200-10110</option><option value="Power Supply">Power Supply</option><option value="Older Controllers">Older Controllers</option><option value="Other">Other</option></select></div>
+                                        </div>
+                                        <div class="section1"><strong>Serial Number 3: </strong><div class="form-group serial-number3"><input class="wpcf7-form-control wpcf7-text form-control" name="serial-number3" type="text" value="" aria-invalid="false"></div></div>
+                                    </div>
+
+                                    <div class="container1">
+                                        <div class="section1">
+                                            <strong>Part Number 4: </strong><div class="form-group part-menu4"><select class="wpcf7-form-control wpcf7-select form-control" name="part-menu4" aria-invalid="false"><option value="" selected="">---</option><option value="V1 Controller PCB 200-10102">V1 Controller PCB 200-10102</option><option value="Reader - MMR 200-10095">Reader - MMR 200-10095</option><option value="Reader - Skimgard 200-10092">Reader - Skimgard 200-10092</option><option value="2nd Card Reader PCB 200-10103">2nd Card Reader PCB 200-10103</option><option value="Power Booster PCB 200-10205">Power Booster PCB 200-10205</option><option value="Modem PC Board 200-10137">Modem PC Board 200-10137</option><option value="I/O PC Board 200-10110">I/O PC Board 200-10110</option><option value="Power Supply">Power Supply</option><option value="Older Controllers">Older Controllers</option><option value="Other">Other</option></select></div>
+                                        </div>
+                                        <div class="section1"><strong>Serial Number 4: </strong><div class="form-group serial-number4"><input class="wpcf7-form-control wpcf7-text form-control" name="serial-number4" type="text" value="" aria-invalid="false"></div></div>
+                                    </div>
+
+
+                                    <div class="container1">
+                                        <div class="section1">
+                                            <strong>Part Number 5: </strong><div class="form-group part-menu5"><select class="wpcf7-form-control wpcf7-select form-control" name="part-menu5" aria-invalid="false"><option value="" selected="">---</option><option value="V1 Controller PCB 200-10102">V1 Controller PCB 200-10102</option><option value="Reader - MMR 200-10095">Reader - MMR 200-10095</option><option value="Reader - Skimgard 200-10092">Reader - Skimgard 200-10092</option><option value="2nd Card Reader PCB 200-10103">2nd Card Reader PCB 200-10103</option><option value="Power Booster PCB 200-10205">Power Booster PCB 200-10205</option><option value="Modem PC Board 200-10137">Modem PC Board 200-10137</option><option value="I/O PC Board 200-10110">I/O PC Board 200-10110</option><option value="Power Supply">Power Supply</option><option value="Older Controllers">Older Controllers</option><option value="Other">Other</option></select></div>
+                                        </div>
+                                        <div class="section1"><strong>Serial Number 5: </strong><div class="form-group serial-number5"><input class="wpcf7-form-control wpcf7-text form-control" name="serial-number5" type="text" value="" aria-invalid="false"></div></div>
+                                    </div>
+
+                                    <div class="container1">
+                                        <div class="section1">
+                                            <strong>Part Number 6: </strong><div class="form-group part-menu6"><select class="wpcf7-form-control wpcf7-select form-control" name="part-menu6" aria-invalid="false"><option value="" selected="">---</option><option value="V1 Controller PCB 200-10102">V1 Controller PCB 200-10102</option><option value="Reader - MMR 200-10095">Reader - MMR 200-10095</option><option value="Reader - Skimgard 200-10092">Reader - Skimgard 200-10092</option><option value="2nd Card Reader PCB 200-10103">2nd Card Reader PCB 200-10103</option><option value="Power Booster PCB 200-10205">Power Booster PCB 200-10205</option><option value="Modem PC Board 200-10137">Modem PC Board 200-10137</option><option value="I/O PC Board 200-10110">I/O PC Board 200-10110</option><option value="Power Supply">Power Supply</option><option value="Older Controllers">Older Controllers</option><option value="Other">Other</option></select></div>
+                                        </div>
+                                        <div class="section1"><strong>Serial Number 6: </strong><div class="form-group serial-number6"><input class="wpcf7-form-control wpcf7-text form-control" name="serial-number6" type="text" value="" aria-invalid="false"></div></div>
+                                    </div>
+
+                                    <div class="container1">
+                                        <div class="section1">
+                                            <strong>Part Number 7: </strong><div class="form-group part-menu7"><select class="wpcf7-form-control wpcf7-select form-control" name="part-menu7" aria-invalid="false"><option value="" selected="">---</option><option value="V1 Controller PCB 200-10102">V1 Controller PCB 200-10102</option><option value="Reader - MMR 200-10095">Reader - MMR 200-10095</option><option value="Reader - Skimgard 200-10092">Reader - Skimgard 200-10092</option><option value="2nd Card Reader PCB 200-10103">2nd Card Reader PCB 200-10103</option><option value="Power Booster PCB 200-10205">Power Booster PCB 200-10205</option><option value="Modem PC Board 200-10137">Modem PC Board 200-10137</option><option value="I/O PC Board 200-10110">I/O PC Board 200-10110</option><option value="Power Supply">Power Supply</option><option value="Older Controllers">Older Controllers</option><option value="Other">Other</option></select></div>
+                                        </div>
+                                        <div class="section1"><strong>Serial Number 7: </strong><div class="form-group serial-number7"><input class="wpcf7-form-control wpcf7-text form-control" name="serial-number7" type="text" value="" aria-invalid="false"></div></div>
+                                    </div>
+
+                                </fieldset>
+
+
+
+
+                                <fieldset>
+                                    <legend>Image Uploads</legend>
+
+                                    <strong>Upload picture(s) of reader and controller Installation</strong> (2MB Limit):<br><i>*Only the 1st Description &amp; Photo is required</i> <br> <br>
+
+                                    <div class="clearfix">
+                                        <div id="left">
+                                            <div class="form-group image-description1 has-error"><input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required wpcf7-not-valid form-control" name="image-description1" type="text" value="" placeholder="Image 1 Description" aria-invalid="false" aria-required="true" required=""><span class="help-block"><div class="wpcf7-not-valid-tip alert alert-warning">The field is required.</div></span></div>
+                                        </div>
+                                        <div id="right">
+                                            <div class="form-group upload-file-1 has-error"><input class="wpcf7-form-control wpcf7-file wpcf7-validates-as-required wpcf7-not-valid " name="upload-file-1" type="file" aria-invalid="false" aria-required="true" required=""><span class="help-block"><div class="wpcf7-not-valid-tip alert alert-warning">The field is required.</div></span></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="clearfix">
+                                        <div id="left">
+                                            <div class="form-group image-description2"><input class="wpcf7-form-control wpcf7-text form-control" name="image-description2" type="text" value="" placeholder="Image 2 Description" aria-invalid="false"></div>
+                                        </div>
+                                        <div id="right">
+                                            <div class="form-group upload-file-2"><input class="wpcf7-form-control wpcf7-file " name="upload-file-2" type="file" aria-invalid="false"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="clearfix">
+                                        <div id="left">
+                                            <div class="form-group image-description3"><input class="wpcf7-form-control wpcf7-text form-control" name="image-description3" type="text" value="" placeholder="Image 3 Description" aria-invalid="false"></div>
+                                        </div>
+                                        <div id="right">
+                                            <div class="form-group upload-file-3"><input class="wpcf7-form-control wpcf7-file " name="upload-file-3" type="file" aria-invalid="false"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="clearfix">
+                                        <div id="left">
+                                            <div class="form-group image-description4"><input class="wpcf7-form-control wpcf7-text form-control" name="image-description4" type="text" value="" placeholder="Image 4 Description" aria-invalid="false"></div>
+                                        </div>
+                                        <div id="right">
+                                            <div class="form-group upload-file-4"><input class="wpcf7-form-control wpcf7-file " name="upload-file-4" type="file" aria-invalid="false"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="clearfix">
+                                        <div id="left">
+                                            <div class="form-group image-description5"><input class="wpcf7-form-control wpcf7-text form-control" name="image-description5" type="text" value="" placeholder="Image 5 Description" aria-invalid="false"></div>
+                                        </div>
+                                        <div id="right">
+                                            <div class="form-group upload-file-5"><input class="wpcf7-form-control wpcf7-file " name="upload-file-5" type="file" aria-invalid="false"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="clearfix">
+                                        <div id="left">
+                                            <div class="form-group image-description6"><input class="wpcf7-form-control wpcf7-text form-control" name="image-description6" type="text" value="" placeholder="Image 6 Description" aria-invalid="false"></div>
+                                        </div>
+                                        <div id="right">
+                                            <div class="form-group upload-file-6"><input class="wpcf7-form-control wpcf7-file " name="upload-file-6" type="file" aria-invalid="false"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="clearfix">
+                                        <div id="left">
+                                            <div class="form-group image-description7"><input class="wpcf7-form-control wpcf7-text form-control" name="image-description7" type="text" value="" placeholder="Image 7 Description" aria-invalid="false"></div>
+                                        </div>
+                                        <div id="right">
+                                            <div class="form-group upload-file-7"><input class="wpcf7-form-control wpcf7-file " name="upload-file-7" type="file" aria-invalid="false"></div>
+                                        </div>
+                                    </div>
+                                    <fieldset>
+                                        <div class="container1">
+                                            <div class="section1"><strong>Was Parabit Called?*</strong></div>
+                                            <div class="section1"><strong>If yes, Date:</strong></div>
+                                            <div class="section1"><strong>Parabit Dispatch #:</strong></div>
+                                        </div>
+
+                                        <div class="container1">
+                                            <div class="section1"><div class="form-group parabit-called has-error"><select class="wpcf7-form-control wpcf7-select wpcf7-validates-as-required wpcf7-not-valid rma-short form-control" name="parabit-called" aria-invalid="false" aria-required="true" required=""><option value="" selected="">---</option><option value="Yes">Yes</option><option value="No">No</option></select><span class="help-block"><div class="wpcf7-not-valid-tip alert alert-warning">The field is required.</div></span></div></div>
+                                            <div class="section1"><div class="form-group call-date"><input class="wpcf7-form-control wpcf7-date wpcf7-validates-as-date form-control" name="call-date" type="date" value="" min="" max="" step="" aria-invalid="false"></div></div>
+                                            <div class="section1"><div class="form-group dispatch-number"><input class="wpcf7-form-control wpcf7-text form-control" name="dispatch-number" type="text" value="" aria-invalid="false"></div></div>
+                                        </div>
+
+                                        <span class="wpcf7-form-control-wrap cf7-counter"><input type="hidden" name="cf7-counter" value="325" size="40" class="wpcf7-form-control wpcf7dtx-dynamictext wpcf7-dynamichidden" aria-invalid="false"></span>
+
+
+
+                                        <div class="form-group"><div><input class="wpcf7-form-control wpcf7-submit btn btn-primary" type="submit" value="Send"></div></div><div class="wpcf7-response-output wpcf7-validation-errors alert alert-warning">One or more fields have an error. Please check and try again.</div>
+                                    </fieldset>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </article>
+
+                </div><!-- /#content -->
+            </div>
+
+            <div class="col-xs-6 col-sm-4" id="sidebar" role="navigation">
+                <aside class="sidebar"></aside>
+            </div>
+
+        </div><!-- /.row -->
+    </div><!-- /.container -->
+    <!--<div class="divider"></div>-->
+
+
+    <div class="above-foot text-center">
+        <div class="container-fluid">
+
+            <div class="row">
+
+                <div class="col-xs-12 text-center"><h1>Browse Solutions by Industry</h1></div>
+
+                <div class="big-wrap-icon">
+
+                    <div class="foot-icon">
+
+                        <a href="http://parabit.com/tag/aviation-transit">
+                            <img src="http://parabit.com/wp-content/themes/parabit-2015/img/icons/aviation_transit_ro.jpg">
+                            <p>Aviation/Transit</p>
+                        </a>
+
+                    </div>
+
+
+
+
+                    <div class="foot-icon">
+
+                        <a href="http://parabit.com/tag/banking-credit-union">
+                            <img src="http://parabit.com/wp-content/themes/parabit-2015/img/icons/bank.jpg">
+                            <p>Banking</p>
+                        </a>
+
+                    </div>
+
+
+
+                    <div class="foot-icon">
+                        <a href="http://parabit.com/tag/corporate">
+                            <img src="http://parabit.com/wp-content/themes/parabit-2015/img/icons/corporate_ro.jpg">
+                            <p>Corporate Facilities</p>
+                        </a>
+                    </div>
+
+                    <div class="foot-icon">
+                        <a href="http://parabit.com/tag/correctional-facilities">
+                            <img src="http://parabit.com/wp-content/themes/parabit-2015/img/icons/correctional.jpg">
+                            <p>Correctional Facilities</p>
+                        </a>
+                    </div>
+
+
+                    <div class="foot-icon">
+                        <a href="http://parabit.com/tag/education">
+                            <img src="http://parabit.com/wp-content/themes/parabit-2015/img/icons/education_ro.jpg">
+                            <p>Education</p>
+                        </a>
+                    </div>
+
+                    <div class="foot-icon">
+                        <a href="http://parabit.com/tag/events-tradeshows">
+                            <img src="http://parabit.com/wp-content/themes/parabit-2015/img/icons/event_tradeshows_ro.jpg">
+                            <p>Event &amp; Trade Shows</p>
+                        </a>
+                    </div>
+
+                    <div class="foot-icon">
+                        <a href="http://parabit.com/tag/government">
+                            <img src="http://parabit.com/wp-content/themes/parabit-2015/img/icons/government_ro.jpg">
+                            <p>Government</p>
+                        </a>
+                    </div>
+
+                    <!--</div>
+                    <div class="clearfix"></div>
+
+
+                    <div class="big-wrap-icon">-->
+
+                    <div class="foot-icon">
+                        <a href="http://parabit.com/tag/healthcare">
+                            <img src="http://parabit.com/wp-content/themes/parabit-2015/img/icons/healthcare_ro.jpg">
+                            <p>Healthcare</p>
+                        </a>
+                    </div>
+
+                    <div class="foot-icon">
+                        <a href="http://parabit.com/tag/hospitality">
+                            <img src="http://parabit.com/wp-content/themes/parabit-2015/img/icons/hospitality_ro.jpg">
+                            <p>Hostpitality</p>
+                        </a>
+                    </div>
+
+                    <div class="foot-icon">
+                        <a href="http://parabit.com/tag/museums">
+                            <img src="http://parabit.com/wp-content/themes/parabit-2015/img/icons/museums_ro.jpg">
+                            <p>Museums</p>
+                        </a>
+                    </div>
+
+                    <div class="foot-icon">
+                        <a href="http://parabit.com/tag/retail">
+                            <img src="http://parabit.com/wp-content/themes/parabit-2015/img/icons/retail_ro.jpg">
+                            <p>Retail</p>
+                        </a>
+                    </div>
+
+                    <div class="foot-icon">
+                        <a href="http://parabit.com/tag/security">
+                            <img src="http://parabit.com/wp-content/themes/parabit-2015/img/icons/security_ro.jpg">
+                            <p>Security</p>
+                        </a>
+                    </div>
+
+
+                </div><!-- wrap -->
+
+
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+
+                <!--border-rt-->
+
+                <div class="col-sm-3 ">
+                    <div class="row">
+                        <!--border-rt-->
+                        <div class="col-sm-12 ">
+
+                            <address>
+                                <!--   <h4>Our Location</h4>-->
+                                <strong>Parabit Systems Inc.</strong><br>
+                                <i class="fa-icon-map-marker"></i> 35 Debevoise Avenue<br>
+                                Roosevelt, NY 1157<a href="http://50.115.235.230/catalog/" target="_blank" style="color: #fafafa; text-decoration:none;">5</a><br>
+                                <i class="fa-icon-phone-sign"></i> 1.888.3PARABIT | Local 516.378.4800
+
+                            </address>
+
+
+
+
+                            <div class="social-icons">
+                                <ul class="list-unstyled list-inline">
+                                    <li><a href="https://www.facebook.com/ParabitSystems/" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                                    <li><a href="https://twitter.com/ParabitSystems" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                                    <li><a href="https://www.linkedin.com/company/1325563?trk=prof-0-ovw-curr_pos" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+                                    <li><a href="https://www.pinterest.com/ParabitSystems/" target="_blank"><i class="fa fa-pinterest-p"></i></a></li>
+                                    <li><a href="https://plus.google.com/+ParabitSystemsIncRoosevelt" target="_blank"><i class="fa fa-google-plus"></i></a></li>
+                                </ul>
+                            </div>
+
+
+
+
+                        </div>
+                    </div>
+
+
+                    <div class="row foot-btm">
+                        <div class="col-xs-12">
+                            <p class="copy">© 2018 <a href="http://parabit.com/">Parabit Systems</a></p>
+                        </div>
+                    </div>
+
+
+                    <div class="trans">
+
+                        <div id="google_translate_element"><div class="skiptranslate goog-te-gadget" dir="ltr" style=""><div id=":0.targetLanguage" style="display: inline;"><select class="goog-te-combo" aria-label="Language Translate Widget"><option value="">Select Language</option><option value="af">Afrikaans</option><option value="sq">Albanian</option><option value="am">Amharic</option><option value="ar">Arabic</option><option value="hy">Armenian</option><option value="az">Azerbaijani</option><option value="eu">Basque</option><option value="be">Belarusian</option><option value="bn">Bengali</option><option value="bs">Bosnian</option><option value="bg">Bulgarian</option><option value="ca">Catalan</option><option value="ceb">Cebuano</option><option value="ny">Chichewa</option><option value="zh-CN">Chinese (Simplified)</option><option value="zh-TW">Chinese (Traditional)</option><option value="co">Corsican</option><option value="hr">Croatian</option><option value="cs">Czech</option><option value="da">Danish</option><option value="nl">Dutch</option><option value="eo">Esperanto</option><option value="et">Estonian</option><option value="tl">Filipino</option><option value="fi">Finnish</option><option value="fr">French</option><option value="fy">Frisian</option><option value="gl">Galician</option><option value="ka">Georgian</option><option value="de">German</option><option value="el">Greek</option><option value="gu">Gujarati</option><option value="ht">Haitian Creole</option><option value="ha">Hausa</option><option value="haw">Hawaiian</option><option value="iw">Hebrew</option><option value="hi">Hindi</option><option value="hmn">Hmong</option><option value="hu">Hungarian</option><option value="is">Icelandic</option><option value="ig">Igbo</option><option value="id">Indonesian</option><option value="ga">Irish</option><option value="it">Italian</option><option value="ja">Japanese</option><option value="jw">Javanese</option><option value="kn">Kannada</option><option value="kk">Kazakh</option><option value="km">Khmer</option><option value="ko">Korean</option><option value="ku">Kurdish (Kurmanji)</option><option value="ky">Kyrgyz</option><option value="lo">Lao</option><option value="la">Latin</option><option value="lv">Latvian</option><option value="lt">Lithuanian</option><option value="lb">Luxembourgish</option><option value="mk">Macedonian</option><option value="mg">Malagasy</option><option value="ms">Malay</option><option value="ml">Malayalam</option><option value="mt">Maltese</option><option value="mi">Maori</option><option value="mr">Marathi</option><option value="mn">Mongolian</option><option value="my">Myanmar (Burmese)</option><option value="ne">Nepali</option><option value="no">Norwegian</option><option value="ps">Pashto</option><option value="fa">Persian</option><option value="pl">Polish</option><option value="pt">Portuguese</option><option value="pa">Punjabi</option><option value="ro">Romanian</option><option value="ru">Russian</option><option value="sm">Samoan</option><option value="gd">Scots Gaelic</option><option value="sr">Serbian</option><option value="st">Sesotho</option><option value="sn">Shona</option><option value="sd">Sindhi</option><option value="si">Sinhala</option><option value="sk">Slovak</option><option value="sl">Slovenian</option><option value="so">Somali</option><option value="es">Spanish</option><option value="su">Sundanese</option><option value="sw">Swahili</option><option value="sv">Swedish</option><option value="tg">Tajik</option><option value="ta">Tamil</option><option value="te">Telugu</option><option value="th">Thai</option><option value="tr">Turkish</option><option value="uk">Ukrainian</option><option value="ur">Urdu</option><option value="uz">Uzbek</option><option value="vi">Vietnamese</option><option value="cy">Welsh</option><option value="xh">Xhosa</option><option value="yi">Yiddish</option><option value="yo">Yoruba</option><option value="zu">Zulu</option></select></div>&nbsp;&nbsp;Powered by <span style="white-space:nowrap"><a class="goog-logo-link" href="https://translate.google.com" target="_blank"><img src="https://www.gstatic.com/images/branding/googlelogo/1x/googlelogo_color_42x16dp.png" width="37px" height="14px" style="padding-right: 3px" alt="Google Translate">Translate</a></span></div></div>
+                        <script type="text/javascript">
+                            function googleTranslateElementInit() {
+                                new google.translate.TranslateElement({ pageLanguage: 'en', layout: google.translate.TranslateElement.FloatPosition.TOP_LEFT, autoDisplay: false }, 'google_translate_element');
+                            }
+                        </script>
+                        <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+
+
+                    </div>
+
+
+
+
+
+
+                </div>
+
+                <!--col-sm-offset-1-->
+
+                <div class="col-sm-9">
+                    <div class="row">
+                        <div class="col-sm-2 foot-links">
+                            <!--<h4>Information</h4>-->
+                            <ul class="list-unstyled">
+                                <li><a href="http://parabit.com/">Home</a></li>
+                                <li><a href="http://parabit.com/about">About</a></li>
+                                <li><a href="http://parabit.com/careers">Careers</a></li>
+                                <li><a href="http://parabit.com/partners-resellers">Partners/Resellers</a></li>
+                                <li><a href="http://parabit.com/tradeshows">Tradeshows</a></li>
+                                <li><a href="http://parabit.com/blog">Blog</a></li>
+                                <li><a href="http://parabit.com/contact">Contact Us</a></li>
+                            </ul>
+                        </div>
+
+
+
+                        <div class="col-sm-3 foot-links">
+                            <h4 class="line3 center standart-h4title">Security Products</h4>
+                            <ul class="list-unstyled">
+                                <li><a href="http://parabit.com/solutions/access-control">ATM Lobby Access Control</a></li>
+                                <li><a href="http://parabit.com/solutions/building-access-control">Building/Telephone Access Control</a></li>
+                                <li><a href="http://parabit.com/solutions/telephones">Courtesy/Emergency Telephones</a></li>
+                                <li><a href="http://parabit.com/solutions/surveillance">HD Surveillance</a></li>
+
+                                <li><a href="http://parabit.com/solutions/light-sensor/light-sensor">Light Sensor</a></li>
+                            </ul>
+                        </div>
+
+
+
+                        <div class="col-sm-3 foot-links">
+                            <h4>Self-Service Products</h4>
+                            <ul class="list-unstyled">
+                                <li><a href="http://parabit.com/solutions/atm-accessories">ATM Surrounds, Toppers &amp; <span class="foot-indent">Accessories</span></a></li>
+                                <li><a href="http://parabit.com/solutions/kiosks/mobile-device-charging-stations">Charging Stations</a></li>
+                                <li><a href="http://parabit.com/solutions/kiosks">Kiosks</a></li>
+                                <li><a href="http://parabit.com/solutions/software-solutions/">Software Solutions</a></li>
+                                <li><a href="http://parabit.com/solutions/welcome-centers/visitor-welcome-centers">Welcome Centers</a></li>
+                            </ul>
+                            <p class="sign-btm"><a href="http://parabit.com/wp-content/themes/parabit-2015/pdf/warranty/Parabit_Website_Privacy_Statement.pdf" class="btn btn-orange" target="_blank">Website Privacy Statement</a></p>
+                        </div>
+
+
+
+
+
+                        <div class="col-sm-4 foot-links">
+                            <h4>Fabrication &amp; Design</h4>
+                            <ul class="list-unstyled">
+                                <li><a href="http://parabit.com/solutions/surveillance/custom-camera-enclosures/">Custom Camera Enclosures</a></li>
+                                <li><a href="http://parabit.com/solutions/access-control/custom-mounting-hardware-installations">Custom Door Hardware &amp; Access Control <span class="foot-indent">Enclosures</span></a></li>
+
+                                <li><a href="http://parabit.com/solutions/fabrication-design-services">Design &amp; Fabrication</a></li>
+
+                                <li><a href="http://parabit.com/solutions/fabrication-design-services/stainless-steel-glass-railings/">Stainless Steel &amp; Glass Railings</a></li>
+                                <br>
+                            </ul>
+
+                            <p class="sign-btm"><a href="https://list.robly.com/subscribe?a=24062ad0ae5f422c5f4a02aea9d86f91" class="btn btn-orange" target="_blank">Sign up for our Newsletter!</a></p>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+            </div>
+
+
+
+
+
+
+
+
+
+        </div>
+    </footer>
+
+    <style>
+        .trans {
+            width: 100%;
+            padding: 10px 0;
+            text-align: left;
+        }
+
+        .goog-logo-link img {
+            width: 70px;
+        }
+
+        .sign-btm {
+            margin-top: 45px;
+        }
+    </style>
+
+
+    <!-- ngg_resource_manager_marker -->
+    <script type="text/javascript" src="http://parabit.com/wp-includes/js/jquery/ui/datepicker.min.js?ver=1.11.4"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function (jQuery) { jQuery.datepicker.setDefaults({ "closeText": "Close", "currentText": "Today", "monthNames": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"], "monthNamesShort": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], "nextText": "Next", "prevText": "Previous", "dayNames": ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], "dayNamesShort": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"], "dayNamesMin": ["S", "M", "T", "W", "T", "F", "S"], "dateFormat": "MM d, yy", "firstDay": 1, "isRTL": false }); });
+    </script>
+    <script type="text/javascript" src="http://parabit.com/wp-content/plugins/contact-form-7-datepicker-fix/js/jquery.ui.spinner.js?ver=4.9.6"></script>
+    <script type="text/javascript" src="http://parabit.com/wp-content/plugins/contact-form-7-datepicker-fix/js/cf7-datepicker-ie-fixer.js?ver=4.9.6"></script>
+    <script type="text/javascript" src="http://parabit.com/wp-includes/js/jquery/ui/tabs.min.js?ver=1.11.4"></script>
+    <script type="text/javascript" src="http://parabit.com/wp-includes/js/mediaelement/wp-mediaelement.min.js?ver=4.9.6"></script>
+    <script type="text/javascript" src="http://parabit.com/wp-includes/js/jquery/jquery.form.min.js?ver=4.2.1"></script>
+    <script type="text/javascript" src="http://parabit.com/wp-content/themes/parabit-2015/js/modernizr-2.8.3.min.js"></script>
+    <script type="text/javascript" src="http://parabit.com/wp-content/themes/parabit-2015/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://parabit.com/wp-content/themes/parabit-2015/js/bst.js"></script>
+    <script type="text/javascript" src="http://parabit.com/wp-includes/js/wp-embed.min.js?ver=4.9.6"></script>
+    <script type="text/javascript">
+        /* <![CDATA[ */
+        var thickboxL10n = { "next": "Next >", "prev": "< Prev", "image": "Image", "of": "of", "close": "Close", "noiframes": "This feature requires inline frames. You have iframes disabled or your browser does not support them.", "loadingAnimation": "http:\/\/parabit.com\/wp-includes\/js\/thickbox\/loadingAnimation.gif" };
+        /* ]]> */
+    </script>
+    <script type="text/javascript" src="http://parabit.com/wp-includes/js/thickbox/thickbox.js?ver=3.1-20121105"></script>
+    <script type="text/javascript" src="http://parabit.com/wp-includes/js/underscore.min.js?ver=1.8.3"></script>
+    <script type="text/javascript" src="http://parabit.com/wp-includes/js/shortcode.min.js?ver=4.9.6"></script>
+    <script type="text/javascript" src="http://parabit.com/wp-admin/js/media-upload.min.js?ver=4.9.6"></script>
+    <script type="text/javascript" src="http://parabit.com/wp-includes/js/jquery/ui/effect.min.js?ver=1.11.4"></script>
+    <script type="text/javascript" src="http://parabit.com/wp-includes/js/jquery/ui/effect-pulsate.min.js?ver=1.11.4"></script>
+    <script type="text/javascript" src="http://parabit.com/wp-includes/js/jquery/ui/effect-highlight.min.js?ver=1.11.4"></script>
+    <script type="text/javascript">
+        /* <![CDATA[ */
+        var userSettings = { "url": "\/", "uid": "0", "time": "1530564691", "secure": "" };
+        /* ]]> */
+    </script>
+    <script type="text/javascript" src="http://parabit.com/wp-includes/js/utils.min.js?ver=4.9.6"></script>
+    <script type="text/javascript" src="http://parabit.com/wp-admin/js/editor.min.js?ver=4.9.6"></script>
+    <div style="display:none">
+        <div class="cdm-modal" data-remodal-options="{ 'hashTracking': false }" data-remodal-id="file">
+            <a data-remodal-action="close" class="remodal-close"></a>
+            <div class="view-file-content">
+
+            </div>
+        </div>
+    </div>
+    <div style="display:none">
+
+    </div>
+
+    <script type="text/javascript">
+        document.addEventListener('wpcf7mailsent', function (event) {
+            if ('1351' == event.detail.contactFormId) {
+                location = 'http://parabit.com/rma-thank-you/';
+            } else if ('1433' == event.detail.contactFormId) {
+                location = 'http://parabit.com/rma-thank-you/';
+            }
+            else { // Sends submissions on all unaccounted for forms to general thank you page
+                location = 'http://parabit.com/thank-you/';
+            }
+        }, false);
+    </script>
+
+
+
+
+    <div class="remodal-overlay remodal-is-closed" style="display: none;"></div><div id="goog-gt-tt" class="skiptranslate" dir="ltr"><div style="padding: 8px;"><div><div class="logo"><img src="https://www.gstatic.com/images/branding/product/1x/translate_24dp.png" width="20" height="20" alt="Google Translate"></div></div></div><div class="top" style="padding: 8px; float: left; width: 100%;"><h1 class="title gray">Original text</h1></div><div class="middle" style="padding: 8px;"><div class="original-text"></div></div><div class="bottom" style="padding: 8px;"><div class="activity-links"><span class="activity-link">Contribute a better translation</span><span class="activity-link"></span></div><div class="started-activity-container"><hr style="color: #CCC; background-color: #CCC; height: 1px; border: none;"><div class="activity-root"></div></div></div><div class="status-message" style="display: none;"></div></div><div class="remodal-wrapper remodal-is-closed" style="display: none;">
+        <div class="remodal remodal-is-initialized remodal-is-closed" data-remodal-id="cdm-utility" tabindex="-1">
+            <a data-remodal-action="close" class="remodal-close"></a>
+
+            <div class="cdm-utility-modal">
+            </div>
+        </div>
+    </div><div class="goog-te-spinner-pos"><div class="goog-te-spinner-animation"><svg xmlns="http://www.w3.org/2000/svg" class="goog-te-spinner" width="96px" height="96px" viewBox="0 0 66 66"><circle class="goog-te-spinner-path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle></svg></div></div>
+</body>
+</html>

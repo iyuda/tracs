@@ -1,0 +1,160 @@
+﻿@using RMATracker.Models
+@using DataLayer;
+
+@model RMAModel
+@{
+    ViewBag.QueryMode = (ViewBag.QueryMode ?? false);
+    string is_asterik = ViewBag.QueryMode ? ": " : "*";
+
+}
+
+<fieldset>
+    @Html.Hidden("hiddenCompanyId", "0")
+
+    <legend>End User Company Information</legend>
+
+    <div class="container" style="border:solid">
+        <br>
+        <div class="form-group bank-name" style="padding-left:10px;">
+            <div class="form-group bank-name" style="padding-left:10px;">
+
+                @if (!ViewBag.QueryMode)
+                {
+                    <label class="" style="padding-right:10px">End User Company Name: @is_asterik</label>
+                    {
+
+                        
+                        SelectList selBankList = new SelectList(Bank.fullList, "Id", "Name", Model.rma?.CompanyId);
+                        if (Model.BankIncludeType == 1)
+                        {
+                            var newList = Bank.fullList.Where(x => x.Name.ToLower().Contains("boa") || x.Name.ToLower().Contains("bofa") || x.Name.ToLower().Contains("bank of america")).ToList();
+                            selBankList = new SelectList(newList, "Id", "Name", newList.Count() == 0 ? 0 : newList?[0].id);
+                            @*@Html.DropDownListFor(m => m.rma.CompanyId, selBankList, "-- Pick One --", new { @style = "padding:4px", @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control" })*@
+                        }
+                        if (Model.BankIncludeType == 2)
+                        {
+                            var newList = Bank.fullList.Where(x => !(x.Name.ToLower().Contains("boa") || x.Name.ToLower().Contains("bofa") || x.Name.ToLower().Contains("bank of america"))).ToList();
+                            selBankList = new SelectList(newList, "Id", "Name", Model.rma?.CompanyId);
+                        }
+
+                        @(Html.Kendo().ComboBoxFor(m => m.rma.CompanyId)
+                                                                                                    //.Name("rma.CompanyId")
+                                                                                                    .Filter("contains")
+                                                                                                    .Placeholder("-- Select End User Company Name --")
+                                                                                                    .DataTextField("Text")
+                                                                                                    .DataValueField("Value")
+                                                                                                    .BindTo((SelectList)selBankList)
+                                                                                                    .Enable(Model.BankIncludeType != 1)
+                                                                                                    .Suggest(true)
+                                                                                                    .HtmlAttributes(new { @class = "capitalize", style = "width:100%;", optional = Model?.FirmTypeId == 2 || (Model?.FirmTypeId == 3 && Model?.BankIncludeType == 1) ? "false" : "true", onchange = "ComboChangeEvent(this); LoadCompanyAddresses('')" })) //, onchange= "GetBranchAddresses(this)" }))
+
+                    }
+                    
+                }
+                else
+                {
+                    @Html.DisplayFor(m => m.rma.companyBranch.bank.Name)
+                    @Html.HiddenFor(m => m.rma.companyBranch.bank.Name)
+                }
+            </div>
+            @*@if (!(Model.techInfo.firmName.ToLower().Contains("securitas") && Model.BankIncludeType==1))*@
+            @if (!(Model?.FirmTypeId == 3 && Model.BankIncludeType == 1))
+            {
+                <br />
+                <div align="right" style="padding-right:20px">
+                    <button type="button" class="btn btn-primary" id="btnAddCompanyDetails" onclick="ShowAddNewAddressForm(this, 'divAddCompanyDetails', 'formCompanyDetailsSave','btnSaveCompanyDetails')">
+                        Add New End User Company
+                    </button>
+                </div>
+                <br>
+            }
+
+            <div class="form-group bank-street-address" style="padding-left:10px;">
+                <label class="">Branch Address: <span class="required">@is_asterik</span></label>
+                @if (!ViewBag.QueryMode)
+                {
+                    @(Html.Kendo().ComboBoxFor(m => m.rma.CompanyBranchId)
+                                                                                               //.Name("rma.CompanyBranchId")
+                                                                                               .AutoBind(false)
+                                                                                              .Filter("contains")
+                                                                                              .Placeholder("-- Select Branch Address --")
+                                                                                              .DataTextField("Text")
+                                                                                              .DataValueField("Value")
+
+                                                                                              .BindTo(new SelectList(Enumerable.Empty<SelectListItem>(), "Value", "Text", Model?.rma?.CompanyBranchId))
+                                                                                              .Suggest(true)
+                                                                                              .HtmlAttributes(new { @class = "capitalize", style = "width:100%;", optional = Model?.FirmTypeId == 2 || (Model?.FirmTypeId == 3 && Model?.BankIncludeType == 1) ? "false" : "true", onchange = "ComboChangeEvent(this)" }))
+                }
+                else
+                {
+                    var branchAddress = Model.rma.companyBranch.Address.ToString();
+                    @Html.Display(branchAddress)
+                    @Html.Hidden(branchAddress)
+                }
+            </div>
+            <br />
+            <div align="right" style="padding-right:20px">
+                <button type="button" class="btn btn-primary" id="btnAddNewAddress" onclick="ShowAddNewAddressForm(this, 'divAddBranchAddress', 'formCompanyBranchSave','btnSaveCompanyBranch')">
+                    Add New Branch
+                </button>
+            </div>
+            <br />
+        </div>
+
+</fieldset>
+<script>
+
+$(document).ready(function () {
+    
+    LoadCompanyAddresses();
+});
+    function filterCompanyAddresses() {
+        $("#rma_CompanyBranchId").data("kendoComboBox").value('');
+        return {
+            company_id: $("#rma_CompanyId").val()
+        }
+    }
+
+    function LoadCompanyAddresses(CompanyAddressId)
+    {
+        var company_id = $("#rma_CompanyId").data('kendoComboBox').value();
+        if (!company_id) return;
+
+        var combobox = $("#rma_CompanyBranchId").data("kendoComboBox");
+
+        $("#rma_CompanyBranchId").kendoComboBox({
+            dataTextField: "Text",
+            dataValueField: "Value",
+
+            dataSource: {
+                transport: {
+                    read: {
+                        cache: false,
+                        serverFiltering: true,
+                        async: false,
+                        dataType: "json",
+                        url: '@Url.Action("GetCompanyBranches", "RMAForm")?company_id=' + company_id,
+                    }
+                }
+            },
+            filter: "contains",
+            suggest: true
+        });
+
+
+        combobox = $("#rma_CompanyBranchId").data("kendoComboBox");
+
+        combobox.select(function (dataItem) {
+
+                //alert(dataItem.Value);
+            return dataItem.Value === CompanyAddressId;
+        });
+        if (combobox.dataSource.view().length == 0) {
+            changeFeedbackMessage('error', '"There was an error processing your request.  Please try again later."');
+        }
+        else if (combobox.dataSource.view().length == 1 && combobox.dataSource.view()[0].Value==-1) {
+            changeFeedbackMessage('error', combobox.dataSource.view()[0].Text);
+            combobox.dataSource.remove(combobox.dataSource.data()[0])
+        }
+    }
+</script>

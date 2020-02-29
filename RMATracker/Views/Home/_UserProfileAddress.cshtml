@@ -1,0 +1,264 @@
+﻿@using DataLayer
+@model DataLayer.UserProfile
+@{
+    ViewBag.QueryMode = (ViewBag.QueryMode ?? false);
+
+    string is_asterik = ViewBag.QueryMode ? ": " : "*";
+    //var stateList = State.GetStates(userInfo: ClientDetection.GetUserEnvironment(Request), parameters: new List<string>() { "GetAll" });
+    //var stateList = State.fullList;
+    var stateList = new List<State>();
+    var countryList = ((Country.fullList?.Count ?? 0) == 0 ? Country.GetCountries() : Country.fullList) ?? new List<Country>();
+    Layout = ViewBag.Layout;
+    var IsMobile = (ViewBag.IsMobile ?? ViewContext.HttpContext.GetOverriddenBrowser().IsMobileDevice);
+
+}
+<div class="row p-px-y5">
+    <div class="col-md-8">
+        <label for="street-txt">Street Address</label>
+        @Html.TextBoxFor(m => m.StreetAddress, new { @id = "street-txt", @class = "capitalize wpcf7-form-control address-updatable wpcf7-text rma-textfield form-control", @required = "", @placeholder = "Street Address" })
+
+    </div>
+</div>
+<div class="p-px-y5 row">
+    <div class="col-md-4">
+        <label for="city-txt">City</label>
+        @Html.TextBoxFor(m => m.City, new { @id = "city-txt", @class = "capitalize wpcf7-form-control address-updatable wpcf7-text rma-textfield form-control", @required = "", @placeholder = "City" })
+
+
+    </div>
+    @{ if (!IsMobile)
+        {
+            @:<div class=" col-md-4">
+            }
+            else
+            {
+            @:</div>
+            @:<div class="p-px-y5 row">
+                @:<div class=" col-md-3">
+                }
+    }
+
+    <div class="">
+        <label class="col" for="ProfileCountryId">Country</label>
+    </div>
+
+    <div class="" style="width:100%">
+        @(Html.Kendo().DropDownListFor(m => m.ProfileCountryId)
+                        .BindTo(new SelectList(countryList, "CountryId", "Name"))
+                        .HtmlAttributes(new { @id = "ProfileCountryId", @class = "address-updatable", @style = "width: 100%; height: 36px;", onchange = "ComboChangeEvent(this); CountryChangeEvent(this); " }))
+      
+
+    </div>
+
+
+</div>
+</div>
+<div class="row p-px-y5">
+    <div class="col-md-4">
+        <label for="zip-txt">ZipCode</label>
+        @Html.TextBoxFor(m => m.Zip, new { @id = "zip-txt", @pattern = "[0-9]{3} [0-9]{2}|[0-9]{5}|[0-9]{5}-[0-9]{4}|[0-9]{5} [0-9]{4}", @class = "wpcf7-form-control address-updatable wpcf7-text rma-textfield form-control", @placeholder = "Zip Code", maxlength = "10" })
+    </div>
+    <div class="col-md-4">
+        <div class="">
+            <label class="" for="ProfileStateId">State</label>
+        </div>
+
+        <div class="" style="width:100%">
+            @Html.Hidden("hiddenProfileStateId", Model == null ? "" : Model.ProfileStateId.ToString()) 
+            @(Html.Kendo().DropDownListFor(m => m.ProfileStateId)
+                .BindTo(new SelectList(stateList, "StateId", "Name", Model == null ? 0 : Model.ProfileStateId))
+                .HtmlAttributes(new { @id = "ProfileStateId", @class = "address-updatable", @style = "width: 100%; height: 36px;" }))
+        </div>
+    </div>
+</div>
+
+
+@{ if (IsMobile)
+                {
+    @:</div>
+}
+}
+
+
+<script>
+
+    //ProfileComboChangeEvent('');
+
+    function ValidateProfile(FormName) {
+        var status = true;
+       
+        $("#" + FormName).find("input[data-role='combobox'][optional!='true']").each(function () {
+
+            var divParent = $(this).closest('div');
+            if ($(divParent).css('display') == 'none')
+                return true;
+            $(divParent).find("div.error").each(function () {
+                $(this).remove();
+            });
+            if ($(this).data("kendoComboBox").text().length == 0 && $(this).closest('form').attr('id') == FormName) {
+                if ($(divParent).find("label.validate-error:visible").length == 0) {
+
+
+                    var $label = $("<label  class='validate-error' for='" + this.id + "'>");
+                    $label.attr('id', this.id + "-error");
+                    $label.text("This field is required."); $label.css("color", "red");
+                    var divParent = $(this).closest('div');
+                    $(divParent).find("label.error, label.validate-error").each(function () {
+                        $(this).remove();
+                    });
+                    $label.appendTo(divParent);
+
+                }
+                status = false;
+            }
+
+        });
+        // See if the other (unselected) tab has errors
+        var profileTabErrorFree = $("#edit-profile").find('.error, .validate-error').length == 0;
+        var addressTabErrorFree = $("#edit-address").find('.error, .validate-error').length == 0;
+        var activeProfileTabErrorFree = $("#edit-profile").find('.error:visible, .validate-error:visible').length == 0;
+        var activeAddressTabErrorFree = $("#edit-address").find('.error:visible, .validate-error:visible').length == 0;
+        $("#" + FormName).find("input[data-role!='combobox'][optional!='true']").each(function () {
+
+            if ($(this).val().length == 0 || $(this).hasClass('validate-error')) {
+
+                var divParent = $(this).closest('div');
+                if ($(divParent).css('display') == 'none')
+                    return true;
+                if (profileTabErrorFree && $(this).hasClass('address-updatable') && $("#navEditProfile").is(':visible') && $("#edit-profile").hasClass("active")) {
+
+                    status = false;
+                }
+                if (addressTabErrorFree && $(this).hasClass('profile-updatable') && $("#navEditAddress").is(':visible') && $("#edit-address").hasClass("active")) {
+
+
+                    status = false;
+                }
+            }
+        });
+        if (activeAddressTabErrorFree && !profileTabErrorFree && $("#navEditProfile").is(':visible') && $("#edit-address").hasClass("active")) {
+            $("#navEditAddress").removeClass("active");
+            $("#edit-address").removeClass("active");
+            $("#navEditProfile").addClass("active");
+            $("#edit-profile").addClass("active");
+        }
+        else if (activeProfileTabErrorFree && !addressTabErrorFree && $("#navEditProfile").is(':visible') && $("#edit-profile").hasClass("active")) {
+            $("#navEditProfile").removeClass("active");
+            $("#edit-profile").removeClass("active");
+            $("#navEditAddress").addClass("active");
+            $("#edit-address").addClass("active");
+        }
+        return status;
+    }
+
+    function ProfileComboChangeEvent(e) {
+        var divParent = $(e).closest('div');
+        $(divParent).find("label.error:visible, label.validate-error:visible").each(function () {
+            $(this).remove();
+        });
+        var combobox = $(e).data("kendoComboBox");
+        if (combobox.selectedIndex === -1 && combobox.value()) {
+            if (combobox.dataSource.view().length > 0) {
+                combobox.select(0);
+            }
+            else {
+                combobox.value("");
+                var $label = $("<label  class='error' for='" + $(e).id + "'>");
+                $label.attr('id', $(e).id + "-error");
+                $label.text("This field is required."); $label.css("color", "red");
+                $label.appendTo(divParent);
+            }
+        }
+    }
+
+    function CountryChangeEvent(e) {
+        //$("#combobox").data("kendoComboBox").value("");
+        var chosenId = $("#ProfileCountryId").data('kendoDropDownList').value();
+
+        if (!chosenId) return;
+
+        $("#ProfileStateId").kendoDropDownList({
+            dataTextField: "Text",
+            dataValueField: "Value",
+            dataSource: {
+                autoSync: true,
+                transport: {
+                    read: {
+                        cache: false,
+                        serverFiltering: true,
+                        async: false,
+                        dataType: "json",
+                        url: '@Url.Action("GetStatesByCountryJson", "Home")?countryId=' + chosenId,
+                    }
+                },
+            }
+        });
+        if ($('#hiddenProfileStateId'))
+            if ($('#hiddenProfileStateId').val())
+                $("#ProfileStateId").data('kendoDropDownList').value($('#hiddenProfileStateId').val());
+            else
+                $("#ProfileStateId").data('kendoDropDownList').select(0);
+        else
+            $("#ProfileStateId").data('kendoDropDownList').select(0);
+    }
+</script>
+
+<script>
+    $(document).ready(function () {
+        CheckIsContractor();
+
+        var profile_country_val = $("#ProfileCountryId").data("kendoDropDownList").value();
+        var profile_country_combo = $("#ProfileCountryId").data("kendoDropDownList");
+
+        if (!profile_country_val) {
+            profile_country_val = "240";
+            profile_country_combo.select(function (dataItem) {
+                return dataItem.Value === profile_country_val;
+            });
+            CountryChangeEvent();
+        }
+
+        
+        //profile_country_combo.trigger("change");
+        //company_det_country_combo.select("240");
+        
+
+    });
+
+    function CheckIsContractor() {
+
+        var checkValue = $(".is-subcontractor").is(":checked");
+
+        if (checkValue) {
+            $("#divContractor").show();
+        } else {
+            $("#divContractor").hide();
+        }
+    };
+
+    $('#divIsContractor :checkbox').change(function () {
+        CheckIsContractor();
+    });
+
+    function LoadContractorFirms(e) {
+        var company_id = $(e).data('kendoComboBox').value();
+        var firmsCombobox = $(e).data("kendoComboBox");
+
+        if (!company_id) return;
+        $("#prof-contractor-txt").kendoComboBox({
+            dataTextField: "Text",
+            dataValueField: "Value",
+            dataSource: firmsCombobox.dataSource,
+            filter: "contains",
+            suggest: true
+        });
+
+        var contractorCombobox = $("#prof-contractor-txt").data("kendoComboBox");
+        contractorCombobox.dataSource.filter({
+            field: 'Value',
+            operator: 'neq',
+            value: company_id
+        });
+        contractorCombobox.value(null);
+    }
+</script>

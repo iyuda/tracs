@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D87FA3D2-5EA3-44F3-BD6B-380AC553D93E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DataLayer</RootNamespace>
+    <AssemblyName>DataLayer</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'TestConfig|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\TestConfig\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Vse.Web.Serialization, Version=1.0.4.0, Culture=neutral, PublicKeyToken=fb838febb49f46b2, processorArchitecture=MSIL">
+      <HintPath>..\packages\Vse.Web.Serialization.ControlledSerializationJsonConverter.1.0.4\lib\net45\Vse.Web.Serialization.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="API\JsonMaker.cs" />
+    <Compile Include="ConfigTools.cs" />
+    <Compile Include="Models\Country.cs" />
+    <Compile Include="Models\REL_TechField_ReturnAddress.cs" />
+    <Compile Include="Models\REL_User_Attribute.cs" />
+    <Compile Include="Models\CompanyDetails.cs" />
+    <Compile Include="Models\Old\Assessment.cs" />
+    <Compile Include="Models\Old\BankInfo.cs" />
+    <Compile Include="Models\Old\PartTypes.cs" />
+    <Compile Include="Models\Old\PuttyTest.cs" />
+    <Compile Include="Models\Old\RegistrationParts.cs" />
+    <Compile Include="Models\Old\Registrations.cs" />
+    <Compile Include="Models\Old\RmaBase.cs" />
+    <Compile Include="Models\Old\RmaDates.cs" />
+    <Compile Include="Models\Old\RmaForms.cs" />
+    <Compile Include="Models\Old\RmaParts.cs" />
+    <Compile Include="Models\Old\RmaProblemTypes.cs" />
+    <Compile Include="Models\Old\RmaReturnAddress.cs" />
+    <Compile Include="Models\Old\RmaSecuritasOptions.cs" />
+    <Compile Include="Models\Old\RmaStatuses.cs" />
+    <Compile Include="Models\Old\Survey.cs" />
+    <Compile Include="Models\Old\SurveyIntegrityChecks.cs" />
+    <Compile Include="Models\Old\SurveyObstructions.cs" />
+    <Compile Include="Models\Old\SurveyReaderArrivalStates.cs" />
+    <Compile Include="Models\Old\SurveySiteInspection.cs" />
+    <Compile Include="Models\Old\TechInfo_Old.cs" />
+    <Compile Include="Models\Old\Tests.cs" />
+    <Compile Include="Models\PartType.cs" />
+    <Compile Include="Logger.cs" />
+    <Compile Include="Models\Attribute.cs" />
+    <Compile Include="Models\CompanyBranch.cs" />
+    <Compile Include="Models\Bank.cs" />
+    <Compile Include="Models\Fault.cs" />
+    <Compile Include="Models\RMAMedia.cs" />
+    <Compile Include="Models\REL_RMA_Status.cs" />
+    <Compile Include="Models\ReturnAddress.cs" />
+    <Compile Include="Models\ReturnedPart.cs" />
+    <Compile Include="Models\RMA.cs" />
+    <Compile Include="Models\RMAType.cs" />
+    <Compile Include="Models\ParabitCall.cs" />
+    <Compile Include="Models\State.cs" />
+    <Compile Include="Models\Status.cs" />
+    <Compile Include="Models\DispatchReason.cs" />
+    <Compile Include="Models\TechInfo.cs" />
+    <Compile Include="Models\TempPassword.cs" />
+    <Compile Include="Models\PasswordType.cs" />
+    <Compile Include="Models\Test.cs" />
+    <Compile Include="Models\Old\Test_MagneticCard.cs" />
+    <Compile Include="Models\Old\TestResult.cs" />
+    <Compile Include="Models\UserProfile.cs" />
+    <Compile Include="Models\UserRegistration.cs" />
+    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\CreditReason.cs" />
+    <Compile Include="Models\Firm.cs" />
+    <Compile Include="Models\Old\Part.cs" />
+    <Compile Include="Models\PartFamily.cs" />
+    <Compile Include="Models\REL_Bank_Firm.cs" />
+    <Compile Include="Models\REL_RMA_Fault.cs" />
+    <Compile Include="Shared\BoolConverter.cs" />
+    <Compile Include="Shared\Constants.cs" />
+    <Compile Include="Shared\ItemDBHandler_old.cs" />
+    <Compile Include="Shared\ItemDBHandler.cs" />
+    <Compile Include="Shared\DataHelper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Shared\DBConnect.cs" />
+    <Compile Include="Shared\ExtendedDataTable.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="API\UrlRequests.cs" />
+    <Compile Include="Test\TestAPI.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="Web.config" />
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

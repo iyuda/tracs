@@ -1,0 +1,250 @@
+﻿@using RMATracker.Models
+@using DataLayer
+@model RMAModel
+
+@{
+    ViewBag.QueryMode = (ViewBag.QueryMode ?? false);
+    //    ViewBag.Title = "Home Page";
+    string is_asterik = ":"; // ViewBag.QueryMode ? ": " : "*";
+    var SectionClass = (ViewBag.IsMobile ?? ViewContext.HttpContext.GetOverriddenBrowser().IsMobileDevice) ? "section-mobile" : "section1";
+}
+
+@{
+    var i = int.Parse(ViewData["index"].ToString());
+    }
+
+<div class="dynamic part-details" id="part_details_@i" style="border-bottom:dotted;max-height:100%;display:block">
+    <div class="container1 part_details_class" id="part_details_@i">
+        <div class="@SectionClass" style="padding-left: 10px">
+            <div>
+                @{
+                    if (!ViewBag.QueryMode)
+                    {
+                        @:<strong id="serial_number_heading">Serial Number: </strong>
+                        @:<div class="form-group serial-number para-input-group">
+                            @Html.TextBoxFor(m => m.rma.returnedParts[i].SerialNumber, new { @index = i, @onblur = "validateSerialNo(this)", @onkeypress = "return isNumberKey(event)", @type = "text", @minlength = "5", @maxlength = "6", @aria_invalid = "false",  @style = "width:70%;font-weight: normal;", @class = String.Format("numeric serial serial-{0} wpcf7-form-control wpcf7-validates-as-required form-control", i) })
+                            <button class="btn btn-primary" type="button" onclick="GetPartDetails(document.getElementsByClassName('serial-@i'))" disabled="disabled">
+                                <span class="fa fa-search icon"></span>
+                            </button>
+
+                        @:</div>
+                    }
+                    else
+                    {
+                        @:<strong>Serial Number @(i + 1): </strong>
+                        @Html.DisplayFor(m => m.rma.returnedParts[i].SerialNumber)
+                        @Html.HiddenFor(m => m.rma.returnedParts[i].SerialNumber)
+                    }
+                }
+            </div>
+        </div>
+        <div class="@SectionClass" style="padding-left: 10px">
+            @{
+
+                @Html.HiddenFor(m => m.rma.returnedParts[i].id)
+                bool IsRemoved;
+                if (ViewBag.IsRemoved == null)
+                {
+                    IsRemoved = Model?.rma?.returnedParts?[i]?.IsRemoved ?? false;
+                }
+                else
+                {
+                    IsRemoved = ViewBag.IsRemoved ?? false;
+                }
+                @Html.HiddenFor(m => m.rma.returnedParts[i].IsRemoved, new { @Value = IsRemoved });
+
+                var partTypes = PartType.fullList;
+                var selectPartNumberList = Enumerable.Empty<SelectListItem>();
+                if (partTypes != null)
+                {
+                    selectPartNumberList = from p in partTypes
+                                           select new SelectListItem
+                                           {
+                                               Value = p.PartNumber + "!#$" + p.PartDescription, //p.id.ToString(),
+                                               Text = p.PartNumber
+                                           };
+                }
+                var selectPartDescList = Enumerable.Empty<SelectListItem>();
+                if (partTypes != null)
+                {
+                    selectPartDescList = from p in partTypes
+                                         select new SelectListItem
+                                         {
+                                             Value = p.PartDescription + "!#$" + p.PartNumber, //p.id.ToString(),
+                                             Text = p.PartDescription
+                                         };
+                }
+
+
+                if (!ViewBag.QueryMode)
+                {
+                    @:<strong id="part_number_heading">Part Number: </strong>
+                    @:<div class="form-group part-menu">
+
+                        @(Html.Kendo().ComboBoxFor(m => m.rma.returnedParts[i].PartNumber)
+                            .Filter("contains")
+                            .Placeholder("-- Select Part Number --")
+                            .DataTextField("Text")
+                            .DataValueField("Value")
+                            .BindTo(new SelectList(selectPartNumberList, "Value", "Text", Model?.rma?.returnedParts?[i]?.PartNumber))
+                            .Suggest(true)
+                            .HtmlAttributes(new { @class = "part-number", style = "width:100%;", optional="true", onchange = "GetPartDescription(this," + @i + ")" }))
+
+
+
+                    @:</div>
+                }
+                else
+                {
+                    @:<strong>Part @(i + 1):</strong>
+                    
+                }
+               
+            }
+
+        </div>
+
+
+
+        <div class="section1" align="right">
+            <button type="button" style="float:right;" class="btn btnRemovePart btn-primary remove-part-button" id="btnRemovePart_@i" index="@i" onclick="RemovePartEntry(this)">
+                Remove
+            </button>
+        </div>
+    </div>
+
+    <div class="container1" style="padding-left: 10px">
+        <strong id="part_description_heading">Part Description:*</strong>
+        @(Html.Kendo().ComboBoxFor(m => m.rma.returnedParts[i].PartDescription)
+                                               .Filter("contains")
+                                               .Placeholder("-- Select Part Description --")
+                                               .DataTextField("Text")
+                                               .DataValueField("Value")
+                                               .BindTo(new SelectList(selectPartDescList, "Value", "Text", Model?.rma?.returnedParts?[i]?.PartDescription))
+                                               
+                                               .Suggest(false)
+                                               .HtmlAttributes(new { style = "width:100%;", onchange = "GetPartNumber(this," + @i + ")" }))
+
+
+
+        
+        <br />
+    </div>
+</div>
+
+<script>
+    var urlGetPartDetails = '@Url.Action("GetPartDetails", "RmaForm", new { SerialNumber = "dummy" })';
+        $(document).ready(function () {
+
+            $("input[id^='hiddenPartId']").each(function () {
+                GetPartDescription(this, $(this).attr('index'));
+            });
+
+            var e = $(".serial");
+
+            if (!e) {
+                return;
+            }
+            $(".serial").each(function () {
+                //$(this).rules('add', {
+                //    number: true
+                //});
+                $(this).on('blur', function () {
+                    validateSerialNo(this);
+                });
+                $(this).on('focus', function () {
+                    validateSerialNo(this);
+                });
+                $(this).on('keyup', function () {
+                    validateSerialNo(this);
+                    var Selector = $(this).closest('div.part-details').find("[data-role='combobox']");
+                    Selector.each(function () {
+                        var combobox = $(this).data("kendoComboBox");
+                        combobox.enable(true);
+                    });
+                });
+                $(this).on('change', function () {
+                    var Selector = $(this).closest('div.part-details').find("[data-role='combobox']");
+                    Selector.each(function () {
+                        var combobox = $(this).data("kendoComboBox");
+                        combobox.enable(true);
+                    });
+                });
+            });
+    });
+
+    
+    function GetPartDescription(e, index) {
+        if ($(e).attr('skip')) return;
+        var freeText = !$(e).data("kendoComboBox").dataSource.view().length > 0;
+        ComboChangeEvent(e, freeText);
+        var Selector = "[id$='index__PartDescription']".replace('index', index);
+        $(Selector).attr('skip', 'true');
+        if ($(e).data("kendoComboBox").dataSource.view().length > 0) {
+            var combobox = $(Selector).data("kendoComboBox");
+            if (combobox.dataSource.view().length == 0)
+                combobox.value('');
+            combobox.select(function (dataItem) {
+                var selected = dataItem.Value.endsWith('!#$' + $(e).data("kendoComboBox").text());
+                if (selected)
+                    ComboChangeEvent($(Selector));
+                return selected;
+            });
+        }
+        $(e).closest('div.container1').find("label.validate-serial-error:visible").remove();
+        $(Selector).attr('skip', null)
+    }
+    function GetPartNumber(e, index) {
+        if ($(e).attr('skip')) return;
+
+        var partNumber = $(e).val();
+        var PartNumberSelector = "[id$='index__PartNumber']".replace('index', index);
+        $(PartNumberSelector).attr('skip', 'true');
+        var combobox = $(PartNumberSelector).data("kendoComboBox");
+        var SerialSelector = "[id$='index__SerialNumber']".replace('index', index);
+        var freeText = !$(e).data("kendoComboBox").dataSource.view().length > 0;  //$(PartNumberSelector).val().length == 0 && $(SerialSelector).val().length == 0;
+        ComboChangeEvent(e, freeText);
+        if (!freeText) {
+            if (combobox.dataSource.view().length == 0)
+                combobox.value('');
+            combobox.select(function (dataItem) {
+                var selected = dataItem.Value.endsWith('!#$' + $(e).data("kendoComboBox").text());
+                if (selected)
+                    ComboChangeEvent($(PartNumberSelector));
+                return selected;
+            });
+        }
+        $(e).closest('div.container1').find("label.validate-serial-error:visible").remove();
+        $(PartNumberSelector).attr('skip', null)
+
+    }
+
+    
+    function RemovePartEntry(e) {
+        var rmaParentDiv = $("div[id^=tabs-" + $('#TabId').val() + "]");
+        if (rmaParentDiv.length == 0) {
+            rmaParentDiv = $("div[id='rmaContainer']");
+        }
+        var visible_count = rmaParentDiv.find(".part_details_class:visible").length;
+        if (visible_count <= 1) {
+            changeFeedbackMessage("error", 'At least one part has to be entered!');
+            return;
+        }
+
+        var PartIndex = $(e).attr("index");
+
+        var sURL = '@Url.Action("RemovePart", "RmaForm", new { index = "param1" })'.replace("param1", PartIndex);
+        $.get(sURL, function (data) {
+            $("#part_details_" + PartIndex).replaceWith(data);
+            $("#part_details_" + PartIndex).hide();
+
+            var visible_count = rmaParentDiv.find(".part_details_class:visible").length;
+            if (visible_count <= 1)
+                $(".remove-part-button").hide();
+            else
+                $(".remove-part-button").show();
+        });
+        }
+</script>
+
+

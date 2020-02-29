@@ -1,0 +1,45 @@
+﻿<!doctype html>
+
+
+
+<meta name="apple-itunes-app" content="app-id=502838820">
+<meta name="google-play-app" content="app-id=ru.hh.android">
+<meta name="msApplication-ID" content="microsoft.build.App" />
+<meta name="msApplication-PackageFamilyName" content="microsoft.build_8wekyb3d8bbwe" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" type="text/css" href="~/Content/smart-app-banner.css">
+<link rel="apple-touch-icon" href="~/images/apple.jpg">
+<link rel="android-touch-icon" href="~/images/play.jpg" />
+<link rel="windows-touch-icon" href="icon.png" />
+<style type="text/css">
+
+    * {
+        box-sizing: border-box;
+    }
+</style>
+<script type="text/javascript" src="~/Scripts/smart-app-banner.js"></script>
+<script type="text/javascript" src="~/Scripts/get-mobile-system.js"></script>
+
+<script>banner = undefined;
+    function RunBanner() {
+        var mobileType = getMobileOperatingSystem();
+        var iconName = mobileType == "android" ? "play" : "apple";
+		var n = document.querySelector('.smartbanner');
+		if (n) {
+			n.parentNode.removeChild(n);
+		}
+		new SmartBanner({
+				daysHidden: 15, // days to hide banner after close button is clicked (defaults to 15)
+				daysReminder: 90, // days to hide banner after "VIEW" button is clicked (defaults to 90)
+				appStoreLanguage: 'us', // language code for the App Store (defaults to user's browser language)
+				title: 'TRACS App',
+                author: 'Parabit Systems. Inc',
+                button: 'Download'
+        });
+        $(".smartbanner-close").remove();
+        $('.para-links').css("margin-top", $('.smartbanner-container').height());
+	};</script>
+<body onload="RunBanner()">
+    
+</body>

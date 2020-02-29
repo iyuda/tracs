@@ -1,0 +1,7 @@
+
+6/26/2019 11:36:54 PM
+http://rma.parabit.com:1340/api/v1/States/GetAll/ GET
+The remote server returned an error: (500) Internal Server Error.:
+Stack trace: at System.Net.HttpWebRequest.GetResponse()
+   at DataLayer.UrlRequests.UrlRequest(String Action, String method, List`1 parameters, String content_type, String data, WebHeaderCollection WebHeaders, Boolean NoAuthorization) in C:\Users\igor\Source\Repos\RmaTracker\DataLayer\API\UrlRequests.cs:line 78
+Source: System

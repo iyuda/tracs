@@ -1,0 +1,127 @@
+﻿@using RMATracker.Models
+@model DataLayer.CompanyBranch
+
+@using DataLayer
+@{
+    //var stateList = State.GetStates(userInfo: ClientDetection.GetUserEnvironment(Request), parameters: new List<string>() { "GetAll" });
+    var stateList = new List<State>();
+    var countryList = ((Country.fullList?.Count ?? 0) == 0 ? Country.GetCountries() : Country.fullList) ?? new List<Country>();
+}
+
+@{
+    ViewBag.QueryMode = (ViewBag.QueryMode ?? false);
+    string is_asterik = ViewBag.QueryMode ? ": " : "*";
+    var SectionClass = (ViewBag.IsMobile ?? ViewContext.HttpContext.GetOverriddenBrowser().IsMobileDevice) ? "section-mobile" : "section1";
+}
+<form id="formCompanyBranchSave" action="~/RmaForm/SubmitCompanyBranch" method="post" class="wpcf7-form" enctype="multipart/form-data" novalidate="novalidate" runat="server">
+    <fieldset>
+        @Html.HiddenFor(m => m.id)
+        @Html.Hidden("CompanyId")
+        @Html.Hidden("CompanyAddressUserId")
+        <div class="form-group street-address" style="padding-left:10px">
+
+            <label class="">Branch Street Address<span class="required">@is_asterik</span></label>
+            @if (!ViewBag.QueryMode)
+            {
+                @Html.TextBoxFor(m => m.Address, new { @style = "width:98%", @maxlength = "255", @aria_invalid = "false", @aria_required = "true", @required = "", @class = "capitalize wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" })
+            }
+            else
+            {
+                @Html.DisplayFor(m => m.Address)
+                @Html.HiddenFor(m => m.Address)
+            }
+        </div>
+        <div class="container1 " style="padding-left:10px">
+
+            <div class="form-group section1 country">
+                <label class="">Branch Country<span class="required">@is_asterik</span></label>
+                @(Html.Kendo().DropDownListFor(m => m.CompanyBranchCountryId)
+                                                                .BindTo(new SelectList(countryList, "CountryId", "Name", Model == null ? 0 : Model?.CompanyBranchCountryId))
+                                                                .HtmlAttributes(new { @id = "CompanyCountryId", @class = "", @style = "width: 98%; min-height: 36px;", onchange = "CompanyAddressCountryChangeEvent(this); ComboChangeEvent(this)" }))
+
+            </div>
+
+        </div>
+        <div class="container1" style="padding-left:10px">
+            <div class="@SectionClass">
+                <div class="form-group city">
+                    <label class="">Branch City<span class="required">@is_asterik</span></label>
+                    @*    <input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" name="city" type="text" value="" aria-invalid="false" aria-required="true" required="">*@
+                    @if (!ViewBag.QueryMode)
+                    {
+                        @Html.TextBoxFor(m => m.City, new { @maxlength = "50", @aria_invalid = "false", @aria_required = "true", @required = "", @class = "capitalize wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" })
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(m => m.City)
+                        @Html.HiddenFor(m => m.City)
+                    }
+                </div>
+            </div>
+            <div class="">
+                <div class="@SectionClass state">
+                    <label class="">Branch State<span class="required">@is_asterik</span></label>
+                        @(Html.Kendo().DropDownListFor(m => m.CompanyBranchStateId)
+                            .BindTo(new SelectList(stateList, "StateId", "Name", Model == null ? 0 : Model?.CompanyBranchStateId))
+                            .HtmlAttributes(new { @id = "CompanyStateId", @class = "", @style = "width: 98%; min-height: 36px;" }))
+                </div>
+            </div>
+            <div class="@SectionClass" style="padding-left:10px">
+                <div class="form-group zip">
+                    <label class="">Branch Zip Code<span class="required">@is_asterik</span></label>
+                    @*<input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" name="zip" type="text" value="" aria-invalid="false" aria-required="true" required="">*@
+                    @if (!ViewBag.QueryMode)
+                    {
+                        @Html.TextBoxFor(m => m.ZipCode, new { @pattern = "[0-9]{3} [0-9]{2}|[0-9]{5}|[0-9]{5}-[0-9]{4}|[0-9]{5} [0-9]{4}", @maxlength = "10", @aria_invalid = "false", @aria_required = "true", @required = "", @class = "zipcode wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" })
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(m => m.ZipCode)
+                        @Html.HiddenFor(m => m.ZipCode)
+                    }
+                </div>
+            </div>
+
+        </div>
+
+    </fieldset>
+
+</form>
+<script>
+    $(document).ready(function () {
+
+    })
+    function CompanyAddressInitUSA() {
+        var company_country_combo = $("#CompanyCountryId").data("kendoDropDownList");
+        company_country_combo.select(function (dataItem) {
+            return dataItem.Value === "240";
+        });
+        CompanyAddressCountryChangeEvent();
+    }
+    function CompanyAddressCountryChangeEvent(e) {
+        console.log(e);
+        var chosenId = $("#CompanyCountryId").data('kendoDropDownList').value();
+        
+        
+        if (!chosenId) return;
+
+        $("#CompanyStateId").kendoDropDownList({
+            dataTextField: "Text",
+            dataValueField: "Value",
+
+            dataSource: {
+                transport: {
+                    read: {
+                        cache: false,
+                        serverFiltering: true,
+                        async: false,
+                        dataType: "json",
+                        url: '@Url.Action("GetStatesByCountryJson", "Home")?countryId=' + chosenId,
+                    }
+                }
+            },
+        });
+    }
+    //CountryChangeEvent();
+    
+</script>

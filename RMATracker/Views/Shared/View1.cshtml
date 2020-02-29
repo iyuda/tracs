@@ -1,0 +1,1301 @@
+﻿<!DOCTYPE html>
+@model RMATracker.Models.RMATrackerViewModel
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://parabit.com/wp-content/themes/parabit-2015/yamm/yamm.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+
+
+    <!-- This site is optimized with the Yoast SEO plugin v7.9 - https://yoast.com/wordpress/plugins/seo/ -->
+    <title>RMA Parabit Tech | Parabit Systems</title>
+    <link rel="canonical" href="https://parabit.com/rmaparabittech/" />
+    <meta property="og:locale" content="en_US" />Organization
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="RMA Parabit Tech | Parabit Systems" />
+    <meta property="og:url" content="https://parabit.com/rmaparabittech/" />
+    <meta property="og:site_name" content="Parabit Systems" />
+    <meta property="article:publisher" content="https://www.facebook.com/ParabitSystems/" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="RMA Parabit Tech | Parabit Systems" />
+
+    <!-- / Yoast SEO plugin. -->
+
+    <link rel='dns-prefetch' href='//s.w.org' />
+    <script type="text/javascript">
+        window._wpemojiSettings = { "baseUrl": "https:\/\/s.w.org\/images\/core\/emoji\/2.4\/72x72\/", "ext": ".png", "svgUrl": "https:\/\/s.w.org\/images\/core\/emoji\/2.4\/svg\/", "svgExt": ".svg", "source": { "concatemoji": "https:\/\/parabit.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.9.7" } };
+        !function (a, b, c) { function d(a, b) { var c = String.fromCharCode; l.clearRect(0, 0, k.width, k.height), l.fillText(c.apply(this, a), 0, 0); var d = k.toDataURL(); l.clearRect(0, 0, k.width, k.height), l.fillText(c.apply(this, b), 0, 0); var e = k.toDataURL(); return d === e } function e(a) { var b; if (!l || !l.fillText) return !1; switch (l.textBaseline = "top", l.font = "600 32px Arial", a) { case "flag": return !(b = d([55356, 56826, 55356, 56819], [55356, 56826, 8203, 55356, 56819])) && (b = d([55356, 57332, 56128, 56423, 56128, 56418, 56128, 56421, 56128, 56430, 56128, 56423, 56128, 56447], [55356, 57332, 8203, 56128, 56423, 8203, 56128, 56418, 8203, 56128, 56421, 8203, 56128, 56430, 8203, 56128, 56423, 8203, 56128, 56447]), !b); case "emoji": return b = d([55357, 56692, 8205, 9792, 65039], [55357, 56692, 8203, 9792, 65039]), !b }return !1 } function f(a) { var c = b.createElement("script"); c.src = a, c.defer = c.type = "text/javascript", b.getElementsByTagName("head")[0].appendChild(c) } var g, h, i, j, k = b.createElement("canvas"), l = k.getContext && k.getContext("2d"); for (j = Array("flag", "emoji"), c.supports = { everything: !0, everythingExceptFlag: !0 }, i = 0; i < j.length; i++)c.supports[j[i]] = e(j[i]), c.supports.everything = c.supports.everything && c.supports[j[i]], "flag" !== j[i] && (c.supports.everythingExceptFlag = c.supports.everythingExceptFlag && c.supports[j[i]]); c.supports.everythingExceptFlag = c.supports.everythingExceptFlag && !c.supports.flag, c.DOMReady = !1, c.readyCallback = function () { c.DOMReady = !0 }, c.supports.everything || (h = function () { c.readyCallback() }, b.addEventListener ? (b.addEventListener("DOMContentLoaded", h, !1), a.addEventListener("load", h, !1)) : (a.attachEvent("onload", h), b.attachEvent("onreadystatechange", function () { "complete" === b.readyState && c.readyCallback() })), g = c.source || {}, g.concatemoji ? f(g.concatemoji) : g.wpemoji && g.twemoji && (f(g.twemoji), f(g.wpemoji))) }(window, document, window._wpemojiSettings);
+    </script>
+    <style type="text/css">
+        img.wp-smiley,
+        img.emoji {
+            display: inline !important;
+            border: none !important;
+            box-shadow: none !important;
+            height: 1em !important;
+            width: 1em !important;
+            margin: 0 .07em !important;
+            vertical-align: -0.1em !important;
+            background: none !important;
+            padding: 0 !important;
+        }
+    </style>
+    <link rel='stylesheet' id='contact-form-7-bootstrap-style-css' href='https://parabit.com/wp-content/plugins/bootstrap-for-contact-form-7/assets/dist/css/style.min.css?ver=4.9.7' type='text/css' media='all' />
+    <link rel='stylesheet' id='cf7.slim.css-css' href='https://parabit.com/wp-content/plugins/slim-contact-form-7/lib/slim.min.css?ver=1.2.2' type='text/css' media='all' />
+    <link rel='stylesheet' id='cf7.field.css-css' href='https://parabit.com/wp-content/plugins/slim-contact-form-7/field/styles.css?ver=1.2.2' type='text/css' media='all' />
+    <link rel='stylesheet' id='dashicons-css' href='https://parabit.com/wp-includes/css/dashicons.min.css?ver=4.9.7' type='text/css' media='all' />
+    <link rel='stylesheet' id='thickbox-css' href='https://parabit.com/wp-includes/js/thickbox/thickbox.css?ver=4.9.7' type='text/css' media='all' />
+    <link rel='stylesheet' id='bootstrap-css-css' href='https://parabit.com/wp-content/themes/parabit-2015/css/bootstrap.min.css?ver=3.3.4' type='text/css' media='all' />
+    <link rel='stylesheet' id='bst-css-css' href='https://parabit.com/wp-content/themes/parabit-2015/css/bst.css' type='text/css' media='all' />
+    <link rel='stylesheet' id='jquery-ui-css-css' href='https://parabit.com/wp-content/plugins/contact-form-7-datepicker-fix/css/jquery-ui.css?ver=4.9.7' type='text/css' media='all' />
+    <script type='text/javascript' src='https://parabit.com/wp-includes/js/jquery/jquery.js?ver=1.12.4'></script>
+    <script type='text/javascript' src='https://parabit.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.1'></script>
+    <script type='text/javascript' src='https://parabit.com/wp-content/plugins/sp-client-document-manager/js/jquery.remodal.js?ver=4.9.7'></script>
+    <script type='text/javascript' src='https://parabit.com/wp-content/plugins/sp-client-document-manager/js/jquery.responsive.tabs.js?ver=4.9.7'></script>
+    <script type='text/javascript'>
+        /* <![CDATA[ */
+        var userSettings = { "url": "\/", "uid": "0", "time": "1532626623", "secure": "1" };
+        /* ]]> */
+    </script>
+    <script type='text/javascript' src='https://parabit.com/wp-includes/js/utils.min.js?ver=4.9.7'></script>
+    <script type='text/javascript'>
+        /* <![CDATA[ */
+        var sp_cdm_link = { "ajax": "https:\/\/parabit.com\/wp-admin\/admin-ajax.php" };
+        /* ]]> */
+    </script>
+    <script type='text/javascript' src='https://parabit.com/wp-content/plugins/sp-client-document-manager/integrated/sp-cdm-link/js/scripts.js?ver=4.9.7'></script>
+    <script type='text/javascript'>
+        /* <![CDATA[ */
+        var sp_cdm_media = { "ajax": "https:\/\/parabit.com\/wp-admin\/admin-ajax.php" };
+        /* ]]> */
+    </script>
+    <script type='text/javascript' src='https://parabit.com/wp-content/plugins/sp-client-document-manager/integrated/sp-cdm-media/js/scripts.js?ver=4.9.7'></script>
+    <link rel='https://api.w.org/' href='https://parabit.com/wp-json/' />
+    <link rel="alternate" type="application/json+oembed" href="https://parabit.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fparabit.com%2Frmaparabittech%2F" />
+    <link rel="alternate" type="text/xml+oembed" href="https://parabit.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fparabit.com%2Frmaparabittech%2F&#038;format=xml" />
+    <!-- <meta name="NextGEN" version="3.0.7" /> -->
+    <style type="text/css">
+        div.wpcf7 .ajax-loader {
+            background-image: url('https://parabit.com/wp-content/plugins/contact-form-7/images/ajax-loader.gif');
+        }
+    </style>
+    <style type="text/css">
+        .recentcomments a {
+            display: inline !important;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+    </style>
+    <style type="text/css" id="wp-custom-css">
+        select.wpcf7-form-control.wpcf7-select.wpcf7-validates-as-required.rma-called.form-control {
+            width: 10%;
+        }
+
+        input.wpcf7-form-control.wpcf7-text.rma-smalltext.form-control, input.wpcf7-form-control.wpcf7-date.wpcf7-validates-as-date.rma-calendar.form-control, input.wpcf7-form-control.wpcf7-text.rma-zip-code.form-control, input.wpcf7-form-control.wpcf7-text.wpcf7-validates-as-required.rma-calendar.form-control {
+            width: 22%;
+        }
+
+        textarea.wpcf7-form-control.wpcf7-textarea.rma-textarea.form-control, select.wpcf7-form-control.wpcf7-select.wpcf7-validates-as-required.rma-dropdown.form-control, input.wpcf7-form-control.wpcf7-text.wpcf7-validates-as-required.rma-textfield.form-control {
+            width: 75%;
+        }
+
+        input.wpcf7-form-control.wpcf7-text.rma-file-description.form-control {
+            width: 50%;
+        }
+
+
+
+
+        #left {
+            width: 47%;
+            float: left;
+            margin-right: 6%;
+        }
+
+        #right {
+            width: 47%;
+            float: left;
+        }
+
+        .clearfix:after {
+            content: "\0020";
+            display: block;
+            height: 0;
+            clear: both;
+            visibility: hidden;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .clearfix {
+            display: block;
+        }
+
+        .container1:after { /*clear float*/
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        .section1 {
+            float: left;
+            width: 33.3333%;
+            border: 0px;
+            box-sizing: border-box;
+            padding: 10px 20px 10px 0px;
+        }
+
+
+
+        .imgsize {
+            width: 250px !important;
+        }
+    </style>
+    <link rel="shortcut icon" href="http://parabit.com/wp-content/uploads/2017/09/favicon.ico" />
+    <link href="https://parabit.com/wp-content/themes/parabit-2015/css/animate.css" rel="stylesheet" type="text/css">
+    <link href="https://parabit.com/wp-content/themes/parabit-2015/style.css" rel="stylesheet" type="text/css">
+    <link href="https://parabit.com/wp-content/themes/parabit-2015/responsive.css" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic|Montserrat:400,700' rel='stylesheet' type='text/css'>
+
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-25232888-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+
+    <link rel='stylesheet' id='jquery-remodal-css' href='https://parabit.com/wp-content/plugins/sp-client-document-manager/css/jquery.remodal.css?ver=4.9.7' type='text/css' media='all' />
+    <link rel='stylesheet' id='jquery-responsive-tabs-css' href='https://parabit.com/wp-content/plugins/sp-client-document-manager/css/jquery.responsive.tabs.css?ver=4.9.7' type='text/css' media='all' />
+</head>
+
+<body class="page-template-default page page-id-1677 gecko">
+
+    <!--[if lt IE 8]>
+    <div class="alert alert-warning">
+    You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.
+    </div>
+    <![endif]-->
+
+
+    <div class="head-top">
+        <div class="container">
+            <div class="row">
+
+
+
+
+
+
+
+
+
+                <div class="col-xs-5 col-sm-3 social-icons">
+                    <ul class="list-unstyled list-inline lead">
+                        <li><a href="https://www.facebook.com/ParabitSystems/" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="https://twitter.com/ParabitSystems" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="https://www.linkedin.com/company/1325563?trk=prof-0-ovw-curr_pos" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+                        <li><a href="https://www.pinterest.com/ParabitSystems/" target="_blank"><i class="fa fa-pinterest-p"></i></a></li>
+                        <li><a href="https://plus.google.com/+ParabitSystemsIncRoosevelt" target="_blank"><i class="fa fa-google-plus"></i></a></li>
+                    </ul>
+                </div>
+
+                <div class="col-xs-7 col-sm-9 top-links">
+
+                    <ul class="list-unstyled list-inline pull-right">
+
+                        <li><a href="https://parabit.com/tradeshows">Tradeshows</a></li>
+                        <li><a href="https://parabit.com/catalogs-warranty">Catalogs / Warranty</a></li>
+                        <li><a href="https://parabit.com/partners-resellers">Partners / Resellers</a></li>
+                        <li><a href="https://parabit.com/careers">Careers</a></li>
+                        <li><a href="https://parabit.com/blog/">Blog</a></li>
+                        <li><a href="https://parabit.com/press/">Press</a></li>
+                        <li style="color: #fff;">&nbsp;  &nbsp; 1 (888) 3-<span style="color: #EE661A;">PARABIT</span></li>
+                    </ul>
+
+
+
+
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+    <div id="navigation">
+        <div class="navbar yamm navbar-default">
+            <div class="container">
+
+                <div class="navbar-header">
+                    <button type="button" data-toggle="collapse" data-target="#navbar-collapse-1" class="navbar-toggle"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+
+                    <a href="https://parabit.com/index.php" class="navbar-brand">
+                        <div class="svg-logo">
+                            <object data="https://parabit.com/wp-content/themes/parabit-2015/img/parabit-logo.svg" type="image/svg+xml">
+                                <img src="https://parabit.com/wp-content/themes/parabit-2015/img/logo.png">
+                            </object>
+                        </div>
+                    </a>
+                </div>
+
+
+
+
+
+
+
+                <div id="navbar-collapse-1" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-right">
+
+
+                        <li><a href="https://parabit.com/">Home</a></li>
+
+                        <li><a href="https://parabit.com/about">About</a></li>
+
+
+                        <!-- Tab demo -->
+                        <li class="dropdown yamm-fw">
+                            <a href="#" data-toggle="dropdown" class="dropdown-toggle">Solutions <b class="caret"></b></a>
+
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <div class="yamm-content">
+
+
+                                        <div class="container">
+                                            <div class="row">
+
+                                                <div class="col-sm-4 border-rt">
+                                                    <div class="row">
+
+                                                        <div class="col-xs-12">
+                                                            <h3 class="no-top">Security Products</h3>
+                                                            <p class="no-top"><small>Total security solutions to fit any budget.</small></p>
+                                                            <ul>
+                                                                <li><a href="https://parabit.com/solutions/access-control">ATM Lobby Access Control</a></li>
+                                                                <li><a href="https://parabit.com/solutions/building-access-control">Building/Telephone Access Control</a></li>
+                                                                <li><a href="https://parabit.com/solutions/telephones">Courtesy/Emergency Telephones</a></li>
+                                                                <li><a href="https://parabit.com/solutions/surveillance">HD Surveillance</a></li>
+
+                                                                <li><a href="https://parabit.com/solutions/light-sensor/light-sensor">Light Sensor</a></li>
+                                                                <li><a href="https://parabit.com/solutions/kiosks/visitor-management-kiosks/">Visitor Management Solutions</a></li>
+                                                                <li><a href="https://parabit.com/solutions/access-control/custom-door-hardware/"> Door Lock/Exit Hardware</a></li>
+                                                                <li><a href="https://parabit.com/solutions/surveillance/">Specialty Cameras/Camera Enclosures</a></li>
+
+                                                            </ul>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+
+
+                                                <div class="col-sm-4 border-rt">
+                                                    <div class="row">
+
+                                                        <div class="col-xs-12">
+                                                            <h3 class="no-top">Self Service</h3>
+                                                            <p class="no-top"><small>Provide on-demand information and increase revenue.</small></p>
+                                                            <ul>
+                                                                <li><a href="https://parabit.com/solutions/atm-accessories">ATM Surrounds, Toppers &amp; Accessories</a></li>
+                                                                <li><a href="https://parabit.com/solutions/kiosks/mobile-device-charging-stations">Charging Stations</a></li>
+                                                                <li><a href="https://parabit.com/solutions/software-solutions/">Digital Signage Software</a></li>
+                                                                <li><a href="https://parabit.com/solutions/kiosks">Kiosks</a></li>
+                                                                <li><a href="https://parabit.com/solutions/welcome-centers/visitor-welcome-centers">Welcome Centers</a></li>
+
+
+                                                            </ul>
+                                                        </div>
+
+
+                                                    </div>
+                                                </div>
+
+
+
+                                                <div class="col-sm-4">
+                                                    <div class="row">
+
+                                                        <div class="col-xs-12">
+                                                            <h3 class="no-top">Fabrication &amp; Design</h3>
+                                                            <p class="no-top"><small>Custom, American-made work.</small></p>
+                                                            <ul>
+                                                                <li><a href="https://parabit.com/solutions/surveillance/custom-camera-enclosures/">Custom Camera Enclosures</a></li>
+                                                                <li><a href="https://parabit.com/solutions/access-control/custom-mounting-hardware-installations">Custom Door Hardware & Access Control Enclosures</a></li>
+                                                                <li><a href="https://parabit.com/solutions/fabrication-design-services">Design &amp; Fabrication</a></li>
+                                                                <li><a href="https://parabit.com/solutions/fabrication-design-services/stainless-steel-glass-railings/">Stainless Steel & Glass Railings</a></li>
+
+                                                            </ul>
+
+                                                        </div>
+
+
+                                                    </div>
+                                                </div>
+
+
+
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </li>
+                            </ul>
+
+
+                        </li><!-- solutions -->
+
+
+
+
+
+                        <li><a href="https://parabit.com/integration">Integration</a></li>
+
+
+
+
+                        <li class="dropdown">
+                            <a href="#" data-toggle="dropdown" class="dropdown-toggle" aria-expanded="false">Industries <b class="caret"></b></a>
+                            <ul role="menu" class="dropdown-menu classic">
+                                <div class="yamm-content">
+                                    <li><a href="https://parabit.com/tag/aviation-transit">Aviation / Transit</a></li>
+                                    <li><a href="https://parabit.com/tag/banking-credit-union">Banking</a></li>
+                                    <li><a href="https://parabit.com/tag/corporate">Corporate</a></li>
+                                    <li><a href="https://parabit.com/tag/correctional-facilities">Correctional Facilities</a></li>
+                                    <li><a href="https://parabit.com/tag/education">Education</a></li>
+                                    <li><a href="https://parabit.com/tag/events-tradeshows">Event &amp; Tradeshows</a></li>
+                                    <li><a href="https://parabit.com/tag/government">Government</a></li>
+                                    <li><a href="https://parabit.com/tag/healthcare">Healthcare</a></li>
+                                    <li><a href="https://parabit.com/tag/hospitality">Hospitality</a></li>
+                                    <li><a href="https://parabit.com/tag/museums">Museums</a></li>
+                                    <li><a href="https://parabit.com/tag/retail">Retail</a></li>
+                                    <li><a href="https://parabit.com/tag/security">Security</a></li>
+                                </div>
+                            </ul>
+                        </li>
+
+
+
+
+
+
+                        <li class="dropdown">
+                            <a href="#" data-toggle="dropdown" class="dropdown-toggle" aria-expanded="false">Media <b class="caret"></b></a>
+                            <ul role="menu" class="dropdown-menu classic">
+                                <div class="yamm-content">
+                                    <li><a href="https://parabit.com/gallery">Gallery</a></li>
+                                    <li><a href="https://parabit.com/presentations">Presentations</a></li>
+                                    <li><a href="https://parabit.com/webinars">Webinars</a></li>
+
+                                    <li><a href="https://parabit.com/white-papers">White Papers</a></li>
+                                </div>
+                            </ul>
+                        </li>
+
+                        <li><a href="https://parabit.com/clients">Clients</a></li>
+
+
+                        <li class="mobi-x"><a href="https://parabit.com/tradeshows">Tradeshows</a></li>
+                        <li class="mobi-x"><a href="https://parabit.com/catalogs-warranty">Catalogs / Warranty</a></li>
+                        <li class="mobi-x"><a href="https://parabit.com/partners-resellers">Partners / Resellers</a></li>
+                        <li class="mobi-x"><a href="https://parabit.com/careers">Careers</a></li>
+                        <li class="mobi-x"><a href="https://parabit.com/blog/">Blog</a></li>
+
+
+                        <li><a href="https://parabit.com/contact">Contact Us</a></li>
+
+
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#myModal">
+                                <i class="fa fa-search"></i>
+                            </a>
+                        </li>
+
+
+
+
+                    </ul>
+                </div>
+
+
+
+            </div>
+        </div><!-- navbar yamm -->
+    </div><!-- #navigation -->
+
+
+
+
+
+
+
+
+    <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?lang=css"></script>
+    <script type="text/javascript">
+        jQuery(function () {
+            window.prettyPrint && prettyPrint()
+            jQuery(document).on('click', '.yamm .dropdown-menu', function (e) {
+                e.stopPropagation()
+            })
+        })
+    </script>
+
+
+    <!-- Modal -->
+    <div class="modal fade modal-search" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+
+
+
+
+                    <form role="search" method="get" id="searchform" class="wp-search" action="https://parabit.com/">
+
+
+                        <div>
+                            <input type="text" value="" name="s" id="s" class="big-search" placeholder="Enter a search term ..." />
+
+
+
+                            <button type="submit" id="searchsubmit" class="pull-right search-but" />
+                            <i class="fa fa-search"></i>
+                            </button>
+
+
+                        </div>
+                    </form>
+
+
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+
+
+    <script type="text/javascript">
+        $(window).scroll(function () {
+            var scroll = $(window).scrollTop();
+
+            if (scroll >= 200) {
+                $("#navigation").addClass("sticky");
+                $(".navbar").addClass("stick-logo");
+                $("body").addClass("stick-padd");
+            } else {
+                $("#navigation").removeClass("sticky");
+                $(".navbar").removeClass("stick-logo");
+                $("body").removeClass("stick-padd");
+            }
+        });
+    </script>
+    <div class="page-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+
+                    <header>
+                        <h1>RMA Parabit Tech</h1>
+                        <p id="breadcrumbs"><span><span><a href="https://parabit.com/">Home</a> / <strong class="breadcrumb_last">RMA Parabit Tech</strong></span></span></p>
+                    </header>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="container">
+        <div class="row">
+
+            <div class="col-xs-12 col-sm-8">
+                <div id="content" role="main">
+                    <article role="article" id="post_1677" class="post-1677 page type-page status-publish hentry">
+
+                        <div role="form" class="wpcf7" id="wpcf7-f1676-p1677-o1" lang="en-US" dir="ltr">
+                            <div class="screen-reader-response"></div>
+                            <form id="formRMASend" action="~/Shared/SendRMAData" method="post" class="wpcf7-form" enctype="multipart/form-data" novalidate="novalidate" runat="server">
+                                @Html.HiddenFor(m => m.ViewType)
+                                @Html.AntiForgeryToken()
+                                <font color="red">
+                                    When returning PC Boards or exposed electronics, always place in anti -static pink or silver bags. Failure to place exposed electronics(pc boards) in anti -static packaging voids all warranties. Static destroys electronics.
+                                    All items should be shipped inside boxes with the Case# marked on the box.
+                                    Items received damaged due to improper packaging are the responsibility of the shipper.
+                                    Always provide RMA documentation / Case Numbers with ALL returns(print the email received after submitting the form on the website).
+                                    Please process only one site per RMA form. Do not return equipment from multiple sites on a single RMA form.
+                                    <br><br>
+                                    Equipment to be returned with Case # to<br>
+                                    Parabit Systems <br>
+                                    35 Debevoise Ave<br>
+                                    Roosevelt, NY 11575 <br>
+                                    Attention RMA Depatment<br>
+                                    Attention: George Koebel, Paul Vitoria<br>
+                                </font>
+                                <br><br>
+                                * Required Fields <br> <br>
+                                @*<strong>Problem Description:*</strong>  <br>*@
+
+
+                                <div class="form-group call-number">
+                                    @{
+                                        if (ViewBag.ViewType == "rmaparabittech" || ViewBag.ViewType == "rmaparabitsub")
+                                        {
+                                            <label class="">ESC Dispatch #:<span class="required">*</span></label>
+                                        }
+                                        else
+                                        {
+                                            <label class="">Vendor Call # (TR #):<span class="required">*</span></label>
+                                        }
+                                    }
+                                    @Html.TextBoxFor(m => m.RMABase.tr_no, new { @maxlength = "12", @data_validation = "required", @required = "", @aria_invalid = "false", @aria_required = "true", @class = "required wpcf7-form-control wpcf7-text wpcf7-validates-as-required wpcf7-not-valid rma-calendar form-control" })
+                                </div> <br>
+                                @{
+                                    if (ViewBag.ViewType == "rmaparabittech")
+                                    {
+                                        @:<div class="container1" style="display:none">
+                                        }
+                                        else
+                                        {
+                                            @:<div class="container1">
+                                            }
+                                }
+
+                                <strong>Type of RMA:*</strong>  <br>
+                                <div class="form-group TypeofRMA">
+
+                                    @Html.DropDownListFor(m => m.RMADetails.ReturnType, new SelectList(new List<Object>{
+                                       new { value = 0 , text = "Service request"  },
+                                       new { value = 1 , text = "Credit request" },
+                                    }, "Value", "Text"), "-- Pick One --", new { @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-select wpcf7-validates-as-required section1 form-control" })
+
+
+
+
+                                </div><br><br>
+
+                                <strong>If Credit then reason for:*</strong>  <br>
+                                <div class="form-group IfCreditReason">
+
+                                    @Html.DropDownListFor(m => m.RMADetails.CreditReason, new SelectList(new List<Object>{
+                                        new { value = 0 , text = "Job cancelled"  },
+                                        new { value = 1 , text = "No longer required (excess inventory)" },
+                                        new { value = 2 , text = "Wrong part ordered" },
+                                        new { value = 3 , text = "Wrong color" },
+                                    }, "Value", "Text"), "-- Pick One --", new { @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-select wpcf7-validates-as-required section1 form-control" })
+                                </div><br><br>
+
+                            </div>
+                            <br>
+
+                            <div class="form-group firm-name">
+                                <label class="">Firm Name</label>
+                                @{ bool is_securitas = Model.ViewType == "rma-boa" || Model.ViewType == "rma-securitas-general";}
+                                @Html.TextBoxFor(m => m.TechInfo.ClientName, new {
+                                        @placeholder = @is_securitas ? "Securitas" :"",
+                                        @maxlength = "50",
+                                        @aria_invalid = "false",
+                                        @class = "wpcf7-form-control wpcf7-text rma-textfield form-control" })
+                            </div>
+
+                            <div class="container1">
+                                <div class="section1">
+                                    <div class="form-group tech-name">
+                                        <label class="">Tech Name<span class="required">*</span></label>
+
+                                        @Html.TextBoxFor(m => m.TechInfo.TechName, new { @maxlength = "50", @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" })
+                                    </div>
+                                </div>
+                                <div class="section1">
+                                    <div class="form-group tech-email">
+                                        <label class="">Tech Email<span class="required">*</span></label>
+
+                                        @Html.TextBoxFor(m => m.TechInfo.TechEmail, new { @maxlength = "50", @type = "email", @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" })
+                                    </div>
+                                </div>
+                                <div class="section1">
+                                    <div class="form-group tech-phone">
+                                        <label class="">Tech Phone<span class="required">*</span></label>
+                                        @Html.TextBoxFor(m => m.TechInfo.TechPhone, new { @maxlength = "15", @type = "tel", @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" })
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+                            <br><br>
+                            <fieldset>
+                                <legend>Return Address</legend>
+                                <div class="form-group return-street-address">
+                                    <label class="">Street Address<span class="required">*</span></label>
+                                    @*<input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required rma-textfield form-control" name="return-street-address" type="text" value="" aria-invalid="false" aria-required="true" required="">*@
+                                    @Html.TextBoxFor(m => m.ReturnAddress.StreetAddress, new { @maxlength = "255", @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" })
+                                </div>
+
+                                <div class="container1">
+                                    <div class="section1">
+                                        <div class="form-group return-city">
+                                            <label class="">City<span class="required">*</span></label>
+                                            @*    <input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" name="return-city" type="text" value="" aria-invalid="false" aria-required="true" required="">*@
+                                            @Html.TextBoxFor(m => m.ReturnAddress.City, new { @maxlength = "50", @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="section1">
+                                        <div class="form-group return-state">
+                                            <label class="">State<span class="required">*</span></label>
+                                            @*<input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required rma-short form-control" name="return-state" type="text" value="" aria-invalid="false" aria-required="true" required="">*@
+
+                                            @Html.DropDownListFor(m => m.ReturnAddress.State, new SelectList(Model.States, "Value", "Text", Model.ReturnAddress == null ? null : Model.ReturnAddress.State), "-- Select State --", new
+                                               {
+                                                   @aria_invalid = "false",
+                                                   @aria_required = "true",
+                                                   @required = "",
+                                                   @class = "wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control",
+                                                   @onchange = "GetReturnAddressStateName(this)"
+                                               })
+                                            @Html.HiddenFor(m => m.ReturnAddress._ReturnAddressStateFullName)
+                                            @*@Html.TextBoxFor(m => m.ReturnAddress.State, new { @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" })*@
+                                        </div>
+                                    </div>
+                                    <div class="section1">
+                                        <div class="form-group return-zip">
+                                            <label class="">Zip Code<span class="required">*</span></label>
+                                            @*<input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" name="return-zip" type="text" value="" aria-invalid="false" aria-required="true" required="">*@
+                                            @Html.TextBoxFor(m => m.ReturnAddress.ZipCode, new { @maxlength = "9", @aria_invalid = "false", @aria_required = "true", @required = "", @class = "zipcode wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <br><br>
+                            <fieldset>
+                                <legend>Bank Name &amp; Address</legend>
+                                <div class="form-group bank-name">
+                                    <label class="">Bank Name</label>
+                                    @*<input class="wpcf7-form-control wpcf7-text rma-textfield form-control" name="bank-name" type="text" value="" placeholder="Bank of America" aria-invalid="false">*@
+                                    @Html.TextBoxFor(m => m.BankInfo.BankName, new { @aria_invalid = "false", @class = "wpcf7-form-control wpcf7-text rma-textfield form-control" })
+                                </div><br>
+
+                                <div class="form-group bank-street-address">
+                                    <label class="">Service Call Street Address<span class="required">*</span></label>
+                                    @*<input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required rma-textfield form-control" name="bank-street-address" type="text" value="" aria-invalid="false" aria-required="true" required="">*@
+                                    @Html.TextBoxFor(m => m.BankInfo.BankStreetAddress, new { @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" })
+                                </div>
+
+                                <div class="container1">
+                                    <div class="section1">
+                                        <div class="form-group bank-city">
+                                            <label class="">City<span class="required">*</span></label>
+                                            @*<input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" name="bank-city" type="text" value="" aria-invalid="false" aria-required="true" required="">*@
+                                            @Html.TextBoxFor(m => m.BankInfo.BankCity, new { @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="section1">
+                                        <div class="form-group bank-state">
+                                            <label class="">State<span class="required">*</span></label>
+                                            @*<input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required rma-short form-control" name="bank-state" type="text" value="" aria-invalid="false" aria-required="true" required="">*@
+
+                                            @Html.DropDownListFor(m => m.BankInfo.BankState, new SelectList(Model.States, "Value", "Text", Model.BankInfo == null ? null : Model.BankInfo.BankState), "-- Select State --", new
+                                               {
+                                                   @aria_invalid = "false",
+                                                   @aria_required = "true",
+                                                   @required = "",
+                                                   @class = "wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control",
+                                                   @onchange = "GetBankStateName(this)"
+                                               })
+                                            @Html.HiddenFor(m => m.BankInfo._BankStateFullName)
+                                            @*@Html.TextBoxFor(m => m.BankInfo.BankState, new { @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" })*@
+                                        </div>
+                                    </div>
+                                    <div class="section1">
+                                        <div class="form-group bank-zip">
+                                            <label class="">Zip Code<span class="required">*</span></label>
+                                            @*<input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" name="bank-zip" type="text" value="" aria-invalid="false" aria-required="true" required="">*@
+                                            @Html.TextBoxFor(m => m.BankInfo.BankZipCode, new { @maxlength = "9", @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+
+
+
+
+                            <strong>Date of Service Call:*</strong> <div class="form-group service-call-date">
+                                @*<input class="wpcf7-form-control wpcf7-date wpcf7-validates-as-required wpcf7-validates-as-date rma-calendar form-control" name="service-call-date" type="date" value="" min="" max="" step="" aria-invalid="false" aria-required="true" required="">*@
+                                @Html.TextBoxFor(m => m.Dates.CaseDate, new { @type = "date", @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-date wpcf7-validates-as-required wpcf7-validates-as-date wpcf7-not-valid rma-calendar form-control" })
+                            </div> <br>
+                            <strong>Problem Description:*</strong> <br>
+                            <div class="form-group problem-menu">
+                                @*<select class="wpcf7-form-control wpcf7-select wpcf7-validates-as-required rma-dropdown form-control" name="problem-menu" aria-invalid="false" aria-required="true" required=""><option value="" selected="">---
+        </option><option value="Card swipe not reading cards"> Card swipe not reading cards</option><option value="Reader flashing red/ access denied"> Reader flashing red/ access denied</option><option value="Phones/Contactless cards not being read"> Phones / Contactless cards not being read</option><option value="False skimming/overlay alarm"> False skimming/overlay alarm</option><option value="Tamper alarm active"> Tamper alarm active</option><option value="CableCut alarm active"> CableCut alarm active</option><option value="Reader LED not working"> Reader LED not working</option><option value="Trouble loading firmware"> Trouble loading firmware</option><option value="Controller unresponsive"> Controller unresponsive</option><option value="Doors not locking"> Doors not locking</option><option value="Doors not opening"> Doors not opening</option><option value="Can't connect to controller"> Can't connect to controller</option><option value="Other">Other</option>
+        </select>*@
+                                @Html.DropDownList("ComplaintCode", new SelectList(new List<Object>{
+                                    new {value = 0, text = "Card swipe not reading cards"  },
+                                    new {value = 1, text = "Reader flashing red/ access denied" },
+                                    new {value = 2, text = "Phones/Contactless cards not being read" },
+                                    new {value = 3, text = "False skimming/overlay alarm" },
+                                    new {value = 4, text = "Tamper alarm active" },
+                                    new {value = 5, text = "CableCut alarm active" },
+                                    new {value = 6, text = "Reader LED not working" },
+                                    new {value = 7, text = "Trouble loading firmware" },
+                                    new {value = 8, text = "Controller unresponsive" },
+                                    new {value = 9, text = "Doors not locking" },
+                                    new {value = 10, text = "Doors not opening" },
+                                    new {value = 11, text = "Can't connect to controller" },
+                                    new {value = 12, text = "Other" },
+
+                                }, "Value", "Text"), "---", new { @onchange = "GetProblemDescription(this)", @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control" })
+                                @Html.HiddenFor(m => m.TechInfo.ClientComplaint)
+                            </div> <br>
+                            <div class="form-group additional-info">
+                                <label class="">Additional Information:</label>
+                                @Html.TextAreaFor(m => m.TechInfo.FieldObservation, new { @rows = "4", @aria_invalid = "false", @class = "wpcf7-form-control wpcf7-textarea rma-textarea form-control" })
+                                @*<textarea class="wpcf7-form-control wpcf7-textarea rma-textarea form-control" name="additional-info" rows="4" aria-invalid="false"></textarea>*@
+                            </div> <br>
+                            <div class="form-group steps-taken">
+                                <label class="">Steps Undertaken to Resolve Issues:</label>
+                                @*<textarea class="wpcf7-form-control wpcf7-textarea rma-textarea form-control" name="steps-taken" rows="4" aria-invalid="false"></textarea>*@
+                                @Html.TextAreaFor(m => m.TechInfo.StepsUndertaken, new { @rows = "4", @aria_invalid = "false", @class = "wpcf7-form-control wpcf7-textarea rma-textarea form-control" })
+                            </div> <br>
+
+
+                            <fieldset>
+                                <legend>Part Number and Serial Number Returns</legend>
+
+
+                                <i>*Only the 1st Part Number &amp; Serial Number is required</i> <br> <br>
+
+                                @for (int i = 0; i < Model.Parts.Count; i++)
+                                {
+                                    <div class="container1">
+                                        <div class="section1">
+                                            @{
+                                                if (i == 0)
+                                                {
+                                                    @:<strong>Part Number @(i + 1):*</strong>
+                                                    @:<div class="form-group part-menu">
+                                                        //ViewBag
+                                                        @Html.DropDownListFor(m => m.Parts[i]._PartNo, new SelectList(Model.getPartTypes(), "PartNo", "PartDescription", Model.Parts[i]._PartNo), "-- Select Part --", new
+                                                           {
+                                                               @aria_invalid = "false",
+                                                               @aria_required = "true",
+                                                               @required = "",
+                                                               @class = "wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control",
+                                                               @onchange = "GetPartID(this)"
+                                                           })
+                                                    }
+                                                    else
+                                                    {
+                                                        @:<strong>Part Number @(i + 1):</strong>
+                                                        @:<div class="form-group part-menu">
+                                                            @Html.DropDownListFor(m => m.Parts[i]._PartNo, new SelectList(Model.getPartTypes(), "PartNo", "PartDescription", Model.Parts[i]._PartNo), "-- Select Part --", new
+                                                       {
+                                                           @aria_invalid = "false",
+                                                           @class = "wpcf7-form-control wpcf7-select form-control",
+                                                           @onchange = "GetPartID(this)"
+                                                       })
+                                                        }
+                                                        @Html.DropDownListFor(m => m.Parts[i]._PartDescription, new SelectList(Model.getPartTypes(), "PartDescription", "PartDescription", Model.Parts[i]._PartDescription), "--", new
+                                                           {
+                                                               @style = "display:none"
+                                                           })
+                                                        @Html.DropDownListFor(m => m.Parts[i].part_types_id, new SelectList(Model.getPartTypes(), "id", "id", Model.Parts[i].part_types_id), "--", new
+                                                           {
+                                                               @style = "display:none"
+                                                           })
+                                                    @:</div>
+                                            }
+                                        </div>
+
+                                        <div class="section1">
+                                            @{
+                                                if (i == 0)
+                                                {
+                                                    @:<strong>Serial Number @(i + 1):* </strong>
+                                                    @:<div class="form-group serial-number">
+                                                        @Html.TextBoxFor(m => m.Parts[i].SN, new { @maxlength = "6", @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-validates-as-required form-control" })
+                                                    }
+                                                    else
+                                                    {
+                                                        @:<strong>Serial Number @(i + 1): </strong>
+                                                        @:<div class="form-group serial-number">
+                                                            @Html.TextBoxFor(m => m.Parts[i].SN, new { @maxlength = "6", @aria_invalid = "false", @class = "wpcf7-form-control form-control" })
+                                                        }
+                                                    @:</div>
+                                            }
+                                        </div>
+                                                      
+                                        <div class="section1"><span class="slim" data-status-file-size="File is too big, maximum file size: $0 MB." data-status-file-type="Invalid file type, expects: $0." data-status-image-too-small="Image is too small, minimum size is: $0 pixels." data-max-file-size="9" data-post="output" data-filter-sharpen="15" data-size="640,480" data-download="true"><input type="file" name="upload-file-7" class="wpcf7-form-control wpcf7-slim" aria-invalid="false" /></span></div>
+                                                      
+                                    </div>
+
+                                }
+
+                            </fieldset>
+
+                            <fieldset>
+                                <div class="container1">
+                                    <div class="section1"><strong>Was Parabit Called?*</strong></div>
+                                    @*<div class="section1"><strong>If yes, Date:</strong></div>*@
+                                    <div class="section1"><strong>Parabit Dispatch #:</strong></div>
+                                </div>
+
+
+                                <div class="section1">
+                                    <div class="form-group parabit-called">
+
+                                        <div class="radio-jquery-ui">
+                                            @Html.RadioButtonFor(m => m.RMABase.was_parabit_called, "false", new { @tag = "No", @onchange = "WasParabitCalled(this)" })
+                                            @Html.LabelFor(m => m.RMABase.was_parabit_called, "No")
+                                        </div>
+                                        <div class="radio-jquery-ui">
+                                            @Html.RadioButtonFor(m => m.RMABase.was_parabit_called, "true", new { @tag = "Yes", @onchange = "WasParabitCalled(this)" })
+                                            @Html.LabelFor(m => m.RMABase.was_parabit_called, "Yes")
+                                        </div>
+                                    </div>
+
+                                    <div class="section1" style="width:100%">
+                                        @{
+
+                                            if (Model.RMABase == null ? false : (Model.RMABase.was_parabit_called == null ? false : (bool)Model.RMABase.was_parabit_called))
+                                            {
+                                                @:<div id="called_date_div" class="form-group call-date">
+                                                }
+                                                else
+                                                {
+                                                    @:<div id="called_date_div" class="form-group call-date" style="display:none">
+                                                    }
+
+                                                    @*<input class="wpcf7-form-control wpcf7-date wpcf7-validates-as-date form-control" name="call-date" type="date" value="" min="" max="" step="" aria-invalid="false">*@
+                                                    @Html.Label("Parabit Call Date")
+                                                    @Html.TextBoxFor(m => m.Dates.ParabitCalledDate, new { @type = "date", @min = "", @max = "", @step = "", @aria_invalid = "false", @class = "wpcf7-form-control wpcf7-date wpcf7-validates-as-date form-control" })
+                                                @:</div>
+                                        }
+                                        @*<select class="wpcf7-form-control wpcf7-select wpcf7-validates-as-required rma-short form-control" name="parabit-called" aria-invalid="false" aria-required="true" required=""><option value="" selected="">---</option><option value="Yes">Yes</option><option value="No">No</option></select>*@
+                                        @*@Html.RadioButtonFor(m => m.RMABase.was_parabit_called, new { @onchange = "WasParabitCalled()" })*@
+                                        @*@Html.Label("Was Parabit Called?")*@
+                                    </div>
+                                </div>
+
+                                <div class="section1">
+                                    <div class="form-group dispatch-number">
+                                        @*<input class="wpcf7-form-control wpcf7-text form-control" name="dispatch-number" type="text" value="" aria-invalid="false">*@
+                                        @Html.TextBoxFor(m => m.RMABase.DispatchNo, new { @maxlength = "20", @aria_invalid = "false", @class = "wpcf7-form-control wpcf7-text form-control" })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <span class="wpcf7-form-control-wrap cf7-counter"><input type="hidden" name="cf7-counter" value="225" size="40" class="wpcf7-form-control wpcf7dtx-dynamictext wpcf7-dynamichidden" aria-invalid="false"></span>
+
+
+
+                            <div class="form-group">
+                                <div>
+                                    <input class="wpcf7-form-control wpcf7-submit btn btn-primary" type="submit" value="Send" id="btnSend">
+                                </div>
+                            </div><div class="wpcf7-response-output wpcf7-display-none alert"></div>
+                            </fieldset>
+                            </form>
+                        </div>
+                    </article>
+
+                </div><!-- /#content -->
+            </div>
+
+            <div class="col-xs-6 col-sm-4" id="sidebar" role="navigation">
+                <aside class="sidebar"></aside>
+            </div>
+
+        </div><!-- /.row -->
+    </div><!-- /.container -->
+    <!--<div class="divider"></div>-->
+
+
+    <div class="above-foot text-center">
+        <div class="container-fluid">
+
+            <div class="row">
+
+                <div class="col-xs-12 text-center"><h1>Browse Solutions by Industry</h1></div>
+
+                <div class="big-wrap-icon">
+
+                    <div class="foot-icon">
+
+                        <a href="https://parabit.com/tag/aviation-transit">
+                            <img src="https://parabit.com/wp-content/themes/parabit-2015/img/icons/aviation_transit_ro.jpg">
+                            <p>Aviation/Transit</p>
+                        </a>
+
+                    </div>
+
+
+
+
+                    <div class="foot-icon">
+
+                        <a href="https://parabit.com/tag/banking-credit-union">
+                            <img src="https://parabit.com/wp-content/themes/parabit-2015/img/icons/bank.jpg">
+                            <p>Banking</p>
+                        </a>
+
+                    </div>
+
+
+
+                    <div class="foot-icon">
+                        <a href="https://parabit.com/tag/corporate">
+                            <img src="https://parabit.com/wp-content/themes/parabit-2015/img/icons/corporate_ro.jpg">
+                            <p>Corporate Facilities</p>
+                        </a>
+                    </div>
+
+                    <div class="foot-icon">
+                        <a href="https://parabit.com/tag/correctional-facilities">
+                            <img src="https://parabit.com/wp-content/themes/parabit-2015/img/icons/correctional.jpg">
+                            <p>Correctional Facilities</p>
+                        </a>
+                    </div>
+
+
+                    <div class="foot-icon">
+                        <a href="https://parabit.com/tag/education">
+                            <img src="https://parabit.com/wp-content/themes/parabit-2015/img/icons/education_ro.jpg">
+                            <p>Education</p>
+                        </a>
+                    </div>
+
+                    <div class="foot-icon">
+                        <a href="https://parabit.com/tag/events-tradeshows">
+                            <img src="https://parabit.com/wp-content/themes/parabit-2015/img/icons/event_tradeshows_ro.jpg">
+                            <p>Event &amp; Trade Shows</p>
+                        </a>
+                    </div>
+
+                    <div class="foot-icon">
+                        <a href="https://parabit.com/tag/government">
+                            <img src="https://parabit.com/wp-content/themes/parabit-2015/img/icons/government_ro.jpg">
+                            <p>Government</p>
+                        </a>
+                    </div>
+
+                    <!--</div>
+                    <div class="clearfix"></div>
+
+
+                    <div class="big-wrap-icon">-->
+
+                    <div class="foot-icon">
+                        <a href="https://parabit.com/tag/healthcare">
+                            <img src="https://parabit.com/wp-content/themes/parabit-2015/img/icons/healthcare_ro.jpg">
+                            <p>Healthcare</p>
+                        </a>
+                    </div>
+
+                    <div class="foot-icon">
+                        <a href="https://parabit.com/tag/hospitality">
+                            <img src="https://parabit.com/wp-content/themes/parabit-2015/img/icons/hospitality_ro.jpg">
+                            <p>Hostpitality</p>
+                        </a>
+                    </div>
+
+                    <div class="foot-icon">
+                        <a href="https://parabit.com/tag/museums">
+                            <img src="https://parabit.com/wp-content/themes/parabit-2015/img/icons/museums_ro.jpg">
+                            <p>Museums</p>
+                        </a>
+                    </div>
+
+                    <div class="foot-icon">
+                        <a href="https://parabit.com/tag/retail">
+                            <img src="https://parabit.com/wp-content/themes/parabit-2015/img/icons/retail_ro.jpg">
+                            <p>Retail</p>
+                        </a>
+                    </div>
+
+                    <div class="foot-icon">
+                        <a href="https://parabit.com/tag/security">
+                            <img src="https://parabit.com/wp-content/themes/parabit-2015/img/icons/security_ro.jpg">
+                            <p>Security</p>
+                        </a>
+                    </div>
+
+
+                </div><!-- wrap -->
+
+
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+
+                <!--border-rt-->
+
+                <div class="col-sm-3 ">
+                    <div class="row">
+                        <!--border-rt-->
+                        <div class="col-sm-12 ">
+
+                            <address>
+                                <!--   <h4>Our Location</h4>-->
+                                <strong>Parabit Systems Inc.</strong><br>
+                                <i class="fa-icon-map-marker"></i> 35 Debevoise Avenue<br>
+                                Roosevelt, NY 1157<a href="http://50.115.235.230/catalog/" target="_blank" style="color: #fafafa; text-decoration:none;">5</a><br>
+                                <i class="fa-icon-phone-sign"></i> 1.888.3PARABIT | Local 516.378.4800
+
+                            </address>
+
+
+
+
+                            <div class="social-icons">
+                                <ul class="list-unstyled list-inline">
+                                    <li><a href="https://www.facebook.com/ParabitSystems/" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                                    <li><a href="https://twitter.com/ParabitSystems" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                                    <li><a href="https://www.linkedin.com/company/1325563?trk=prof-0-ovw-curr_pos" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+                                    <li><a href="https://www.pinterest.com/ParabitSystems/" target="_blank"><i class="fa fa-pinterest-p"></i></a></li>
+                                    <li><a href="https://plus.google.com/+ParabitSystemsIncRoosevelt" target="_blank"><i class="fa fa-google-plus"></i></a></li>
+                                </ul>
+                            </div>
+
+
+
+
+                        </div>
+                    </div>
+
+
+                    <div class="row foot-btm">
+                        <div class="col-xs-12">
+                            <p class="copy">&copy; 2018 <a href="https://parabit.com/">Parabit Systems</a></p>
+                        </div>
+                    </div>
+
+
+                    <div class="trans">
+
+                        <div id="google_translate_element"></div>
+                        <script type="text/javascript">
+                            function googleTranslateElementInit() {
+                                new google.translate.TranslateElement({ pageLanguage: 'en', layout: google.translate.TranslateElement.FloatPosition.TOP_LEFT, autoDisplay: false }, 'google_translate_element');
+                            }
+                        </script>
+                        <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+
+
+                    </div>
+
+
+
+
+
+
+                </div>
+
+                <!--col-sm-offset-1-->
+
+                <div class="col-sm-9">
+                    <div class="row">
+                        <div class="col-sm-2 foot-links">
+                            <!--<h4>Information</h4>-->
+                            <ul class="list-unstyled">
+                                <li><a href="https://parabit.com/">Home</a></li>
+                                <li><a href="https://parabit.com/about">About</a></li>
+                                <li><a href="https://parabit.com/careers">Careers</a></li>
+                                <li><a href="https://parabit.com/partners-resellers">Partners/Resellers</a></li>
+                                <li><a href="https://parabit.com/tradeshows">Tradeshows</a></li>
+                                <li><a href="https://parabit.com/blog">Blog</a></li>
+                                <li><a href="https://parabit.com/contact">Contact Us</a></li>
+                            </ul>
+                        </div>
+
+
+
+                        <div class="col-sm-3 foot-links">
+                            <h4 class="line3 center standart-h4title">Security Products</h4>
+                            <ul class="list-unstyled">
+                                <li><a href="https://parabit.com/solutions/access-control">ATM Lobby Access Control</a></li>
+                                <li><a href="https://parabit.com/solutions/building-access-control">Building/Telephone Access Control</a></li>
+                                <li><a href="https://parabit.com/solutions/telephones">Courtesy/Emergency Telephones</a></li>
+                                <li><a href="https://parabit.com/solutions/surveillance">HD Surveillance</a></li>
+
+                                <li><a href="https://parabit.com/solutions/light-sensor/light-sensor">Light Sensor</a></li>
+                            </ul>
+                        </div>
+
+
+
+                        <div class="col-sm-3 foot-links">
+                            <h4>Self-Service Products</h4>
+                            <ul class="list-unstyled">
+                                <li><a href="https://parabit.com/solutions/atm-accessories">ATM Surrounds, Toppers &amp; <span class="foot-indent">Accessories</span></a></li>
+                                <li><a href="https://parabit.com/solutions/kiosks/mobile-device-charging-stations">Charging Stations</a></li>
+                                <li><a href="https://parabit.com/solutions/kiosks">Kiosks</a></li>
+                                <li><a href="https://parabit.com/solutions/software-solutions/">Software Solutions</a></li>
+                                <li><a href="https://parabit.com/solutions/welcome-centers/visitor-welcome-centers">Welcome Centers</a></li>
+                            </ul>
+                            <p class="sign-btm"><a href="http://parabit.com/wp-content/themes/parabit-2015/pdf/warranty/Parabit_Website_Privacy_Statement.pdf" class="btn btn-orange" target="_blank">Website Privacy Statement</a></p>
+                        </div>
+
+
+
+
+
+                        <div class="col-sm-4 foot-links">
+                            <h4>Fabrication &amp; Design</h4>
+                            <ul class="list-unstyled">
+                                <li><a href="https://parabit.com/solutions/surveillance/custom-camera-enclosures/">Custom Camera Enclosures</a></li>
+                                <li><a href="https://parabit.com/solutions/access-control/custom-mounting-hardware-installations">Custom Door Hardware & Access Control <span class="foot-indent">Enclosures</span></a></li>
+
+                                <li><a href="https://parabit.com/solutions/fabrication-design-services">Design &amp; Fabrication</a></li>
+
+                                <li><a href="https://parabit.com/solutions/fabrication-design-services/stainless-steel-glass-railings/">Stainless Steel & Glass Railings</a></li>
+                                <BR>
+                            </ul>
+
+                            <p class="sign-btm"><a href="https://list.robly.com/subscribe?a=24062ad0ae5f422c5f4a02aea9d86f91" class="btn btn-orange" target="_blank">Sign up for our Newsletter!</a></p>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+            </div>
+
+
+
+
+
+
+
+
+
+        </div>
+    </footer>
+
+    <style>
+        .trans {
+            width: 100%;
+            padding: 10px 0;
+            text-align: left;
+        }
+
+        .goog-logo-link img {
+            width: 70px;
+        }
+
+        .sign-btm {
+            margin-top: 45px;
+        }
+    </style>
+
+
+    <!-- ngg_resource_manager_marker -->
+    <script type='text/javascript' src='https://parabit.com/wp-includes/js/jquery/ui/core.min.js?ver=1.11.4'></script>
+    <script type='text/javascript' src='https://parabit.com/wp-includes/js/jquery/ui/widget.min.js?ver=1.11.4'></script>
+    <script type='text/javascript' src='https://parabit.com/wp-includes/js/jquery/ui/button.min.js?ver=1.11.4'></script>
+    <script type='text/javascript' src='https://parabit.com/wp-includes/js/jquery/ui/datepicker.min.js?ver=1.11.4'></script>
+    <script type='text/javascript'>
+        jQuery(document).ready(function (jQuery) { jQuery.datepicker.setDefaults({ "closeText": "Close", "currentText": "Today", "monthNames": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"], "monthNamesShort": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], "nextText": "Next", "prevText": "Previous", "dayNames": ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], "dayNamesShort": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"], "dayNamesMin": ["S", "M", "T", "W", "T", "F", "S"], "dateFormat": "MM d, yy", "firstDay": 1, "isRTL": false }); });
+    </script>
+    <script type='text/javascript' src='https://parabit.com/wp-content/plugins/contact-form-7-datepicker-fix/js/jquery.ui.spinner.js?ver=4.9.7'></script>
+    <script type='text/javascript' src='https://parabit.com/wp-content/plugins/contact-form-7-datepicker-fix/js/cf7-datepicker-ie-fixer.js?ver=4.9.7'></script>
+    <script type='text/javascript' src='https://parabit.com/wp-content/plugins/slim-contact-form-7/lib/slim.min.js?ver=1.2.2'></script>
+    <script type='text/javascript'>
+        /* <![CDATA[ */
+        var thickboxL10n = { "next": "Next >", "prev": "< Prev", "image": "Image", "of": "of", "close": "Close", "noiframes": "This feature requires inline frames. You have iframes disabled or your browser does not support them.", "loadingAnimation": "https:\/\/parabit.com\/wp-includes\/js\/thickbox\/loadingAnimation.gif" };
+        /* ]]> */
+    </script>
+    <script type='text/javascript' src='https://parabit.com/wp-includes/js/thickbox/thickbox.js?ver=3.1-20121105'></script>
+    <script type='text/javascript' src='https://parabit.com/wp-includes/js/underscore.min.js?ver=1.8.3'></script>
+    <script type='text/javascript' src='https://parabit.com/wp-includes/js/shortcode.min.js?ver=4.9.7'></script>
+    <script type='text/javascript' src='https://parabit.com/wp-admin/js/media-upload.min.js?ver=4.9.7'></script>
+    <script type='text/javascript' src='https://parabit.com/wp-includes/js/jquery/ui/tabs.min.js?ver=1.11.4'></script>
+    <script type='text/javascript' src='https://parabit.com/wp-includes/js/jquery/ui/effect.min.js?ver=1.11.4'></script>
+    <script type='text/javascript' src='https://parabit.com/wp-includes/js/jquery/ui/effect-pulsate.min.js?ver=1.11.4'></script>
+    <script type='text/javascript' src='https://parabit.com/wp-includes/js/jquery/ui/effect-highlight.min.js?ver=1.11.4'></script>
+    <script type='text/javascript' src='https://parabit.com/wp-admin/js/editor.min.js?ver=4.9.7'></script>
+    <script type='text/javascript'>
+        /* <![CDATA[ */
+        var wpcf7_redirect_forms = { "2434": { "page_id": "529", "external_url": "", "use_external_url": "", "http_build_query": "", "open_in_new_tab": "", "after_sent_script": "", "thankyou_page_url": "https:\/\/parabit.com\/thank-you\/" }, "2319": { "page_id": "2320", "external_url": "", "use_external_url": "", "http_build_query": "", "open_in_new_tab": "", "after_sent_script": "", "thankyou_page_url": "https:\/\/parabit.com\/survey\/" }, "1838": { "page_id": "529", "external_url": "", "use_external_url": "", "http_build_query": "", "open_in_new_tab": "", "after_sent_script": "", "thankyou_page_url": "https:\/\/parabit.com\/thank-you\/" }, "1682": { "page_id": "529", "external_url": "", "use_external_url": "", "http_build_query": "", "open_in_new_tab": "", "after_sent_script": "", "thankyou_page_url": "https:\/\/parabit.com\/thank-you\/" }, "1679": { "page_id": "40", "external_url": "", "use_external_url": "", "http_build_query": "", "open_in_new_tab": "", "after_sent_script": "", "thankyou_page_url": "https:\/\/parabit.com\/about\/" }, "1676": { "page_id": "529", "external_url": "", "use_external_url": "", "http_build_query": "", "open_in_new_tab": "", "after_sent_script": "", "thankyou_page_url": "https:\/\/parabit.com\/thank-you\/" }, "1565": { "page_id": "40", "external_url": "", "use_external_url": "on", "http_build_query": "", "open_in_new_tab": "", "after_sent_script": "", "thankyou_page_url": "https:\/\/parabit.com\/about\/" }, "1433": { "page_id": "1374", "external_url": "", "use_external_url": "", "http_build_query": "", "open_in_new_tab": "", "after_sent_script": "", "thankyou_page_url": "https:\/\/parabit.com\/securitas\/rma-thank-you\/" }, "792": { "page_id": "529", "external_url": "", "use_external_url": "", "http_build_query": "", "open_in_new_tab": "", "after_sent_script": "", "thankyou_page_url": "https:\/\/parabit.com\/thank-you\/" }, "574": { "page_id": "", "external_url": "", "use_external_url": "", "http_build_query": "", "open_in_new_tab": "", "after_sent_script": "", "thankyou_page_url": "" } };
+        /* ]]> */
+    </script>
+    <script type='text/javascript' src='https://parabit.com/wp-content/plugins/wpcf7-redirect/js/wpcf7-redirect-script.js'></script>
+    <script type='text/javascript' src='https://parabit.com/wp-content/themes/parabit-2015/js/modernizr-2.8.3.min.js'></script>
+    <script type='text/javascript' src='https://parabit.com/wp-content/themes/parabit-2015/js/bootstrap.min.js'></script>
+    <script type='text/javascript' src='https://parabit.com/wp-content/themes/parabit-2015/js/bst.js'></script>
+    <script type='text/javascript' src='https://parabit.com/wp-includes/js/wp-embed.min.js?ver=4.9.7'></script>
+    <div style="display:none">
+        <div class="cdm-modal" data-remodal-options="{ 'hashTracking': false }" data-remodal-id="file">
+            <a data-remodal-action="close" class="remodal-close"></a>
+            <div class="view-file-content">
+
+            </div>
+        </div>
+    </div>
+    <div style="display:none">
+        <div class="remodal" data-remodal-id="cdm-utility">
+            <a data-remodal-action="close" class="remodal-close"></a>
+
+            <div class="cdm-utility-modal">
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        document.addEventListener('wpcf7mailsent', function (event) {
+            if ('1351' == event.detail.contactFormId) {
+                location = 'http://parabit.com/rma-thank-you/';
+            } else if ('1433' == event.detail.contactFormId) {
+                location = 'http://parabit.com/rma-thank-you/';
+            }
+            else { // Sends submissions on all unaccounted for forms to general thank you page
+                location = 'http://parabit.com/thank-you/';
+            }
+        }, false);
+    </script>
+
+
+</body>
+</html>
+
+<!--Generated by Endurance Page Cache-->

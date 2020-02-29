@@ -1,0 +1,812 @@
+﻿@model RMATracker.Models.RMATrackerViewModel
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.12.0/jquery.validate.min.js"></script>
+@*<script type="text/javascript">
+
+        $(document).ready(function () {
+        $(document).ready(function () {
+
+
+            alert('load');
+        });
+
+        $("input[name^='upload-file-']").change(function (event) {
+            alert('asdfas');
+            var tmppath = URL.createObjectURL(event.target.files[0]);
+            $("img").fadeIn("fast").attr('src',URL.createObjectURL(event.target.files[0]));
+            $("#disp_tmp_path").html("Temporary Path(Copy it and try pasting it in browser address bar) --> <strong>["+tmppath+"]</strong>");
+    });
+
+    </script>*@
+
+
+
+
+
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="http://parabit.com/wp-content/themes/parabit-2015/yamm/yamm.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <script async="" src="//www.google-analytics.com/analytics.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+
+
+    <!-- This site is optimized with the Yoast SEO plugin v7.6.1 - https://yoast.com/wordpress/plugins/seo/ -->
+    <title>RMA - Securitas -Bank of America | Parabit Systems</title>
+    <link rel="canonical" href="http://parabit.com/securitas/rma-boa/">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="RMA - Securitas -Bank of America | Parabit Systems">
+    <meta property="og:url" content="http://parabit.com/securitas/rma-boa/">
+    <meta property="og:site_name" content="Parabit Systems">
+    <meta property="article:publisher" content="https://www.facebook.com/ParabitSystems/">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="RMA - Securitas -Bank of America | Parabit Systems">
+
+    <!-- / Yoast SEO plugin. -->
+
+    <link rel="dns-prefetch" href="//ajax.googleapis.com">
+    <link rel="dns-prefetch" href="//maxcdn.bootstrapcdn.com">
+    <link rel="dns-prefetch" href="//s.w.org">
+    <script type="text/javascript">
+        window._wpemojiSettings = { "baseUrl": "https:\/\/s.w.org\/images\/core\/emoji\/2.4\/72x72\/", "ext": ".png", "svgUrl": "https:\/\/s.w.org\/images\/core\/emoji\/2.4\/svg\/", "svgExt": ".svg", "source": { "concatemoji": "http:\/\/parabit.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.9.6" } };
+        !function (a, b, c) { function d(a, b) { var c = String.fromCharCode; l.clearRect(0, 0, k.width, k.height), l.fillText(c.apply(this, a), 0, 0); var d = k.toDataURL(); l.clearRect(0, 0, k.width, k.height), l.fillText(c.apply(this, b), 0, 0); var e = k.toDataURL(); return d === e } function e(a) { var b; if (!l || !l.fillText) return !1; switch (l.textBaseline = "top", l.font = "600 32px Arial", a) { case "flag": return !(b = d([55356, 56826, 55356, 56819], [55356, 56826, 8203, 55356, 56819])) && (b = d([55356, 57332, 56128, 56423, 56128, 56418, 56128, 56421, 56128, 56430, 56128, 56423, 56128, 56447], [55356, 57332, 8203, 56128, 56423, 8203, 56128, 56418, 8203, 56128, 56421, 8203, 56128, 56430, 8203, 56128, 56423, 8203, 56128, 56447]), !b); case "emoji": return b = d([55357, 56692, 8205, 9792, 65039], [55357, 56692, 8203, 9792, 65039]), !b }return !1 } function f(a) { var c = b.createElement("script"); c.src = a, c.defer = c.type = "text/javascript", b.getElementsByTagName("head")[0].appendChild(c) } var g, h, i, j, k = b.createElement("canvas"), l = k.getContext && k.getContext("2d"); for (j = Array("flag", "emoji"), c.supports = { everything: !0, everythingExceptFlag: !0 }, i = 0; i < j.length; i++)c.supports[j[i]] = e(j[i]), c.supports.everything = c.supports.everything && c.supports[j[i]], "flag" !== j[i] && (c.supports.everythingExceptFlag = c.supports.everythingExceptFlag && c.supports[j[i]]); c.supports.everythingExceptFlag = c.supports.everythingExceptFlag && !c.supports.flag, c.DOMReady = !1, c.readyCallback = function () { c.DOMReady = !0 }, c.supports.everything || (h = function () { c.readyCallback() }, b.addEventListener ? (b.addEventListener("DOMContentLoaded", h, !1), a.addEventListener("load", h, !1)) : (a.attachEvent("onload", h), b.attachEvent("onreadystatechange", function () { "complete" === b.readyState && c.readyCallback() })), g = c.source || {}, g.concatemoji ? f(g.concatemoji) : g.wpemoji && g.twemoji && (f(g.twemoji), f(g.wpemoji))) }(window, document, window._wpemojiSettings);
+    </script>
+    <script src="http://parabit.com/wp-includes/js/wp-emoji-release.min.js?ver=4.9.6" type="text/javascript" defer=""></script>
+    <style type="text/css">
+        img.wp-smiley,
+        img.emoji {
+            display: inline !important;
+            border: none !important;
+            box-shadow: none !important;
+            height: 1em !important;
+            width: 1em !important;
+            margin: 0 .07em !important;
+            vertical-align: -0.1em !important;
+            background: none !important;
+            padding: 0 !important;
+        }
+    </style>
+    <link rel="stylesheet" id="jquery-ui-css-css" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.min.css?ver=4.9.6" type="text/css" media="all">
+    <link rel="stylesheet" id="font-awesome-smarty-css" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css?ver=4.9.6" type="text/css" media="all">
+    <link rel="stylesheet" id="cdm-style-css" href="http://parabit.com/wp-content/plugins/sp-client-document-manager/style.css?ver=3.0.9" type="text/css" media="all">
+    <link rel="stylesheet" id="cdm_reverse_order-css" href="http://parabit.com/wp-content/plugins/sp-client-document-manager/css/breadcrumbs.css?ver=4.9.6" type="text/css" media="all">
+    <link rel="stylesheet" id="bootstrap-css-css" href="http://parabit.com/wp-content/themes/parabit-2015/css/bootstrap.min.css?ver=3.3.4" type="text/css" media="all">
+    <link rel="stylesheet" id="bst-css-css" href="http://parabit.com/wp-content/themes/parabit-2015/css/bst.css" type="text/css" media="all">
+    <script type="text/javascript" src="http://parabit.com/wp-includes/js/jquery/jquery.js?ver=1.12.4"></script>
+    <script type="text/javascript" src="http://parabit.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.1"></script>
+    <script type="text/javascript" src="http://parabit.com/wp-content/plugins/sp-client-document-manager/js/jquery.remodal.js?ver=4.9.6"></script>
+    <script type="text/javascript" src="http://parabit.com/wp-content/plugins/sp-client-document-manager/js/jquery.responsive.tabs.js?ver=4.9.6"></script>
+    <script type="text/javascript" src="http://parabit.com/wp-includes/js/jquery/ui/core.min.js?ver=1.11.4"></script>
+    <script type="text/javascript" src="http://parabit.com/wp-includes/js/jquery/ui/widget.min.js?ver=1.11.4"></script>
+    <script type="text/javascript" src="http://parabit.com/wp-includes/js/jquery/ui/button.min.js?ver=1.11.4"></script>
+    <script type="text/javascript" src="http://parabit.com/wp-includes/js/jquery/ui/mouse.min.js?ver=1.11.4"></script>
+    <script type="text/javascript" src="http://parabit.com/wp-includes/js/jquery/ui/resizable.min.js?ver=1.11.4"></script>
+    <script type="text/javascript" src="http://parabit.com/wp-includes/js/jquery/ui/draggable.min.js?ver=1.11.4"></script>
+    <script type="text/javascript" src="http://parabit.com/wp-includes/js/jquery/ui/position.min.js?ver=1.11.4"></script>
+    <script type="text/javascript" src="http://parabit.com/wp-includes/js/jquery/ui/dialog.min.js?ver=1.11.4"></script>
+    <script type="text/javascript">
+        var mejsL10n = { "language": "en", "strings": { "mejs.install-flash": "You are using a browser that does not have Flash player enabled or installed. Please turn on your Flash player plugin or download the latest version from https:\/\/get.adobe.com\/flashplayer\/", "mejs.fullscreen-off": "Turn off Fullscreen", "mejs.fullscreen-on": "Go Fullscreen", "mejs.download-video": "Download Video", "mejs.fullscreen": "Fullscreen", "mejs.time-jump-forward": ["Jump forward 1 second", "Jump forward %1 seconds"], "mejs.loop": "Toggle Loop", "mejs.play": "Play", "mejs.pause": "Pause", "mejs.close": "Close", "mejs.time-slider": "Time Slider", "mejs.time-help-text": "Use Left\/Right Arrow keys to advance one second, Up\/Down arrows to advance ten seconds.", "mejs.time-skip-back": ["Skip back 1 second", "Skip back %1 seconds"], "mejs.captions-subtitles": "Captions\/Subtitles", "mejs.captions-chapters": "Chapters", "mejs.none": "None", "mejs.mute-toggle": "Mute Toggle", "mejs.volume-help-text": "Use Up\/Down Arrow keys to increase or decrease volume.", "mejs.unmute": "Unmute", "mejs.mute": "Mute", "mejs.volume-slider": "Volume Slider", "mejs.video-player": "Video Player", "mejs.audio-player": "Audio Player", "mejs.ad-skip": "Skip ad", "mejs.ad-skip-info": ["Skip in 1 second", "Skip in %1 seconds"], "mejs.source-chooser": "Source Chooser", "mejs.stop": "Stop", "mejs.speed-rate": "Speed Rate", "mejs.live-broadcast": "Live Broadcast", "mejs.afrikaans": "Afrikaans", "mejs.albanian": "Albanian", "mejs.arabic": "Arabic", "mejs.belarusian": "Belarusian", "mejs.bulgarian": "Bulgarian", "mejs.catalan": "Catalan", "mejs.chinese": "Chinese", "mejs.chinese-simplified": "Chinese (Simplified)", "mejs.chinese-traditional": "Chinese (Traditional)", "mejs.croatian": "Croatian", "mejs.czech": "Czech", "mejs.danish": "Danish", "mejs.dutch": "Dutch", "mejs.english": "English", "mejs.estonian": "Estonian", "mejs.filipino": "Filipino", "mejs.finnish": "Finnish", "mejs.french": "French", "mejs.galician": "Galician", "mejs.german": "German", "mejs.greek": "Greek", "mejs.haitian-creole": "Haitian Creole", "mejs.hebrew": "Hebrew", "mejs.hindi": "Hindi", "mejs.hungarian": "Hungarian", "mejs.icelandic": "Icelandic", "mejs.indonesian": "Indonesian", "mejs.irish": "Irish", "mejs.italian": "Italian", "mejs.japanese": "Japanese", "mejs.korean": "Korean", "mejs.latvian": "Latvian", "mejs.lithuanian": "Lithuanian", "mejs.macedonian": "Macedonian", "mejs.malay": "Malay", "mejs.maltese": "Maltese", "mejs.norwegian": "Norwegian", "mejs.persian": "Persian", "mejs.polish": "Polish", "mejs.portuguese": "Portuguese", "mejs.romanian": "Romanian", "mejs.russian": "Russian", "mejs.serbian": "Serbian", "mejs.slovak": "Slovak", "mejs.slovenian": "Slovenian", "mejs.spanish": "Spanish", "mejs.swahili": "Swahili", "mejs.swedish": "Swedish", "mejs.tagalog": "Tagalog", "mejs.thai": "Thai", "mejs.turkish": "Turkish", "mejs.ukrainian": "Ukrainian", "mejs.vietnamese": "Vietnamese", "mejs.welsh": "Welsh", "mejs.yiddish": "Yiddish" } };
+    </script>
+    <script type="text/javascript" src="http://parabit.com/wp-includes/js/mediaelement/mediaelement-and-player.min.js?ver=4.2.6-78496d1"></script>
+    <script type="text/javascript" src="http://parabit.com/wp-includes/js/mediaelement/mediaelement-migrate.min.js?ver=4.9.6"></script>
+    <script type="text/javascript">
+        /* <![CDATA[ */
+        var _wpmejsSettings = { "pluginPath": "\/wp-includes\/js\/mediaelement\/", "classPrefix": "mejs-", "stretching": "responsive" };
+        /* ]]> */
+    </script>
+    <script type="text/javascript" src="http://parabit.com/wp-content/plugins/sp-client-document-manager/js/jquery.validate.js?ver=4.9.6"></script>
+    <script type="text/javascript" src="http://parabit.com/wp-content/plugins/sp-client-document-manager/js/jquery.cookie.js?ver=4.9.6"></script>
+    <script type="text/javascript">
+        /* <![CDATA[ */
+        var sp_vars = { "ajax_url": "http:\/\/parabit.com\/wp-admin\/admin-ajax.php", "plugin_url": "http:\/\/parabit.com\/wp-content\/plugins\/sp-client-document-manager\/", "uid": "0", "sp_cu_user_projects_required": "0" };
+        /* ]]> */
+    </script>
+    <script type="text/javascript" src="http://parabit.com/wp-content/plugins/sp-client-document-manager/upload.js?ver=4.9.6"></script>
+    <script type="text/javascript" src="http://parabit.com/wp-content/plugins/sp-client-document-manager/js/jquery.modal.responsive.js?ver=4.9.6"></script>
+    <script type="text/javascript" src="http://parabit.com/wp-content/plugins/sp-client-document-manager/js/reverse.js?ver=4.9.6"></script>
+    <script type="text/javascript">
+        /* <![CDATA[ */
+        var sp_cdm_link = { "ajax": "http:\/\/parabit.com\/wp-admin\/admin-ajax.php" };
+        /* ]]> */
+    </script>
+    <script type="text/javascript" src="http://parabit.com/wp-content/plugins/sp-client-document-manager/integrated/sp-cdm-link/js/scripts.js?ver=4.9.6"></script>
+    <script type="text/javascript">
+        /* <![CDATA[ */
+        var sp_cdm_media = { "ajax": "http:\/\/parabit.com\/wp-admin\/admin-ajax.php" };
+        /* ]]> */
+    </script>
+    <script type="text/javascript" src="http://parabit.com/wp-content/plugins/sp-client-document-manager/integrated/sp-cdm-media/js/scripts.js?ver=4.9.6"></script>
+    <link rel="https://api.w.org/" href="http://parabit.com/wp-json/">
+    <link rel="alternate" type="application/json+oembed" href="http://parabit.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fparabit.com%2Fsecuritas%2Frma-boa%2F">
+    <link rel="alternate" type="text/xml+oembed" href="http://parabit.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fparabit.com%2Fsecuritas%2Frma-boa%2F&amp;format=xml">
+    <!-- <meta name="NextGEN" version="3.0.1" /> -->
+    <link rel="stylesheet" id="dashicons-css" href="http://parabit.com/wp-includes/css/dashicons.min.css?ver=4.9.6" type="text/css" media="all">
+    <link rel="stylesheet" id="thickbox-css" href="http://parabit.com/wp-includes/js/thickbox/thickbox.css?ver=4.9.6" type="text/css" media="all">
+    <style type="text/css">
+        div.wpcf7 .screen-reader-response {
+            position: absolute;
+            overflow: hidden;
+            clip: rect(1px, 1px, 1px, 1px);
+            height: 1px;
+            width: 1px;
+            margin: 0;
+            padding: 0;
+            border: 0;
+        }
+
+        div.wpcf7 .form-inline img.ajax-loader {
+            display: inline;
+        }
+
+        div.wpcf7 .ajax-loader {
+            visibility: hidden;
+            display: inline-block;
+            background-image: url('http://parabit.com/wp-content/plugins/contact-form-7/images/ajax-loader.gif');
+            width: 16px;
+            height: 16px;
+            border: none;
+            padding: 0;
+            margin: 0 0 0 4px;
+            vertical-align: middle;
+        }
+
+            div.wpcf7 .ajax-loader.is-active {
+                visibility: visible;
+            }
+
+        div.wpcf7 div.ajax-error {
+            display: none;
+        }
+
+        div.wpcf7 .wpcf7-display-none {
+            display: none;
+        }
+
+        div.wpcf7 .placeheld {
+            color: #888;
+        }
+
+        div.wpcf7 .wpcf7-recaptcha iframe {
+            margin-bottom: 0;
+        }
+
+        div.wpcf7 input[type="file"] {
+            cursor: pointer;
+        }
+
+            div.wpcf7 input[type="file"]:disabled {
+                cursor: default;
+            }
+
+        div.wpcf7 .form-inline .form-group {
+            max-width: 250px;
+        }
+
+        div.wpcf7 .input-group-addon img {
+            height: 100%;
+            width: auto;
+            max-width: none !important;
+            border-radius: 5px;
+        }
+
+        div.wpcf7 .input-group-addon.input-group-has-image {
+            padding: 0;
+        }
+    </style>
+    <style type="text/css">
+        .recentcomments a {
+            display: inline !important;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+    </style>
+    <style type="text/css" id="wp-custom-css">
+        select.wpcf7-form-control.wpcf7-select.wpcf7-validates-as-required.rma-called.form-control {
+            width: 10%;
+        }
+
+        input.wpcf7-form-control.wpcf7-text.rma-smalltext.form-control, input.wpcf7-form-control.wpcf7-date.wpcf7-validates-as-date.rma-calendar.form-control, input.wpcf7-form-control.wpcf7-text.rma-zip-code.form-control, input.wpcf7-form-control.wpcf7-text.wpcf7-validates-as-required.rma-calendar.form-control {
+            width: 22%;
+        }
+
+        textarea.wpcf7-form-control.wpcf7-textarea.rma-textarea.form-control, select.wpcf7-form-control.wpcf7-select.wpcf7-validates-as-required.rma-dropdown.form-control, input.wpcf7-form-control.wpcf7-text.wpcf7-validates-as-required.rma-textfield.form-control {
+            width: 75%;
+        }
+
+        input.wpcf7-form-control.wpcf7-text.rma-file-description.form-control {
+            width: 50%;
+        }
+
+
+
+
+        #left {
+            width: 47%;
+            float: left;
+            margin-right: 6%;
+        }
+
+        #right {
+            width: 47%;
+            float: left;
+        }
+
+        .clearfix:after {
+            content: "\0020";
+            display: block;
+            height: 0;
+            clear: both;
+            visibility: hidden;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .clearfix {
+            display: block;
+        }
+
+        .container1:after { /*clear float*/
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        .section1 {
+            float: left;
+            width: 33.3333%;
+            border: 0px;
+            box-sizing: border-box;
+            padding: 10px 20px 10px 0px;
+        }
+
+
+        .section1 {
+            float: none;
+            width: auto;
+        }
+
+        }
+
+        .imgsize {
+            width: 250px !important;
+        }
+    </style>
+    <link rel="shortcut icon" href="http://parabit.com/wp-content/uploads/2017/09/favicon.ico">
+    <link href="http://parabit.com/wp-content/themes/parabit-2015/css/animate.css" rel="stylesheet" type="text/css">
+    <link href="http://parabit.com/wp-content/themes/parabit-2015/style.css" rel="stylesheet" type="text/css">
+    <link href="http://parabit.com/wp-content/themes/parabit-2015/responsive.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic|Montserrat:400,700" rel="stylesheet" type="text/css">
+
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-25232888-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+
+    <link rel="stylesheet" id="jquery-remodal-css" href="http://parabit.com/wp-content/plugins/sp-client-document-manager/css/jquery.remodal.css?ver=4.9.6" type="text/css" media="all">
+    <link rel="stylesheet" id="jquery-responsive-tabs-css" href="http://parabit.com/wp-content/plugins/sp-client-document-manager/css/jquery.responsive.tabs.css?ver=4.9.6" type="text/css" media="all">
+    <link type="text/css" rel="stylesheet" charset="UTF-8" href="https://translate.googleapis.com/translate_static/css/translateelement.css">
+    <script type="text/javascript" charset="UTF-8" src="https://translate.googleapis.com/translate_static/js/element/main.js"></script>
+    <script type="text/javascript" charset="UTF-8" src="https://translate.googleapis.com/element/TE_20180625_00/e/js/element/element_main.js"></script>
+</head>
+
+
+
+
+
+
+<div class="container" style="margin-top:40px;">
+    <div class="row">
+
+
+        @*        <form action="/securitas/rma-boa/#wpcf7-f1433-p1434-o1" method="post" class="wpcf7-form" enctype="multipart/form-data" novalidate="novalidate">*@
+        <form id="formRMASend" action="~/Home/SendRMAData" method="post" class="wpcf7-form" enctype="multipart/form-data" novalidate="novalidate" runat="server">
+            @Html.AntiForgeryToken()
+            <div style="display: none;">
+                <input type="hidden" name="_wpcf7" value="1433">
+                <input type="hidden" name="_wpcf7_version" value="5.0.1">
+                <input type="hidden" name="_wpcf7_locale" value="en_US">
+                <input type="hidden" name="_wpcf7_unit_tag" value="wpcf7-f1433-p1434-o1">
+                <input type="hidden" name="_wpcf7_container_post" value="1434">
+            </div>
+
+            <br><br>
+            * Required Fields <br> <br>
+            <strong>Problem Description:*</strong>  <br>
+            <div class="form-group call-number">
+                <label class="">Vendor Call # (TR #): <span class="required">*</span></label>
+
+                @Html.TextBoxFor(m => m.RMABase.tr_no, new {@aria_invalid = "false", @aria_required = "true", @required = "",@class = "wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control" })
+            </div> <br>
+
+            <div class="container1">
+                <strong>Type of RMA:*</strong>  <br>
+                <div class="form-group TypeofRMA">
+
+                    @Html.DropDownListFor(m=> m.RMADetails.ReturnType, new SelectList(new List<Object>{
+                       new { value = 0 , text = "Service request"  },
+                       new { value = 1 , text = "Credit request" },
+                    },  "Value", "Text"), "Pick One", new { @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control" })
+                </div><br><br>
+
+                <strong>If Credit then reason for:</strong>  <br>
+                <div class="form-group IfCreditReason">
+
+                    @Html.DropDownListFor(m=> m.RMADetails.CreditReason, new SelectList(new List<Object>{
+                    new { value = 0 , text = "Job cancelled"  },
+                    new { value = 1 , text = "No longer required (excess inventory)" },
+                    new { value = 2 , text = "Wrong part ordered" },
+                    new { value = 3 , text = "Wrong color" },
+                },  "Value", "Text"), "Pick One", new { @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control" })
+                </div><br><br>
+
+            </div>
+            <br>
+
+            <div class="form-group firm-name">
+                <label class="">Firm Name</label>
+
+                @Html.TextBoxFor(m => m.TechInfo.ClientName, new { @aria_invalid = "false", @class = "wpcf7-form-control wpcf7-text rma-textfield form-control" })
+            </div>
+
+            <div class="container1">
+                <div class="section1">
+                    <div class="form-group tech-name">
+                        <label class="">Tech Name<span class="required">*</span></label>
+
+                        @Html.TextBoxFor(m => m.TechInfo.TechName, new { @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" })
+                    </div>
+                </div>
+                <div class="section1">
+                    <div class="form-group tech-email">
+                        <label class="">Tech Email<span class="required">*</span></label>
+
+                        @Html.TextBoxFor(m => m.TechInfo.TechEmail, new { @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" })
+                    </div>
+                </div>
+                <div class="section1">
+                    <div class="form-group tech-phone">
+                        <label class="">Tech Phone<span class="required">*</span></label>
+
+                    </div>
+                    @Html.TextBoxFor(m => m.TechInfo.TechPhone, new { @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" })
+                </div>
+            </div>
+
+            <br><br>
+            <fieldset>
+                <legend>Return Address</legend>
+                <div class="form-group return-street-address">
+                    <label class="">Street Address<span class="required">*</span></label>
+                    @*<input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required rma-textfield form-control" name="return-street-address" type="text" value="" aria-invalid="false" aria-required="true" required="">*@
+                    @Html.TextBoxFor(m => m.ReturnAddress.StreetAddress, new { @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" })
+                </div>
+
+                <div class="container1">
+                    <div class="section1">
+                        <div class="form-group return-city">
+                            <label class="">City<span class="required">*</span></label>
+                            @*    <input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" name="return-city" type="text" value="" aria-invalid="false" aria-required="true" required="">*@
+                            @Html.TextBoxFor(m => m.ReturnAddress.City, new { @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" })
+                        </div>
+                    </div>
+                    <div class="section1">
+                        <div class="form-group return-state">
+                            <label class="">State<span class="required">*</span></label>
+                            @*<input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required rma-short form-control" name="return-state" type="text" value="" aria-invalid="false" aria-required="true" required="">*@
+                            @Html.TextBoxFor(m => m.ReturnAddress.State, new { @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" })
+                        </div>
+                    </div>
+                    <div class="section1">
+                        <div class="form-group return-zip">
+                            <label class="">Zip Code<span class="required">*</span></label>
+                            @*<input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" name="return-zip" type="text" value="" aria-invalid="false" aria-required="true" required="">*@
+                            @Html.TextBoxFor(m => m.ReturnAddress.ZipCode, new { @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" })
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <br><br>
+            <fieldset>
+                <legend>Bank Name &amp; Address</legend>
+                <div class="form-group bank-name">
+                    <label class="">Bank Name</label>
+                    @*<input class="wpcf7-form-control wpcf7-text rma-textfield form-control" name="bank-name" type="text" value="" placeholder="Bank of America" aria-invalid="false">*@
+                    @Html.TextBoxFor(m => m.BankInfo.BankName, new { @aria_invalid = "false", @class = "wpcf7-form-control wpcf7-text rma-textfield form-control" })
+                </div><br>
+
+                <div class="form-group bank-street-address">
+                    <label class="">Service Call Street Address<span class="required">*</span></label>
+                    @*<input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required rma-textfield form-control" name="bank-street-address" type="text" value="" aria-invalid="false" aria-required="true" required="">*@
+                    @Html.TextBoxFor(m => m.BankInfo.BankStreetAddress, new { @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" })
+                </div>
+
+                <div class="container1">
+                    <div class="section1">
+                        <div class="form-group bank-city">
+                            <label class="">City<span class="required">*</span></label>
+                            @*<input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" name="bank-city" type="text" value="" aria-invalid="false" aria-required="true" required="">*@
+                            @Html.TextBoxFor(m => m.BankInfo.BankCity, new { @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" })
+                        </div>
+                    </div>
+                    <div class="section1">
+                        <div class="form-group bank-state">
+                            <label class="">State<span class="required">*</span></label>
+                            @*<input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required rma-short form-control" name="bank-state" type="text" value="" aria-invalid="false" aria-required="true" required="">*@
+                            @Html.TextBoxFor(m => m.BankInfo.BankState, new { @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" })
+                        </div>
+                    </div>
+                    <div class="section1">
+                        <div class="form-group bank-zip">
+                            <label class="">Zip Code<span class="required">*</span></label>
+                            @*<input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" name="bank-zip" type="text" value="" aria-invalid="false" aria-required="true" required="">*@
+                            @Html.TextBoxFor(m => m.BankInfo.BankZipCode, new { @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" })
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+
+
+
+
+            <strong>Date of Service Call:*</strong> <div class="form-group service-call-date">
+                @*<input class="wpcf7-form-control wpcf7-date wpcf7-validates-as-required wpcf7-validates-as-date rma-calendar form-control" name="service-call-date" type="date" value="" min="" max="" step="" aria-invalid="false" aria-required="true" required="">*@
+                @Html.TextBoxFor(m => m.Dates.CaseDate, new { @type = "date", @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" })
+            </div>  <br>
+            <strong>Problem Description:*</strong>  <br>
+            <div class="form-group problem-menu">
+                @*<select class="wpcf7-form-control wpcf7-select wpcf7-validates-as-required rma-dropdown form-control" name="problem-menu" aria-invalid="false" aria-required="true" required=""><option value="" selected="">---
+                    </option><option value="Card swipe not reading cards"> Card swipe not reading cards</option><option value="Reader flashing red/ access denied"> Reader flashing red/ access denied</option><option value="Phones/Contactless cards not being read"> Phones / Contactless cards not being read</option><option value="False skimming/overlay alarm"> False skimming/overlay alarm</option><option value="Tamper alarm active"> Tamper alarm active</option><option value="CableCut alarm active"> CableCut alarm active</option><option value="Reader LED not working"> Reader LED not working</option><option value="Trouble loading firmware"> Trouble loading firmware</option><option value="Controller unresponsive"> Controller unresponsive</option><option value="Doors not locking"> Doors not locking</option><option value="Doors not opening"> Doors not opening</option><option value="Can't connect to controller"> Can't connect to controller</option><option value="Other">Other</option>
+                    </select>*@
+                @Html.DropDownListFor(m=> m.TechInfo.ClientComplaint, new SelectList(new List<Object>{
+                    new { value = 0 , text = "Card swipe not reading cards"  },
+                    new { value = 1 , text = "Reader flashing red/ access denied" },
+                    new { value = 2 , text = "Phones/Contactless cards not being read" },
+                    new { value = 3 , text = "False skimming/overlay alarm" },
+                    new { value = 3 , text = "Tamper alarm active" },
+                    new { value = 3 , text = "CableCut alarm active" },
+                    new { value = 3 , text = "Reader LED not working" },
+                    new { value = 3 , text = "Trouble loading firmware" },
+                    new { value = 3 , text = "Controller unresponsive" },
+                    new { value = 3 , text = "Doors not locking" },
+                    new { value = 3 , text = "Doors not opening" },
+                    new { value = 3 , text = "Can't connect to controller" },
+                    new { value = 3 , text = "Other" },
+
+                },  "Value", "Text"), "---", new { @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control" })
+
+            </div> <br>
+            <div class="form-group additional-info">
+                <label class="">Additional Information:</label>
+                @Html.TextAreaFor(m => m.TechInfo.FieldObservation, new { @rows = "4", @aria_invalid = "false", @class = "wpcf7-form-control wpcf7-textarea rma-textarea form-control" })
+                @*<textarea class="wpcf7-form-control wpcf7-textarea rma-textarea form-control" name="additional-info" rows="4" aria-invalid="false"></textarea>*@
+            </div> <br>
+            <div class="form-group steps-taken">
+                <label class="">Steps undertaken to Resolve Issues:</label>
+                @*<textarea class="wpcf7-form-control wpcf7-textarea rma-textarea form-control" name="steps-taken" rows="4" aria-invalid="false"></textarea>*@
+                @Html.TextAreaFor(m => m.TechInfo.StepsUndertaken, new { @rows = "4", @aria_invalid = "false", @class = "wpcf7-form-control wpcf7-textarea rma-textarea form-control" })
+            </div> <br>
+
+
+            <fieldset>
+                <legend>Part Number and Serial Number Returns</legend>
+
+
+                <i>*Only the 1st Part Number &amp; Serial Number is required</i> <br> <br>
+
+                @for (int i = 0; i < 7; i++)
+                {
+                    <div class="container1">
+                        <div class="section1">
+                            <strong>Part Number @(i + 1):* </strong><div class="form-group part-menu">
+                                @{
+                                    if (i == 1)
+                                    {
+                                        //ViewBag
+                                        @Html.DropDownListFor(m => m.Parts[i]._PartNo, new SelectList(Model.getPartTypes(), "PartNo", "PartDescription", Model.Parts[i]._PartNo), "-- Select Part --", new 
+                                        { 
+                                            @aria_invalid = "false", 
+                                            @aria_required = "true", 
+                                            @required = "", 
+                                            @class = "wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control",
+                                            @onchange = "GetPartID(this)"
+                                        })
+                                    }
+                                    else
+                                    {
+                                        @Html.DropDownListFor(m => m.Parts[i]._PartNo, new SelectList(Model.getPartTypes(), "PartNo", "PartDescription", Model.Parts[i]._PartNo), "-- Select Part --", new 
+                                        { 
+                                            @aria_invalid = "false", 
+                                            @class = "wpcf7-form-control wpcf7-select form-control",
+                                            @onchange = "GetPartID(this)"
+                                        })
+                                    }
+                                    @Html.DropDownListFor(m => m.Parts[i]._PartDescription, new SelectList(Model.getPartTypes(), "PartDescription", "PartDescription", Model.Parts[i]._PartDescription), "--", new 
+                                        { 
+                                             @style = "display:none" 
+                                        })
+                                    @Html.DropDownListFor(m => m.Parts[i].part_types_id, new SelectList(Model.getPartTypes(), "id", "id", Model.Parts[i].part_types_id), "--", new 
+                                        { 
+                                             @style = "display:none" 
+                                        })
+                                }
+                            </div>
+
+                        </div>
+
+                        <div class="section1">
+                            <strong>Serial Number @(i + 1):* </strong><div class="form-group serial-number">
+                                @*<input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" name="serial-number" type="text" value="" aria-invalid="false" aria-required="true" required="">*@
+                                @Html.TextBoxFor(m => m.Parts[i].SN, new { @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-validates-as-required form-control" })
+                            </div>
+                        </div>
+                    </div>
+                }
+
+
+
+            </fieldset>
+
+
+
+
+            <fieldset>
+                <legend>Image Uploads</legend>
+
+                <strong>Upload picture(s) of reader and controller Installation</strong> (2MB Limit):<br><i>*Only the 1st Description &amp; Photo is required</i> <br> <br>
+                @for (int i = 0; i < 7; i++)
+                {
+                    <div class="clearfix">
+                        <div id="left">
+                            <div class="form-group image-description1">
+                                @*<input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" name="image-description1" type="text" value="" placeholder="Image 1 Description" aria-invalid="false" aria-required="true" required="">*@
+                                @{ if (i == 0)
+                                    {
+                                        @Html.TextBoxFor(m => m.Images[i].ImageDescription, new
+                                        {
+                                           @aria_invalid = "false",
+                                           @aria_required = "true",
+                                           @required = "",
+                                           @class = "wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control",
+                                           @placeholder = "Image " + (i + 1) + " Description"
+                                       })
+                                    }
+                                    else
+                                    {
+                                        @Html.TextBoxFor(m => m.Images[i].ImageDescription, new
+                                        {
+                                            @aria_invalid = "false", 
+                                            @class = "wpcf7-form-control wpcf7-select form-control", 
+                                            @placeholder = "Image " + (i + 1) + " Description" })
+                                        }
+                                    }
+                            </div>
+                        </div>
+                        <div id="right">
+                            <div class="form-group upload-file-1">
+                                @*<input class="wpcf7-form-control wpcf7-file wpcf7-validates-as-required " name="Images.Image1" type="file" aria-invalid="false" aria-required="true" required="">*@
+
+                                @{
+                                    if (i == 0)
+                                    {
+                                        @Html.TextBoxFor(m => m.Images[i].ImageBody, new { type = "file", @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-select wpcf7-validates-as-required" })
+                                    }
+                                    else
+                                    {
+                                        @Html.TextBoxFor(m => m.Images[i].ImageBody, new { type = "file", @aria_invalid = "false", @class = "wpcf7-form-control wpcf7-select" })
+                                    }
+                                }
+                                @*@Html.ValidationMessageFor(m => m.Images[i].ImageBody)*@
+
+                            </div>
+                        </div>
+                    </div>
+                }
+                @*<div class="clearfix">
+                        <div id="left">
+                            <div class="form-group image-description2"><input class="wpcf7-form-control wpcf7-text form-control" name="Images.ImageDescription2" type="text" value="" placeholder="Image 2 Description" aria-invalid="false"></div>
+                        </div>
+                        <div id="right">
+                            <div class="form-group upload-file-2">
+
+                                @Html.TextBoxFor(m => m.Images.Image2, new { type = "file" })
+                                @Html.ValidationMessageFor(m => m.Images.Image2)
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="clearfix">
+                        <div id="left">
+                            <div class="form-group image-description3"><input class="wpcf7-form-control wpcf7-text form-control" name="image-description3" type="text" value="" placeholder="Image 3 Description" aria-invalid="false"></div>
+                        </div>
+                        <div id="right">
+                            <div class="form-group upload-file-3">
+
+                                @Html.TextBoxFor(m => m.Images.Image3, new { type = "file" })
+                                @Html.ValidationMessageFor(m => m.Images.Image3)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="clearfix">
+                        <div id="left">
+                            <div class="form-group image-description4"><input class="wpcf7-form-control wpcf7-text form-control" name="image-description4" type="text" value="" placeholder="Image 4 Description" aria-invalid="false"></div>
+                        </div>
+                        <div id="right">
+                            <div class="form-group upload-file-4">
+
+                                @Html.TextBoxFor(m => m.Images.Image4, new { type = "file" })
+                                @Html.ValidationMessageFor(m => m.Images.Image4)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="clearfix">
+                        <div id="left">
+                            <div class="form-group image-description5"><input class="wpcf7-form-control wpcf7-text form-control" name="image-description5" type="text" value="" placeholder="Image 5 Description" aria-invalid="false"></div>
+                        </div>
+                        <div id="right">
+                            <div class="form-group upload-file-5">
+
+                                @Html.TextBoxFor(m => m.Images.Image5, new { type = "file" })
+                                @Html.ValidationMessageFor(m => m.Images.Image5)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="clearfix">
+                        <div id="left">
+                            <div class="form-group image-description6"><input class="wpcf7-form-control wpcf7-text form-control" name="image-description6" type="text" value="" placeholder="Image 6 Description" aria-invalid="false"></div>
+                        </div>
+                        <div id="right">
+                            <div class="form-group upload-file-6">
+
+                                @Html.TextBoxFor(m => m.Images.Image6, new { type = "file" })
+                                @Html.ValidationMessageFor(m => m.Images.Image6)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="clearfix">
+                        <div id="left">
+                            <div class="form-group image-description7"><input class="wpcf7-form-control wpcf7-text form-control" name="image-description7" type="text" value="" placeholder="Image 7 Description" aria-invalid="false"></div>
+                        </div>
+                        <div id="right">
+                            <div class="form-group upload-file-7">
+
+                                @Html.TextBoxFor(m => m.Images.Image7, new { type = "file" })
+                                @Html.ValidationMessageFor(m => m.Images.Image7)
+                            </div>
+                        </div>
+                    </div>*@
+                <fieldset>
+                    <div class="container1">
+                        <div class="section1"><strong>Was Parabit Called?*</strong></div>
+                        <div class="section1"><strong>If yes, Date:</strong></div>
+                        <div class="section1"><strong>Parabit Dispatch #:</strong></div>
+                    </div>
+
+                    <div class="container1">
+                        <div class="section1"><div class="form-group parabit-called"><select class="wpcf7-form-control wpcf7-select wpcf7-validates-as-required rma-short form-control" name="parabit-called" aria-invalid="false" aria-required="true" required=""><option value="" selected="">---</option><option value="Yes">Yes</option><option value="No">No</option></select></div></div>
+                        <div class="section1"><div class="form-group call-date"><input class="wpcf7-form-control wpcf7-date wpcf7-validates-as-date form-control" name="call-date" type="date" value="" min="" max="" step="" aria-invalid="false"></div></div>
+                        <div class="section1"><div class="form-group dispatch-number"><input class="wpcf7-form-control wpcf7-text form-control" name="dispatch-number" type="text" value="" aria-invalid="false"></div></div>
+                    </div>
+
+                    <span class="wpcf7-form-control-wrap cf7-counter"><input type="hidden" name="cf7-counter" value="225" size="40" class="wpcf7-form-control wpcf7dtx-dynamictext wpcf7-dynamichidden" aria-invalid="false"></span>
+
+
+
+                    <div class="form-group"><div><input class="wpcf7-form-control wpcf7-submit btn btn-primary" type="submit" value="Send"></div></div><div class="wpcf7-response-output wpcf7-display-none alert"></div>
+                </fieldset>
+            </fieldset>
+        </form>
+
+
+
+
+
+
+
+
+
+
+        @*<form id="formRMASend" action="~/Home/SendRMAData" method="post">
+                <table style="width:auto;height:300px">
+
+                    <tr>
+                        <td>Tracking Number:<span class="required">*</span></td>
+                        <td><input type="text" id="txtTrackId" name="txtTrackId" placeholder="Please enter tracking number..." class="form-control" style="width:400px;" /></td>
+                    </tr>
+                    <tr>
+                        <td>Type of RMA:<span class="required">*</span></td>
+                        <td>
+                            <select class="form-control" id="TypeofRMA" name="TypeofRMA" aria-invalid="false" aria-required="true" required="">
+                                <option value="Pick One">Pick One</option>
+                                <option value="Service request">Service request</option>
+                                <option value="Credit request">Credit request</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>If Credit then reason for:</td>
+                        <td>
+                            <select class="form-control" id="IfCreditReason" name="IfCreditReason" aria-invalid="false" aria-required="true" required="">
+                                <option value="Pick One">Pick One</option>
+                                <option value="Job cancelled">Job cancelled</option>
+                                <option value="No longer required (excess inventory)">No longer required (excess inventory)</option>
+                                <option value="Wrong color">Wrong color</option>
+                                <option value="Wrong part ordered">Wrong part ordered</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Firm Name</td>
+                        <td><input class="wpcf7-form-control wpcf7-text rma-textfield form-control" name="firm-name" type="text" value="" placeholder="Securitas" aria-invalid="false"></td>
+                    </tr>
+                    <tr>
+
+                    <tr>
+                        <td>Tech Name:<span class="required">*</span></td>
+                        <td>Tech Email:<span class="required">*</span></td>
+                        <td>Tech Phone:<span class="required">*</span></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" id="txtTechName" name="txtTechName" class="form-control" style="width:400px;" /></td>
+                        <td><input type="text" id="txtTechEmail" name="txtTechEmail" class="form-control" style="width:400px;" /></td>
+                        <td><input type="text" id="txtTechPhone" name="txtTechPhone" class="form-control" style="width:400px;" /></td>
+                    </tr>
+
+
+                    </tr>
+                    <tr>
+                        <td colspan="2"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="right"><input type="submit" value="Send" class="btn-primary" /></td>
+                    </tr>
+                </table>
+            </form>*@
+
+    </div>
+</div>
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+<script type="text/javascript">
+    $('#formRMASend').validate();
+    function GetPartID(e) {
+        var type_id = e.id.replace("_PartNo", "part_types_id");
+        var description_id = e.id.replace("_PartNo", "_PartDescription");
+        $("#" + type_id).prop('selectedIndex', $("#" + e.id + "  option:selected").index());
+        $("#" + description_id).prop('selectedIndex', $("#" + e.id + "  option:selected").index());
+
+        
+        }
+    //$(function () {
+    //    $("#formRMASend").submit(function () {
+    //        var selTypeText = $("#Parts_0__PartNo option:selected").text();
+    //        alert(selTypeText);
+    //        //$("#hidText").val(selTypeText);
+    //    });
+    //});
+
+</script>
+
+

@@ -1,0 +1,122 @@
+// TYPOGRAPHY
+// imports
+@import 'https://fonts.googleapis.com/css?family=Montserrat'
+@import './mixin/spacing/margin'
+@import './mixin/spacing/padding'
+
+
+body
+    //font-family: 'Montserrat', 'FiraCode', 'Open Sans' !important
+    color: $para_black
+//    font-size: 1.13em
+
+.heading
+    background-color: $para_white
+// size vars
+$h1 : 24px
+
+.w-25
+    width: 25%
+.w-50
+    width: 50%
+.w-75
+    width: 75%
+.w-100
+    width: 100%
+
+// margin & padding standard vars
+//  factor by which the spacing will increase by
+$space_factor_list_percent: 3 5 7 10 12 15 25 50 75
+$space_factor_list_pixel: 5 10 15 20 25 30 35 40 45 50 60 70 80 90 100 150 200 500 1000
+$height_factor_list: 25 50 75 100
+
+.m-yauto
+    @include margin_top_spacing(auto)
+    @include margin_bot_spacing(auto)
+
+.m-xauto
+    @include margin_right_spacing(auto)
+    @include margin_left_spacing(auto)
+
+.m-lauto
+    @include margin_left_spacing(auto)
+
+.m-rauto
+    @include margin_right_spacing(auto)
+
+.m-tauto
+    @include margin_top_spacing(auto)
+
+.m-bauto
+    @include margin_bot_spacing(auto)
+
+
+@each $height_multiplier in $height_factor_list
+    .h#{$height_multiplier}
+        height: $height_multiplier * 1%
+
+@each $space_percent in $space_factor_list_percent
+    .m-top#{$space_percent}
+        @include margin_top_spacing($space_percent * 1%)
+    .m-bot#{$space_percent}
+        @include margin_bot_spacing($space_percent * 1%)
+    .m-right#{$space_percent}
+        @include margin_right_spacing($space_percent * 1%)
+    .m-left#{$space_percent}
+        @include margin_left_spacing($space_percent * 1%)
+    .m-x#{$space_percent}
+        @include margin_left_spacing($space_percent * 1%)
+        @include margin_right_spacing($space_percent * 1%)
+    .m-y#{$space_percent}
+        @include margin_top_spacing($space_percent * 1%)
+        @include margin_bot_spacing($space_percent * 1%)
+
+    .p-top#{$space_percent}
+        @include padding_top_spacing($space_percent * 1%)
+    .p-bot#{$space_percent}
+        @include padding_bot_spacing($space_percent * 1%)
+    .p-right#{$space_percent}
+        @include padding_right_spacing($space_percent * 1%)
+    .p-left#{$space_percent}
+        @include padding_left_spacing($space_percent * 1%)
+    .p-x#{$space_percent}
+        @include padding_left_spacing($space_percent * 1%)
+        @include padding_right_spacing($space_percent * 1%)
+    .p-y#{$space_percent}
+        @include padding_top_spacing($space_percent * 1%)
+        @include padding_bot_spacing($space_percent * 1%)
+
+
+@each $space_pixel in $space_factor_list_pixel
+    .m-px-top#{$space_pixel}
+        @include margin_top_spacing($space_pixel * 1px)
+    .m-px-bot#{$space_pixel}
+        @include margin_bot_spacing($space_pixel * 1px)
+    .m-px-right#{$space_pixel}
+        @include margin_right_spacing($space_pixel * 1px)
+    .m-px-left#{$space_pixel}
+        @include margin_left_spacing($space_pixel * 1px)
+    .m-px-x#{$space_pixel}
+        @include margin_left_spacing($space_pixel * 1px)
+        @include margin_right_spacing($space_pixel * 1px)
+    .m-px-y#{$space_pixel}
+        @include margin_top_spacing($space_pixel * 1px)
+        @include margin_bot_spacing($space_pixel * 1px)
+
+    .p-px-top#{$space_pixel}
+        @include padding_top_spacing($space_pixel * 1px)
+    .p-px-bot#{$space_pixel}
+        @include padding_bot_spacing($space_pixel * 1px)
+    .p-px-right#{$space_pixel}
+        @include padding_right_spacing($space_pixel * 1px)
+    .p-px-left#{$space_pixel}
+        @include padding_left_spacing($space_pixel * 1px)
+    .p-px-x#{$space_pixel}
+        @include padding_left_spacing($space_pixel * 1px)
+        @include padding_right_spacing($space_pixel * 1px)
+    .p-px-y#{$space_pixel}
+        @include padding_top_spacing($space_pixel * 1px)
+        @include padding_bot_spacing($space_pixel * 1px)
+
+.indent
+    margin-left: 3%

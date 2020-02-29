@@ -1,0 +1,285 @@
+Date: 2018-08-29
+Tech Name:Sharma sukhdeo
+Client Dispatch Service Requestor: Bank of America
+
+Client Email: Brooklyn
+Client State: New York
+Client Zip: 11213
+Problem Reported by Service Requester: 
+Conduct full test of location
+
+Who Reported the Problem? Branch personnel did not make request Reporter Phone: N/a Problem Reported by Site Contact:
+N/a
+
+
+Reader #1 S/N: 206317
+Reader #1 Name: N/a 
+
+Reader #2 S/N:        
+Reader #2 Name:   
+
+Controller S/N: 107237       
+Controller Image Name: N/a 
+
+Panel Existing Firmware Version: Feth03-27-18_sp_v1-1       
+New Firmware Version Installed: Fbne08-16-18_sp_v2-1           
+
+UPS Present? Yes       
+If not, did you Install one? No           
+
+Card Reader Wiring: N/a       
+Card Reader Name: N/a  
+
+Describe Physical Interference Devices (i.e.; Door Handle, Storefront, etc.)
+
+
+Electrical Interference Devices (i.e.; Power Supply PCB mounted in ACS-1E panel, etc.):
+
+     
+
+Is a power supply PCB for the ACS-1E Panel or the Door Lock/Exit Hardware mounted within the ACS-1E Panel? 
+No
+
+Type of power supply needed:
+
+
+Card Reader #1  State upon Arrival: - LED Status
+Green: Yes       
+Programmed Access Schedule: No
+ 
+Amber: No       
+Programmed Access Schedule: No
+
+Red: No       
+Programmed Access Schedule: No
+           
+Blinking Red: No       
+Programmed Access Schedule: No
+
+Other: 
+
+Card Reader #1 Read Tests:
+Magnetic Stripe Card Read Successful? Yes
+
+
+Contactless EMV Card or NFC Enabled Mobile Phone Read Successful? Yes
+Notes:
+
+
+Card Reader #2 State upon Arrival: - LED Status
+Green:        
+Programmed Access Schedule: 
+ 
+Amber:        
+Programmed Access Schedule: 
+
+Red:        
+Programmed Access Schedule: 
+           
+Blinking Red:        
+Programmed Access Schedule: 
+
+Other: 
+
+Card Reader #2 Read Tests:
+Magnetic Stripe Card Read Successful? Yes Contactless EMV Card or NFC Enabled Mobile Phone Read Successful? Yes
+Notes:
+
+
+ACS-1E Panel State upon Arrival:
+Heart Beat LED State
+           
+Main: Fast Blinking Green       
+Other: N/a
+   
+RS485: Fast Blinking Green       
+Other: N/a
+
+
+Alarm LED’s State
+           
+Tamper: Off       
+Other: N/a
+  
+Overlay: Off       
+Other: N/a
+
+Cable Cut: Off       
+Other: N/a
+
+
+Relay LED State
+           
+Relay 1: Off       
+Other: N/a
+ 
+Relay 2: Off       
+Other: N/a
+  
+Relay 3: Off       
+Other: N/a
+
+Was Client able to Remote Connect and upload these two Audit Trial Files?  
+Yes
+
+
+Client does not have Remote Connectivity to the ACS-1E Panel
+
+Retrieve IP Configurations and print the screen. Completed: Yes Record Name of CS 1E Panel IP Configurations File Saved:
+
+
+Record Name of CS 1E Panel Audit Trail File Saved:
+
+
+
+Client ACS Enterprise/Network Contact: 
+
+
+Troubleshooting 
+
+Check/Tighten ACS-1E Panel screw terminals for the card reader cable(s). Checked: 
+Yes
+
+
+Remove MMR Card Reader B-Nuts, re-twist cables and re-crimp B-Nut connections. Checked:
+Yes
+
+Make sure B-Nut is completely inserted over twisted cables where no bare wires can be seen at the base of each B-Nut. Checked:
+Yes
+
+
+Check for possible splice(s) within cable or cable picking up EMF interference from other equipment or light fixtures touching or close to the card reader cable. Checked: 
+Yes
+
+Cable Moved:
+No
+
+  
+Take Picture of the both ends of the existing Cable. 
+Picture Taken? Yes
+
+
+
+Is the Jacket of the Card Reader Cable and the colors of the each card reader cable identical?
+Yes
+
+
+
+Record Ohms of Resistance for each pair of cables:
+           
+Pair 1 Ohms: 2.3       
+Pair 2 Ohms: 2.3        
+Pair 3 Ohms: 2.4       
+Pair 4 Ohms: 2.4
+
+
+
+Card Reader Cable is cable from:
+the typical ACS-1E 6 conductor 22 Ga.
+
+
+What is the Gauge of the current Card Reader Cable?
+22 Ga.
+Other: 
+   
+Does the Cable have Twisted Pairs? 
+No 
+
+
+Did/Does Card Reader Cable need to be replaced?
+No
+ 
+Did you install a new Card Reader Cable?
+No 
+
+If a return visit is required to replace the cable, circle and/or note the following requirements:
+
+
+
+PICTURES OF THE CABLE RUN/WALLS/CEILING, IF A NEW CARD READER CABLE INSTALL IS REQUIRED:
+Pictures Taken: No
+
+Describe any unique requirements:
+N/a
+
+
+Overlay Alarm
+
+Make note of any observations of activity within the Video that may have contributed to the Overlay Alarm:
+
+
+MMR-SkimGard Overlay Installation Obstructions
+
+Obstructions Found? No
+Describe Obstructions:
+
+Picture Taken: Yes
+
+
+
+
+Check if the ATM Lobby Door/Pull Handle interferes with the Card Reader Overlay Scanning area.
+Obstructions Found? No
+Describe Obstructions:
+N/a
+Picture Taken: Yes
+
+
+
+Check Card Reader for foreign objects or materials installed over the SkimGard-MMR faceplate and/or Sensors. 
+Obstructions Found? No
+Describe Obstructions:
+
+Picture Taken: No
+
+
+Check with on-site branch, service or construction personnel if objects have been placed in front of or near the MMR Card Reader or the ATM Door was propped open during the reported Overlay Alarm event time. 
+Obstructions Reported? No
+Describe Obstructions:
+
+Picture Taken: No
+
+If the Overlay Alarm is asserted within the first 30-35 minutes of the power on, and none of the above physical restrictions exist, then replace the SkimGard/MMR Card Reader.
+Make any notes of additional findings:
+
+
+           
+New MMR Reader #1 Serial #:        
+New MMR Reader #2 Serial #: 
+
+
+Tamper Alarms
+
+Make note of any observations of activity within the Video that may have contributed to the Tamper Alarm: 
+
+
+With a Multi-Meter, test the continuity of the Tamper switch wires within the collar (carefully depress down onto the silver tab of the Tamper switch, continuity should show a close/off when the silver tab is depressed and an open/on when you let go of the silver tab on the Tamper switch).
+Continuity Tests OK: Yes
+Changed Switch: Yes   
+
+Inspect the Tamper Switch wires (two white wires within the collar) for damage and then inspect the Tamper switch wire contacts for a broken/cold solder joint.
+Cables/Solder Joint Show Damage: No
+Changed Switch: Yes  
+
+If the Tamper alarm LED turns off by shorting the MMR white wires and you’ve verified the Tamper switch and Tamper Circuit within the MMR are working correctly, begin to test the accelerometer within the MMR Reader.
+
+If the ACS-1E Panel is far away (> 20 seconds from you tilting the MMR) from the MMR Reader you can verify the Accelerometer Tamper signal by viewing the ACS-1E Event Panel Messages. 
+Replaced MMR Reader: No 
+
+Reinstall the MMR Reader to check if the MMR Reader is actuating the Tamper switch. If the Tamper Alarm LED remains on, the Tamper switch is not engaged with the installed MMR Reader, replace the collar.  
+Replaced Collar: No 
+
+Thoroughly inspect the MMR Card Reader module for any material within the card slot, possible intrusion or modification.
+Inspection Results: (Describe) 
+
+Picture Taken: No
+
+
+Did you find the ACS-1E Card Reader Serial # “Learn Jumper” shunted? No
+Results: (Describe) 
+
+
+Please record the Names below of any Branch personnel trained on the MMR Reader usage:
+
+Name of Branch Staff Trained: 
+

@@ -1,0 +1,130 @@
+﻿@model RMATracker.Models.Assessment
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Assessment</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.VerifyReturn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VerifyReturn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PhysicalDamage)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PhysicalDamage)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PowerUp)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PowerUp)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VerifyLED)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VerifyLED)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TamperSwitch)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TamperSwitch)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PosSwitch)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PosSwitch)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CableCut)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CableCut)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SkimAlarm)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SkimAlarm)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CardRead)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CardRead)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NFCProximity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NFCProximity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UnitPassFail)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UnitPassFail)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RootCause)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RootCause)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HardwareRootCause)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HardwareRootCause)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateCreated)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateCreated)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

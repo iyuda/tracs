@@ -1,0 +1,118 @@
+﻿@using RMATracker.Models
+@using DataLayer
+@model RMAModel
+
+
+@{
+
+    ViewBag.QueryMode = (ViewBag.QueryMode ?? false);
+    //    ViewBag.Title = "Home Page";
+    string is_asterik = ViewBag.QueryMode ? ": " : "*";
+
+}
+
+<fieldset>
+    <legend>Part Returns</legend>
+
+
+    <div class="container" style="border:solid">
+        <div id="divParts">
+            @{ if (Model?.rma?.returnedParts == null)
+                {
+                    Model.rma.returnedParts = new List<ReturnedPart>();
+                }
+                if (Model?.rma?.returnedParts?.Count == 0)
+                {
+                    Model?.rma?.returnedParts.Add(new ReturnedPart());
+                }
+            }
+            @for (int i = 0; i < (Model != null ? Model?.rma?.returnedParts?.Count : 0); i++)
+            {
+                Html.RenderAction("PartEntry", "RMAForm", new { Index = i });
+                
+            }
+        </div>
+        <div class="section1"></div><div class="section1"></div>
+        <div class="section1">
+            <div align="right">
+                <button type="button" class="btn btn-primary" id="btnAddPart" onclick="AddPart()">
+                    Add Part
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <br>
+
+</fieldset>
+<script>
+    function GetPartDetails(e) {
+
+        var DescriptionName = e.name.replace("PartId", "PartName");
+        var SerialNumberName = e.name.replace("PartId", "SerialNumber");
+        $("name=[" + DescriptionName + "]").val($("#" + e.id + "  option:selected").text()); // prop('value', $("#" + e.id + "  option:selected").index());
+
+    }
+    
+
+    function AddPart() {
+        var rmaParentDiv = $("div[id^=tabs-" + $('#TabId').val() + "]");
+        if (rmaParentDiv.length == 0) {
+            rmaParentDiv = $("div[id='rmaContainer']");
+        }
+
+
+
+
+        var visible_count = rmaParentDiv.find(".part_details_class:visible").length;
+        if (visible_count >= 7) {
+            //alert("You have reached the maximum number of returned parts!");
+            changeFeedbackMessage("error", 'You have reached the maximum number of returned parts!');
+            return;
+        }
+
+
+        var new_number = rmaParentDiv.find(".part_details_class").length
+        //var sURL = "/RMAForm/PartEntry?Index=" + new_number + "&DynamicAdd=true";
+        var sURL = '@Url.Action("PartEntry", "RmaForm", new { index = "param1", DynamicAdd="true" })'.replace("param1", new_number)
+        $.get(sURL, function (data) {
+            rmaParentDiv.find("#divParts").append(data);
+            $('.btn-primary').css('background-color', '#F57B20')   
+            $(".remove-part-button").show();
+
+            $(".serial").each(function () {
+                $(this).on('blur', function () {
+                    validateSerialNo(this);
+                });
+                $(this).on('focus', function () {
+                    validateSerialNo(this);
+                });
+                $(this).on('keyup', function () {
+                    validateSerialNo(this); 
+                    var Selector = $(this).closest('div.part-details').find("[data-role='combobox']");
+                    Selector.each(function () {
+                        var combobox = $(this).data("kendoComboBox");
+                        combobox.enable(true);
+                    });
+                });
+                $(this).on('change', function () {
+                    var Selector = $(this).closest('div.part-details').find("[data-role='combobox']");
+                    Selector.each(function () {
+                        var combobox = $(this).data("kendoComboBox");
+                        combobox.enable(true);
+                    });
+                });
+            });
+        });
+
+    }
+    $(document).ready(function () {
+        if ('@(Model?.rma?.returnedParts?.Count)' <= "1")
+            $(".remove-part-button").hide();
+        else
+            $(".remove-part-button").show();
+    });
+</script>

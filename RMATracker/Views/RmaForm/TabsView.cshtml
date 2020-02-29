@@ -1,0 +1,57 @@
+﻿@using RMATracker.Models
+@using DataLayer
+@model  User
+@{
+    ViewBag.Title = "RMA Request";
+}
+
+<div id="tabs">
+    @Html.Hidden("TabId", "0" )
+    @{
+        var all_attributes = DataLayer.Attribute.attributes;
+        var attributes =
+        (from rel_User_Attribute in Model.rel_User_Attributes
+         join attribute in all_attributes on rel_User_Attribute.AttributeId equals attribute.id
+         orderby attribute.Name
+         select attribute).Distinct().ToList();
+
+        if (attributes.Count > 1)
+        {
+            int tab_index = 0;
+            @:<ul>
+                foreach (DataLayer.Attribute attribute in attributes)
+                {
+                    <li><a href="#tabs-@tab_index">@attribute.Name</a></li>
+                    tab_index++;
+                }
+            @:</ul>
+            tab_index = 0;
+            foreach (DataLayer.Attribute attribute in attributes)
+            {
+                @:<div id="tabs-@tab_index">
+                    Html.RenderAction("GetRMAForm", "RMAForm", new { attribute = attribute });
+                    tab_index++;
+                @:</div>
+            }
+        }
+        else
+        {
+            Html.RenderAction("GetRMAForm", "RMAForm", new { attribute = attributes?[0] });
+        }
+    }
+
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#TabId').val('0');
+    });
+    $(function () {
+        $('#tabs').tabs({
+            activate: function (event, ui) {
+                $('#TabId').val(ui.newTab.index());
+            }
+            
+        });
+    }); 
+    
+</script>

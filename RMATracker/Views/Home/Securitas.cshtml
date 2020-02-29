@@ -1,0 +1,53 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+ 
+}
+<head>
+
+    <link href="~/content/web/kendo.common-material.min.css" rel="stylesheet" />
+    <link href="~/content/web/kendo.rtl.min.css" rel="stylesheet" />
+    <link href="~/content/web/kendo.material.min.css" rel="stylesheet" />
+    <link href="~/content/web/kendo.material.mobile.min.css" rel="stylesheet" />
+    <link href="~/content/shared/examples.css" rel="stylesheet" />
+
+    <script src="~/Scripts/Kendo/jquery.min.js"></script>
+    <script src="~/Scripts/Kendo/kendo.all.min.js"></script>
+    <script src="~/Scripts/Kendo/kendo.aspnetmvc.min.js"></script>
+    <script src="~/Scripts/Kendo/kendo.timezones.min.js"></script>
+
+</head>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-8">
+            <div id="content" role="main">
+                <article role="article" id="post_1425" class="post-1425 page type-page status-publish hentry">
+                    <p>In order to begin the return process, please click the appropriate logo below.</p>
+                    <p>&nbsp;</p>
+                    <p>
+                        <a BankIncludeType="1" class="bank-selection" href='@Url.Action("GetRMAForm", "RMAForm", new {BankIncludeType=1} )'>RMA request for:<img src="~/images/boa_logo.jpg" alt="" class="imgsize" width="250" height="46"></a><br>
+                        <br><br>
+                        <br><br>
+                        <a BankIncludeType="2" class="bank-selection" href='@Url.Action("GetRMAForm", "RMAForm", new {BankIncludeType=2} )'>General RMA request:<img src="~/images/RMAIcon.jpg" alt="" class="imgsize" width="250" height="46"></a>
+                    </p>
+                </article>
+
+            </div><!-- /#content -->
+        </div>
+
+        <div class="col-xs-6 col-sm-4" id="sidebar" role="navigation">
+            <aside class="sidebar"></aside>
+        </div>
+
+    </div><!-- /.row -->
+</div>
+<script>
+         $(document).ready(function () {
+
+             if (document.referrer.toLowerCase().indexOf('rmaform') >= 0) {
+                 history.pushState(null, null, window.location.href);
+                window.addEventListener('popstate', function () {
+                    history.pushState(null, null, window.location.href);
+                });
+            }
+    });
+</script>

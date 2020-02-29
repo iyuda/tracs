@@ -1,0 +1,175 @@
+﻿@{
+
+    var className = ViewData["ClassName"];
+    var propertyName = ViewData["PropertyName"];
+    var index = ViewData["Index"];
+    var attributes = ViewData["Attributes"];
+    var divClass = ViewData["DivClass"];
+    var RequiredNote = ViewData["RequiredNote"];
+    var ShowLabel = ViewData["ShowLabel"];
+    var LabelForReadOnly = ViewData["LabelForReadOnly"];
+    var LabelForEdit = ViewData["LabelForEdit"];
+    var TextArea = ViewData["TextArea"];
+
+    if (ShowLabel == null)
+    {
+        ShowLabel = false;
+    }
+    var QueryMode = ViewData["QueryMode"];
+
+    if (QueryMode == null)
+    {
+        QueryMode = false;
+    }
+
+
+
+    string AddToID = "";
+    string AddToName = "";
+    string text = "";
+    dynamic WorkObject;
+    switch (className)
+    {
+        case "SurveyIntegrityChecks":
+            WorkObject = Model.SurveyIntegrityChecks;
+            break;
+        case "SurveyObstructions":
+            WorkObject = Model.SurveyObstructions;
+            break;
+        case "SurveyReaderArrivalStates":
+            WorkObject = Model.SurveyReaderArrivalStates;
+            break;
+        case "SurveySiteInspection":
+            WorkObject = Model.SurveySiteInspection;
+            break;
+        default:
+            WorkObject = Model.Survey;
+            break;
+    }
+    if (index != null)
+    {
+        AddToID = index.ToString() + "__";
+        AddToName = "[" + index.ToString() + "]";
+        WorkObject = WorkObject[Int32.Parse(index.ToString())];
+
+
+    }
+    var temp_value = WorkObject?.GetType().GetProperty(propertyName.ToString())?.GetValue(WorkObject, null);
+    text = temp_value == null ? "" : temp_value.ToString();
+
+    var PlaceholderProperty = attributes.GetType().GetProperties().FirstOrDefault(prop => prop.Name == "placeholder");
+    var IsRequired = attributes.GetType().GetProperties().FirstOrDefault(prop => prop.Name == "aria_required");
+    dynamic DataType = attributes.GetType().GetProperties().FirstOrDefault(prop => prop.Name == "type");
+    if (DataType != null)
+    {
+        DataType = DataType.GetValue(attributes, null).ToString().ToLower();
+    }
+    else
+    {
+        DataType = "text";
+    }
+
+    if (DataType == "date")
+    {
+        text = ((text??"") == "" ? "" : DateTime.Parse(text).ToString("yyyy-MM-dd"));
+        //var Value_Property = attributes.GetType().GetProperties().FirstOrDefault(prop => prop.Name == "Value");
+        //if (Value_Property != null)
+        //{
+        //    text = Value_Property.GetValue(attributes, null).ToString().ToLower();
+        //}
+    }
+    var html = TextArea==null ? @Html.TextBox(className + "_" + AddToID + propertyName, null, attributes)
+                  : @Html.TextArea(className + "_" + AddToID + propertyName, null, attributes);
+}
+
+
+@if (!(bool)QueryMode)
+{
+    @*if (PlaceholderProperty != null )
+        {
+            string Header = PlaceholderProperty.GetValue(attributes, null).ToString();
+            if (IsRequired != null)
+            {
+                @:<label>@Header<span class="required">@RequiredNote</span></label>
+            }
+            else
+            {
+                @:<label>@Header</label>
+            }
+        }*@
+    if (LabelForEdit != null)
+    {
+        @Html.Raw(@LabelForEdit);
+    }
+    @:<div class="@divClass">
+
+    string work_html = html.ToString().Replace("{", "♥").Replace("}", "♣");
+
+    if (TextArea==null) {
+        string str_to_replace = "<input ";
+        work_html = work_html.Replace(str_to_replace, "{2}Name=\"{0}\" Value=\"{1}\" ");
+        work_html = String.Format(work_html, className + AddToName + "." + propertyName, text ?? "", str_to_replace);
+    }
+    else
+    {
+        string str1_to_replace = "<textarea ";
+        string str2_to_replace = "</textarea>";
+        work_html = work_html.Replace(str1_to_replace, "{0}Name=\"{1}\"").Replace(str2_to_replace, "{2}{3}"); 
+        work_html = String.Format(work_html, str1_to_replace, className + AddToName + "." + propertyName, text ?? "", str2_to_replace);
+    }
+    work_html = work_html.Replace("♥", "{").Replace("♣", "}");
+    @Html.Raw(@work_html)
+
+    @:</div>
+}
+else
+{
+
+    @:<div class="@divClass">
+    if ((bool)ShowLabel)
+    {
+        string Label = PlaceholderProperty != null && LabelForReadOnly == null ?
+                        PlaceholderProperty.GetValue(attributes, null).ToString().Replace("(required)", "").Trim() :
+                        (LabelForReadOnly ?? "").ToString();
+        @:<label style="width:@(Label.Length + 2)ch;font-weight:normal">@Label :</label>
+        if (TextArea != null)
+        {
+            @:<br />
+        }
+    }
+    if (index == null)
+    {
+        @Html.Label(className + "_" + AddToID + propertyName, text, new { @style = "font-weight:bold" })
+    }
+    else
+    {
+        @Html.Label(className + "_" + AddToID + propertyName, text, new { @style = "font-weight:bold" })
+        @Html.Hidden(className + "_" + AddToID + propertyName, text)
+    }
+    @Html.Hidden(className + "_" + AddToID + propertyName)
+
+    @*if (DataType != "date")
+    {
+        if (index == null)
+        {
+            @Html.Label(className + "_" + AddToID + propertyName, text, new { @style = "font-weight:bold" })
+        }
+        else
+        {
+            @Html.Label(className + "_" + AddToID + propertyName, text, new { @style = "font-weight:bold" })
+            @Html.Hidden(className + "_" + AddToID + propertyName, text)
+        }
+        @Html.Hidden(className + "_" + AddToID + propertyName)
+    }
+    else
+    {
+        var Value = attributes.GetType().GetProperties().FirstOrDefault(prop => prop.Name == "Value");
+        if (Value != null)
+        {
+            string value = Value.GetValue(attributes, null).ToString().ToLower();
+            @Html.Label(className + AddToName + "." + propertyName, value, new { @style = "font-weight:bold;" })
+            @Html.Hidden(className + AddToName + "." + propertyName, value)
+        }
+    }*@
+@:</div>
+}

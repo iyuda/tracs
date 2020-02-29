@@ -1,0 +1,1 @@
+[14-Jan-2019 19:58:49 America/Chicago] PHP Fatal error:  Class 'WP_Filesystem_Base' not found in /home2/parabitcom/public_html/wp-admin/includes/class-wp-filesystem-ssh2.php on line 36

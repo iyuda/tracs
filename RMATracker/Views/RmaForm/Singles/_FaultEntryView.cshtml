@@ -1,0 +1,134 @@
+﻿@using RMATracker.Models
+@using DataLayer
+@model RMAModel
+
+@{
+    ViewBag.QueryMode = (ViewBag.QueryMode ?? false);
+    string is_asterik = ":"; // ViewBag.QueryMode ? ": " : "*";
+
+}
+
+@{var i = int.Parse(ViewData["index"].ToString());
+    Html.HiddenFor(m => m.rma.rel_RMA_Faults[i].id);
+    }
+
+
+
+<div style="border-bottom:dotted;padding-left:10px" id="fault_details_@i" class="container1 fault_details_class dynamic">
+    <br>
+    @{ <div class="form-group problem-menu">
+    <strong id="fault_heading_1">Technician Findings/Diagnosis: *</strong> <br>
+    @{ var faults = Fault.fullList ?? new List<DataLayer.Fault>();
+        bool IsRemoved;
+        if (ViewBag.IsRemoved == null)
+        {
+            IsRemoved = Model?.rma?.rel_RMA_Faults?[i]?.IsRemoved ?? false;
+        }
+        else
+        {
+            IsRemoved = ViewBag.IsRemoved ?? false;
+        }
+        Html.HiddenFor(m => m.rma.rel_RMA_Faults[i].IsRemoved, new { @Value = IsRemoved });
+    }
+    @if (!ViewBag.QueryMode)
+    {
+        @Html.DropDownListFor(m => m.rma.rel_RMA_Faults[i].id, new SelectList(faults, "id", "description"), "-- Pick One --", new {@index = i, @onchange= "CheckOther(this)", @style = "padding:4px;font-weight: normal;", @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control" })
+    }
+    else
+    {
+        @Html.Display(faults.FirstOrDefault(f => f.id == Model?.rma?.rel_RMA_Faults[i]?.FaultId)?.Description)
+        @*@Html.HiddenFor(m => m.complaint.Description)*@
+    }
+</div><br>
+
+
+        <div class="form-group steps-taken">
+            <strong id="fault_heading_2">Steps Undertaken to Resolve Issues: *</strong> <br>
+            @*<textarea class="wpcf7-form-control wpcf7-textarea rma-textarea form-control" name="steps-taken" rows="4" aria-invalid="false"></textarea>*@
+            @if (!ViewBag.QueryMode)
+            {
+                @Html.TextAreaFor(m => m.rma.rel_RMA_Faults[i].StepsUndertaken, new { @style = "width:100%;font-weight:normal", @maxlength = "255", @rows = "4", @aria_required = "true", @required = "", @aria_invalid = "false", @class = "wpcf7-form-control wpcf7-textarea rma-textarea form-control" })
+            }
+            else
+            {
+                @Html.DisplayFor(m => m.rma.rel_RMA_Faults[i].StepsUndertaken)
+                @Html.HiddenFor(m => m.rma.rel_RMA_Faults[i].StepsUndertaken)
+            }
+        </div> <br>
+        <div class="form-group additional-info">
+            <strong class="observations-heading" id="fault_heading_3">Additional Information:</strong> <br>
+            @if (!ViewBag.QueryMode)
+            {
+                @Html.TextAreaFor(m => m.rma.rel_RMA_Faults[i].Observations, new { @style = "width:100%;font-weight:normal", @maxlength = "255", @rows = "4", @aria_invalid = "false", @class = "observations-field wpcf7-form-control wpcf7-textarea rma-textarea form-control" })
+            }
+            else
+            {
+                @Html.DisplayFor(m => m.rma.rel_RMA_Faults[i].Observations)
+                @Html.HiddenFor(m => m.rma.rel_RMA_Faults[i].Observations)
+            }
+            @*<textarea class="wpcf7-form-control wpcf7-textarea rma-textarea form-control" name="additional-info" rows="4" aria-invalid="false"></textarea>*@
+        </div>
+        <div class="section1" align="right"></div>
+        <div class="section1" align="right"></div>
+        <div class="section1" align="right">
+            <button type="button" style="float:right;" class="btn btn-primary remove-problem-button" id="btnRemoveFault_@i" index="@i" onclick="RemoveFaultEntry(this)">
+                Remove
+            </button>
+        </div>
+        <br>
+
+    }
+</div>
+<script>
+    function RemoveFaultEntry(e) {
+        var FaultIndex = $(e).attr("index");
+
+        var rmaParentDiv = $("div[id^=tabs-" + $('#TabId').val() + "]");
+        if (rmaParentDiv.length == 0) {
+            rmaParentDiv = $("div[id='rmaContainer']");
+        }
+        var visible_count = rmaParentDiv.find(".fault_details_class:visible").length;
+        if (visible_count <= 1) {
+            changeFeedbackMessage("error", 'At least one problem has to be entered!');
+            return;
+        }
+
+        var sURL = '@Url.Action("RemoveFault", "RmaForm", new { index = "param1" })'.replace("param1", FaultIndex);
+        $.get(sURL, function (data) {
+            $("#fault_details_" + FaultIndex).replaceWith(data);
+            $("#fault_details_" + FaultIndex).hide();
+
+            var visible_count = rmaParentDiv.find(".fault_details_class:visible").length;
+            if (visible_count <= 1)
+                $(".remove-problem-button").hide();
+            else
+                $(".remove-problem-button").show();
+        });
+    }
+     function CheckOther(e) {
+         var text = $("option:selected", e).text();
+         var FaultIndex = $(e).attr("index");
+         var heading = $("#fault_details_" + FaultIndex).find(".observations-heading");
+         var field = $("#fault_details_" + FaultIndex).find(".observations-field");
+         if (text.toLowerCase() == "other") {
+             if (heading)
+                 if (heading.text().indexOf("*") < 0)
+                     heading.text(heading.text() + "*");
+             if (field) {
+                 field.attr("required", "");
+                 field.attr("aria-required", "true");
+             }
+
+         }
+         else {
+             if (heading)
+                 if (heading.text().indexOf("*") >= 0)
+                     heading.text(heading.text().replace("*", ""));
+             if (field) {
+                 field.removeAttr("required");
+                 field.removeAttr("aria-required");
+             }
+         }
+
+    }
+</script>

@@ -1,0 +1,114 @@
+﻿@model RMATracker.Models.SurveyModel
+@{
+
+    var className = ViewData["ClassName"];
+    var propertyName = ViewData["PropertyName"];
+    var index = ViewData["Index"];
+    var FirstValue = ViewData["FirstValue"];
+    var SecondValue = ViewData["SecondValue"];
+    var QueryMode = ViewData["QueryMode"];
+    var Label = ViewData["Label"];
+
+    if (QueryMode == null)
+    {
+        QueryMode = false;
+    }
+    if (FirstValue == null)
+    {
+        FirstValue = "Yes";
+    }
+    if (SecondValue == null)
+    {
+        SecondValue = "No";
+    }
+
+    string AddToID = "";
+    string AddToName = "";
+
+    dynamic WorkObject;
+    switch (className)
+    {
+        case "SurveyIntegrityChecks":
+            WorkObject = Model.SurveyIntegrityChecks;
+            break;
+        case "SurveyObstructions":
+            WorkObject = Model.SurveyObstructions;
+            break;
+        case "SurveyReaderArrivalStates":
+            WorkObject = Model.SurveyReaderArrivalStates;
+            break;
+        case "SurveySiteInspection":
+            WorkObject = Model.SurveySiteInspection;
+            break;
+        default:
+            WorkObject = Model.Survey;
+            break;
+    }
+    if (index != null)
+    {
+        AddToID = index.ToString() + "__";
+        AddToName = "[" + index.ToString() + "]";
+        WorkObject = WorkObject[Int32.Parse(index.ToString())];
+    }
+    var value = WorkObject?.GetType().GetProperty(propertyName.ToString())?.GetValue(WorkObject, null);
+    string text = value == null ? "" : value.ToString();
+
+    if (text.ToLower() == "true")
+    {
+        text = FirstValue.ToString();
+    }
+    if (text.ToLower() == "false")
+    {
+        text = SecondValue.ToString();
+    }
+}
+@if (!(bool)QueryMode)
+{
+    if (Label != null)
+    {
+        @Html.Raw(@Label);
+    }
+    <div class="container1">
+        <div class="section1">
+            @{
+                <div class="radio-jquery-ui">
+                    @*@Html.RadioButtonFor(m => m.GetValue(className, propertyName, index), "true", new { @tag = FirstValue })*@
+                    @*@Html.LabelFor(m => m.GetValue(className, propertyName, index), FirstValue)*@
+                    @*<div class="radio-jquery-ui">
+                            <input id="SurveySiteInspection_is_mounted" name="SurveySiteInspection.is_mounted" tag="No" value="false" type="radio">
+                            <label for="SurveySiteInspection_is_mounted">No</label>
+                        </div>*@
+
+                    @Html.RadioButton(className + "_" + AddToID + propertyName, "true", text == FirstValue.ToString(), new {@Name = className + AddToName + "." + propertyName, @tag = FirstValue })
+                    @Html.Label("", FirstValue.ToString())
+                </div>
+                <div class="radio-jquery-ui">
+                    @*@Html.RadioButtonFor(m => m.GetValue(className, propertyName, index), "false", new { @tag = SecondValue })
+                        @Html.LabelFor(m => m.GetValue(className, propertyName, index), SecondValue)*@
+                    @Html.RadioButton(className + "_" + AddToID + propertyName, "false", text == SecondValue.ToString(), new { @Name = className + AddToName + "." + propertyName, @tag = SecondValue })
+                    @Html.Label("", SecondValue.ToString())
+                </div>
+            }
+        </div>
+
+    </div>
+}
+else
+{
+    <div>
+        @{
+            if (Label != null)
+            {
+                <label style="width:@(Label.ToString().Length+2)ch;font-weight:normal">@Label</label>
+            }
+            //var text = ((@Model.GetValue(className, propertyName, index) ?? false) ? FirstValue : SecondValue);
+            @*@Html.LabelFor(m => m.GetValue(className, propertyName, index), text.ToString(), new { @style = "font-weight:normal" })
+                @Html.HiddenFor(m => m.GetValue(className, propertyName, index), text.ToString())*@
+            @Html.Label(className + "_" + AddToID + propertyName, text, new { @style = "font-weight:bold" })
+            @Html.Hidden(className + "_" + AddToID + propertyName, text)
+
+
+
+        }
+    </div>
+}

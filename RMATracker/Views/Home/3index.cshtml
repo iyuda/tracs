@@ -1,0 +1,591 @@
+﻿@model RMATracker.Models.RMATrackerViewModel
+@{
+    ViewBag.Title = "Home Page";
+}
+<head>
+
+
+</head>
+
+<body class="text-center">
+
+
+    <!--<table>
+        <tbody>
+            <tr>
+
+                <td width="10%" id="DI800FormAgency">
+                    <input id="Log" type="image" src="/ResetPassword%20Dependencies/logoWithName.png">
+                </td>
+            </tr>
+        </tbody>
+    </table>-->
+
+
+    <form class="form-signin" id="ResetRequestForm">
+        <table>
+            <tbody>
+                <tr>
+
+                    <td width="10%" id="DI800FormAgency">
+                        <input id="Log" type="image" src="ResetPassword%20Dependencies/logoWithName.png">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <br /><br />
+        <img class="mb-4" src="ResetPassword%20Dependencies/bootstrap-solid.htm" alt="" height="72" width="72">
+        <h1 class="h3 mb-3 font-weight-normal" style="font-size:large ">Please Enter User Information</h1>
+        <label for="Agency_Number" class="sr-only">Agency</label>
+        <input id="Agency_Number" class="form-control" placeholder="Agency Number" autofocus="" type="text">
+        <label for="Badge" class="sr-only">User</label>
+        <input id="Badge" class="form-control" placeholder="Badge Number" required="" type="text">
+        <br /><br />
+        <!--<div class="checkbox mb-3">
+            <label>
+                <input value="remember-me" type="checkbox"> Remember me
+            </label>
+        </div>-->
+        <button class="btn btn-lg btn-primary btn-block" type="submit" id="SubmitReset">Submit</button>
+
+    </form>
+    <input type="hidden" id="token">
+    <form id="NewPasswordForm" action="www.yahoo.com">
+        <img class="mb-4" src="ResetPassword%20Dependencies/bootstrap-solid.htm" alt="" height="72" width="72">
+        <h1 class="h3 mb-3 font-weight-normal">Please Enter Your New Password</h1>
+        <label for="NewPassword" class="sr-only">New Password</label>
+        <input id="NewPassword" class="form-control" placeholder="New Password" required="" autofocus="" type="password">
+        <label for="ConfirmPassword" class="sr-only">Confirm Password</label>
+        <input id="ConfirmPassword" class="form-control" placeholder="Confirm Password" required="" type="password">
+        <br /><br />
+        <!--<div class="checkbox mb-3">
+            <label>
+                <input value="remember-me" type="checkbox"> Remember me
+            </label>
+        </div>-->
+        <button class="btn btn-lg btn-primary btn-block" type="submit" id="SubmitPassword">Submit</button>
+    </form>
+
+
+</body>
+<script>
+    var format = function (str, col) {
+        col = typeof col === 'object' ? col : Array.prototype.slice.call(arguments, 1);
+
+        return str.replace(/\{\{|\}\}|\{(\w+)\}/g, function (m, n) {
+            if (m == "{{") { return "{"; }
+            if (m == "}}") { return "}"; }
+            return col[n];
+        });
+    };
+    //$('#myModal').on('show.bs.modal', function (event) {
+
+    //    var button = $(event.relatedTarget) // Button that triggered the modal
+    //    var recipient = button.data('whatever') // Extract info from data-* attributes
+    //    // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+    //    // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+    //    var modal = $(this)
+    //    modal.find('.modal-title').text('New message to ' + recipient)
+    //    modal.find('.modal-body input').val(recipient)
+    //})
+    $(document).ready(function () {
+        token = getQueryVariable("token");
+        //        alert(token);
+        document.getElementById('NewPasswordForm').style.display = 'none';
+        document.getElementById('ResetRequestForm').style.display = 'none';
+        if (token == '' || token == null || token == undefined) {
+            document.title = 'Request To Reset User Password';
+            document.getElementById('ResetRequestForm').style.display = '';
+        }
+        else {
+            document.title = 'Change User Password';
+            var url = format('https://208.71.35.185/api/Ios/resetPassToken?token={0}', token);
+            // var url = format('http://localhost:53187/api/Ios/resetPassToken?token={0}', token);
+            document.getElementById('token').value = token;
+            $.ajax({
+                type: "GET",
+                url: url,
+                success: function (status) {
+
+                    if (status["success"]) {
+                        document.getElementById('NewPasswordForm').style.display = '';
+                    }
+                    else {
+                        document.title = 'Request To Reset User Password';
+                        document.getElementById('ResetRequestForm').style.display = '';
+                        bootbox.alert("The link was not found or expired!")
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    bootbox.alert("error opening " + url + ", status: " + textStatus + ", error: " + errorThrown);
+                }
+            });
+        }
+    });
+
+    $("#ResetRequestForm").submit(function (e) {
+        e.preventDefault();
+        var agency = $('#Agency_Number').val();
+        var user = $('#Badge').val();
+        //if (agency.length == 0) {
+        //    alert("Agency cannot be blank");
+        //    return;
+        //}
+        //if (user.length == 0) {
+        //    alert("Badge cannot be blank");
+        //    return;
+        //}
+        var url = format('https://208.71.35.185/api/Ios/resetPassRequest?agency={0}&user={1}', agency, user);
+        // url = "https://208.71.35.185/api/Ios/resetPassRequest";
+        $.ajax({
+            // contentType: "application/json; charset=utf-8",
+            type: "GET",
+            url: url,
+            success: function (status) {
+                if (status["success"])
+                    bootbox.alert("Email was sent.  To setup new password check your email")
+                else
+                    bootbox.alert(status["reason"])
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                //alert(JSON.stringify(XMLHttpRequest, null, "\t"));
+                bootbox.alert("error opening " + url + ", status: " + textStatus + ", error: " + errorThrown);
+            }
+        });
+
+
+    });
+    $("#NewPasswordForm").submit(function (e) {
+        e.preventDefault();
+        var new_pass = $('#NewPassword').val();
+        var confirm_pass = $('#ConfirmPassword').val();
+        //if (new_pass.length == 0 || confirm_pass.length == 0) {
+        //    alert("Password cannot be blank");
+        //    return;
+        //}
+        //if (new_pass != confirm_pass) {
+        //    alert("Passwords do not match");
+        //    return;
+        //}
+
+        var url = format('https://208.71.35.185/api/Ios/resetPass');
+        var data = {};
+        data.token = $('#token').val();
+        data.pass = new_pass;
+        $.ajax({
+            contentType: "application/json; charset=utf-8",
+            type: "POST",
+            url: url,
+
+            data: JSON.stringify(data),
+            success: function (status) {
+
+                if (status["success"])
+                    alert("Password has been changed.")
+                else
+                    alert(status["reason"])
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("error opening " + url + ", status: " + textStatus + ", error: " + errorThrown);
+            }
+        });
+
+    });
+    function getQueryVariable(variable) {
+        var query = window.location.search.substring(1);
+        var vars = query.split("&");
+        for (var i = 0; i < vars.length; i++) {
+            var pair = vars[i].split("=");
+            if (pair[0] == variable) { return pair[1]; }
+        }
+        return (false);
+    }
+</script>
+
+
+
+
+
+<div class="container" style="margin-top:40px;">
+    <div class="row">
+        <form id="formRMASend" method="post" class="wpcf7-form" enctype="multipart/form-data"  runat="server">
+                @Html.AntiForgeryToken()
+                <div style="display: none;">
+                    <input type="hidden" name="_wpcf7" value="1433">
+                    <input type="hidden" name="_wpcf7_version" value="5.0.1">
+                    <input type="hidden" name="_wpcf7_locale" value="en_US">
+                    <input type="hidden" name="_wpcf7_unit_tag" value="wpcf7-f1433-p1434-o1">
+                    <input type="hidden" name="_wpcf7_container_post" value="1434">
+                </div>
+
+
+
+                <br><br>
+                * Required Fields <br> <br>
+                <strong>Problem Description:*</strong>  <br>
+                <div class="form-group call-number">
+                    <label class="">Vendor Call # (TR #): <span class="required">*</span></label>
+
+                    @Html.TextBoxFor(m => m.RMABase.tr_no, new { @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control" })
+                </div> <br>
+
+                <div class="container1">
+                    <strong>Type of RMA:*</strong>  <br>
+                    <div class="form-group TypeofRMA">
+
+                        @Html.DropDownListFor(m=> m.RMADetails.ReturnType, new SelectList(new List<Object>
+                            {
+                            new { value = 0 , text = "Service request"  },
+                            new { value = 1 , text = "Credit request" },
+                            },  "Value", "Text"), "Pick One", new { @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control" })
+                    </div><br><br>
+
+                    <strong>If Credit then reason for:</strong>  <br>
+                    <div class="form-group IfCreditReason">
+
+                        @Html.DropDownListFor(m=> m.RMADetails.CreditReason, new SelectList(new List<Object>
+                            {
+                            new { value = 0 , text = "Job cancelled"  },
+                            new { value = 1 , text = "No longer required (excess inventory)" },
+                            new { value = 2 , text = "Wrong part ordered" },
+                            new { value = 3 , text = "Wrong color" },
+                            },  "Value", "Text"), "Pick One", new { @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control" })
+                    </div><br><br>
+
+                </div>
+                <br>
+
+                <div class="form-group firm-name">
+                    <label class="">Firm Name</label>
+
+                    @Html.TextBoxFor(m => m.TechInfo.ClientName, new { @aria_invalid = "false", @class = "wpcf7-form-control wpcf7-text rma-textfield form-control" })
+                </div>
+
+                <div class="container1">
+                    <div class="section1">
+                        <div class="form-group tech-name">
+                            <label class="">Tech Name<span class="required">*</span></label>
+
+                            @Html.TextBoxFor(m => m.TechInfo.TechName, new { @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" })
+                        </div>
+                    </div>
+                    <div class="section1">
+                        <div class="form-group tech-email">
+                            <label class="">Tech Email<span class="required">*</span></label>
+
+                            @Html.TextBoxFor(m => m.TechInfo.TechEmail, new { @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" })
+                        </div>
+                    </div>
+                    <div class="section1">
+                        <div class="form-group tech-phone">
+                            <label class="">Tech Phone<span class="required">*</span></label>
+
+                        </div>
+                        @Html.TextBoxFor(m => m.TechInfo.TechPhone, new { @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" })
+                    </div>
+                </div>
+
+                <br><br>
+                <fieldset>
+                    <legend>Return Address</legend>
+                    <div class="form-group return-street-address">
+                        <label class="">Street Address<span class="required">*</span></label>
+                        @*<input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required rma-textfield form-control" name="return-street-address" type="text" value="" aria-invalid="false" aria-required="true" required="">*@
+                        @Html.TextBoxFor(m => m.ReturnAddress.StreetAddress, new { @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" })
+                    </div>
+
+                    <div class="container1">
+                        <div class="section1">
+                            <div class="form-group return-city">
+                                <label class="">City<span class="required">*</span></label>
+                                @*    <input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" name="return-city" type="text" value="" aria-invalid="false" aria-required="true" required="">*@
+                                @Html.TextBoxFor(m => m.ReturnAddress.City, new { @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" })
+                            </div>
+                        </div>
+                        <div class="section1">
+                            <div class="form-group return-state">
+                                <label class="">State<span class="required">*</span></label>
+                                @*<input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required rma-short form-control" name="return-state" type="text" value="" aria-invalid="false" aria-required="true" required="">*@
+                                @Html.TextBoxFor(m => m.ReturnAddress.State, new { @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" })
+                            </div>
+                        </div>
+                        <div class="section1">
+                            <div class="form-group return-zip">
+                                <label class="">Zip Code<span class="required">*</span></label>
+                                @*<input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" name="return-zip" type="text" value="" aria-invalid="false" aria-required="true" required="">*@
+                                @Html.TextBoxFor(m => m.ReturnAddress.ZipCode, new { @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" })
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <br><br>
+                <fieldset>
+                    <legend>Bank Name &amp; Address</legend>
+                    <div class="form-group bank-name">
+                        <label class="">Bank Name</label>
+                        @*<input class="wpcf7-form-control wpcf7-text rma-textfield form-control" name="bank-name" type="text" value="" placeholder="Bank of America" aria-invalid="false">*@
+                        @Html.TextBoxFor(m => m.BankInfo.BankName, new { @aria_invalid = "false", @class = "wpcf7-form-control wpcf7-text rma-textfield form-control" })
+                    </div><br>
+
+                    <div class="form-group bank-street-address">
+                        <label class="">Service Call Street Address<span class="required">*</span></label>
+                        @*<input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required rma-textfield form-control" name="bank-street-address" type="text" value="" aria-invalid="false" aria-required="true" required="">*@
+                        @Html.TextBoxFor(m => m.BankInfo.BankStreetAddress, new { @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" })
+                    </div>
+
+                    <div class="container1">
+                        <div class="section1">
+                            <div class="form-group bank-city">
+                                <label class="">City<span class="required">*</span></label>
+                                @*<input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" name="bank-city" type="text" value="" aria-invalid="false" aria-required="true" required="">*@
+                                @Html.TextBoxFor(m => m.BankInfo.BankCity, new { @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" })
+                            </div>
+                        </div>
+                        <div class="section1">
+                            <div class="form-group bank-state">
+                                <label class="">State<span class="required">*</span></label>
+                                @*<input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required rma-short form-control" name="bank-state" type="text" value="" aria-invalid="false" aria-required="true" required="">*@
+                                @Html.TextBoxFor(m => m.BankInfo.BankState, new { @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" })
+                            </div>
+                        </div>
+                        <div class="section1">
+                            <div class="form-group bank-zip">
+                                <label class="">Zip Code<span class="required">*</span></label>
+                                @*<input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" name="bank-zip" type="text" value="" aria-invalid="false" aria-required="true" required="">*@
+                                @Html.TextBoxFor(m => m.BankInfo.BankZipCode, new { @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" })
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+
+
+
+
+                <strong>Date of Service Call:*</strong> <div class="form-group service-call-date">
+                    @*<input class="wpcf7-form-control wpcf7-date wpcf7-validates-as-required wpcf7-validates-as-date rma-calendar form-control" name="service-call-date" type="date" value="" min="" max="" step="" aria-invalid="false" aria-required="true" required="">*@
+                    @Html.TextBoxFor(m => m.Dates.CaseDate, new { @type = "date", @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" })
+                </div>  <br>
+                <strong>Problem Description:*</strong>  <br>
+                <div class="form-group problem-menu">
+                    @*<select class="wpcf7-form-control wpcf7-select wpcf7-validates-as-required rma-dropdown form-control" name="problem-menu" aria-invalid="false" aria-required="true" required="">
+                        <option value="" selected="">
+                            ---
+                        </option>
+                        <option value="Card swipe not reading cards"> Card swipe not reading cards</option>
+                        <option value="Reader flashing red/ access denied"> Reader flashing red/ access denied</option>
+                        <option value="Phones/Contactless cards not being read"> Phones / Contactless cards not being read</option>
+                        <option value="False skimming/overlay alarm"> False skimming/overlay alarm</option>
+                        <option value="Tamper alarm active"> Tamper alarm active</option>
+                        <option value="CableCut alarm active"> CableCut alarm active</option>
+                        <option value="Reader LED not working"> Reader LED not working</option>
+                        <option value="Trouble loading firmware"> Trouble loading firmware</option>
+                        <option value="Controller unresponsive"> Controller unresponsive</option>
+                        <option value="Doors not locking"> Doors not locking</option>
+                        <option value="Doors not opening"> Doors not opening</option>
+                        <option value="Can't connect to controller"> Can't connect to controller</option>
+                        <option value="Other">Other</option>
+                    </select>*@
+                    @Html.DropDownListFor(m=> m.TechInfo.ClientComplaint, new SelectList(new List<Object>
+                        {
+                        new { value = 0 , text = "Card swipe not reading cards"  },
+                        new { value = 1 , text = "Reader flashing red/ access denied" },
+                        new { value = 2 , text = "Phones/Contactless cards not being read" },
+                        new { value = 3 , text = "False skimming/overlay alarm" },
+                        new { value = 3 , text = "Tamper alarm active" },
+                        new { value = 3 , text = "CableCut alarm active" },
+                        new { value = 3 , text = "Reader LED not working" },
+                        new { value = 3 , text = "Trouble loading firmware" },
+                        new { value = 3 , text = "Controller unresponsive" },
+                        new { value = 3 , text = "Doors not locking" },
+                        new { value = 3 , text = "Doors not opening" },
+                        new { value = 3 , text = "Can't connect to controller" },
+                        new { value = 3 , text = "Other" },
+
+                        },  "Value", "Text"), "---", new { @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control" })
+
+                </div> <br>
+                <div class="form-group additional-info">
+                    <label class="">Additional Information:</label>
+                    @Html.TextAreaFor(m => m.TechInfo.FieldObservation, new { @rows = "4", @aria_invalid = "false", @class = "wpcf7-form-control wpcf7-textarea rma-textarea form-control" })
+                    @*<textarea class="wpcf7-form-control wpcf7-textarea rma-textarea form-control" name="additional-info" rows="4" aria-invalid="false"></textarea>*@
+                </div> <br>
+                <div class="form-group steps-taken">
+                    <label class="">Steps undertaken to Resolve Issues:</label>
+                    @*<textarea class="wpcf7-form-control wpcf7-textarea rma-textarea form-control" name="steps-taken" rows="4" aria-invalid="false"></textarea>*@
+                    @Html.TextAreaFor(m => m.TechInfo.StepsUndertaken, new { @rows = "4", @aria_invalid = "false", @class = "wpcf7-form-control wpcf7-textarea rma-textarea form-control" })
+                </div> <br>
+
+
+                <fieldset>
+                    <legend>Part Number and Serial Number Returns</legend>
+
+
+                    <i>*Only the 1st Part Number &amp; Serial Number is required</i> <br> <br>
+
+                    @for (int i = 0; i < 7; i++)
+                    {
+                    <div class="container1">
+                        <div class="section1">
+                            <strong>Part Number @(i + 1):* </strong><div class="form-group part-menu">
+                                @{
+                                if (i == 1)
+                                {
+                                //ViewBag
+                                @Html.DropDownListFor(m => m.Parts[i]._PartNo, new SelectList(Model.getPartTypes(), "PartNo", "PartDescription", Model.Parts[i]._PartNo), "-- Select Part --", new
+                                {
+                                @aria_invalid = "false",
+                                @aria_required = "true",
+                                @required = "",
+                                @class = "wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control",
+                                @onchange = "GetPartID(this)"
+                                })
+                                }
+                                else
+                                {
+                                @Html.DropDownListFor(m => m.Parts[i]._PartNo, new SelectList(Model.getPartTypes(), "PartNo", "PartDescription", Model.Parts[i]._PartNo), "-- Select Part --", new
+                                {
+                                @aria_invalid = "false",
+                                @class = "wpcf7-form-control wpcf7-select form-control",
+                                @onchange = "GetPartID(this)"
+                                })
+                                }
+                                @Html.DropDownListFor(m => m.Parts[i]._PartDescription, new SelectList(Model.getPartTypes(), "PartDescription", "PartDescription", Model.Parts[i]._PartDescription), "--", new
+                                {
+                                @style = "display:none"
+                                })
+                                @Html.DropDownListFor(m => m.Parts[i].part_types_id, new SelectList(Model.getPartTypes(), "id", "id", Model.Parts[i].part_types_id), "--", new
+                                {
+                                @style = "display:none"
+                                })
+                                }
+                            </div>
+
+                        </div>
+
+                        <div class="section1">
+                            <strong>Serial Number @(i + 1):* </strong><div class="form-group serial-number">
+                                @*<input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" name="serial-number" type="text" value="" aria-invalid="false" aria-required="true" required="">*@
+                                @Html.TextBoxFor(m => m.Parts[i].SN, new { @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-validates-as-required form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    }
+
+
+                    <input id="Badge" class="form-control" placeholder="Badge Number" required="" type="text">
+                </fieldset>
+
+
+
+
+                <fieldset>
+                    <legend>Image Uploads</legend>
+
+                    <strong>Upload picture(s) of reader and controller Installation</strong> (2MB Limit):<br><i>*Only the 1st Description &amp; Photo is required</i> <br> <br>
+                    @for (int i = 0; i < 7; i++)
+                    {
+                    <div class="clearfix">
+                        <div id="left">
+                            <div class="form-group image-description1">
+                                @*<input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control" name="image-description1" type="text" value="" placeholder="Image 1 Description" aria-invalid="false" aria-required="true" required="">*@
+                                @{ if (i == 0)
+                                {
+                                @Html.TextBoxFor(m => m.Images[i].ImageDescription, new
+                                {
+                                @aria_invalid = "false",
+                                @aria_required = "true",
+                                @required = "",
+                                @class = "wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control",
+                                @placeholder = "Image " + (i + 1) + " Description"
+                                })
+                                }
+                                else
+                                {
+                                @Html.TextBoxFor(m => m.Images[i].ImageDescription, new
+                                {
+                                @aria_invalid = "false",
+                                @class = "wpcf7-form-control wpcf7-select form-control",
+                                @placeholder = "Image " + (i + 1) + " Description" })
+                                }
+                                }
+                            </div>
+                        </div>
+                        <div id="right">
+                            <div class="form-group upload-file-1">
+                                @*<input class="wpcf7-form-control wpcf7-file wpcf7-validates-as-required " name="Images.Image1" type="file" aria-invalid="false" aria-required="true" required="">*@
+
+                                @{
+                                if (i == 0)
+                                {
+                                @Html.TextBoxFor(m => m.Images[i].ImageBody, new { type = "file", @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-select wpcf7-validates-as-required" })
+                                }
+                                else
+                                {
+                                @Html.TextBoxFor(m => m.Images[i].ImageBody, new { type = "file", @aria_invalid = "false", @class = "wpcf7-form-control wpcf7-select" })
+                                }
+                                }
+                                @*@Html.ValidationMessageFor(m => m.Images[i].ImageBody)*@
+
+                            </div>
+                        </div>
+                    </div>
+                    }
+
+                    <fieldset>
+                        <div class="container1">
+                            <div class="section1"><strong>Was Parabit Called?*</strong></div>
+                            <div class="section1"><strong>If yes, Date:</strong></div>
+                            <div class="section1"><strong>Parabit Dispatch #:</strong></div>
+                        </div>
+
+                        <div class="container1">
+                            <div class="section1"><div class="form-group parabit-called"><select class="wpcf7-form-control wpcf7-select wpcf7-validates-as-required rma-short form-control" name="parabit-called" aria-invalid="false" aria-required="true" required=""><option value="" selected="">---</option><option value="Yes">Yes</option><option value="No">No</option></select></div></div>
+                            <div class="section1"><div class="form-group call-date"><input class="wpcf7-form-control wpcf7-date wpcf7-validates-as-date form-control" name="call-date" type="date" value="" min="" max="" step="" aria-invalid="false"></div></div>
+                            <div class="section1"><div class="form-group dispatch-number"><input class="wpcf7-form-control wpcf7-text form-control" name="dispatch-number" type="text" value="" aria-invalid="false"></div></div>
+                        </div>
+
+                        <span class="wpcf7-form-control-wrap cf7-counter"><input type="hidden" name="cf7-counter" value="225" size="40" class="wpcf7-form-control wpcf7dtx-dynamictext wpcf7-dynamichidden" aria-invalid="false"></span>
+
+
+
+                        <div class="form-group"><div><input class="wpcf7-form-control wpcf7-submit btn btn-primary" type="submit" value="Send"></div></div><div class="wpcf7-response-output wpcf7-display-none alert"></div>
+                    </fieldset>
+                </fieldset>
+
+            </form>
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+</div>
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+<script type="text/javascript">
+
+	function GetPartID(e) {
+		var type_id = e.id.replace("_PartNo", "part_types_id");
+		var description_id = e.id.replace("_PartNo", "_PartDescription");
+		$("#" + type_id).prop('selectedIndex', $("#" + e.id + "  option:selected").index());
+		$("#" + description_id).prop('selectedIndex', $("#" + e.id + "  option:selected").index());
+
+
+	}
+	//$(function () {
+	//    $("#formRMASend").submit(function () {
+	//        var selTypeText = $("#Parts_0__PartNo option:selected").text();
+	//        alert(selTypeText);
+	//        //$("#hidText").val(selTypeText);
+	//    });
+	//});
+
+</script>

@@ -1,0 +1,327 @@
+﻿@model RMATracker.Models.LoginModel
+@{
+    Layout = "~/Views/Home/_HomeLayout.cshtml";
+    ViewBag.LoginFailed = (ViewBag.LoginFailed ?? false);
+    ViewBag.TempPassword = (ViewBag.TempPassword ?? false);
+    ViewBag.HideLogin = (ViewBag.HideLogin ?? false);
+    ViewBag.Title = "RMA TRACS System";
+    ViewBag.SubTitle = "Login";
+    ViewBag.PopupAddress = (ViewBag.PopupAddress ?? false);
+
+    var IsMobile = (ViewBag.IsMobile ?? ViewContext.HttpContext.GetOverriddenBrowser().IsMobileDevice);
+    var wPercent = IsMobile ? "100" : "40";
+    var ColSpan = IsMobile ? "3" : "3";
+
+}
+@using Kendo.Mvc.UI
+<head>
+
+    <link href="~/content/web/kendo.common-material.min.css" rel="stylesheet" />
+    <link href="~/content/web/kendo.rtl.min.css" rel="stylesheet" />
+    <link href="~/content/web/kendo.material.min.css" rel="stylesheet" />
+    <link href="~/content/web/kendo.material.mobile.min.css" rel="stylesheet" />
+    @*<link href="~/content/shared/examples.css" rel="stylesheet" />*@
+
+    <script src="~/Scripts/Kendo/jquery.min.js"></script>
+    <script src="~/Scripts/Kendo/kendo.all.min.js"></script>
+    <script src="~/Scripts/Kendo/kendo.aspnetmvc.min.js"></script>
+    <script src="~/Scripts/Kendo/kendo.timezones.min.js"></script>
+
+</head>
+<style>
+    .m-y11p5 {
+        margin-top: 11.5% !important;
+        margin-bottom: 11.5% !important;
+    }
+</style>
+@using (Html.BeginForm("Login", "Home", FormMethod.Post, new { @class = "center", @id = "loginForm" }))
+{
+
+    var @DisplayLogin = ViewBag.HideLogin ? "display:none" : "";
+    <div id="divLogin" class="m-y11p5" style="@DisplayLogin" align="center">
+        <table style="width:@wPercent%;">
+            
+            <tr class="blank_row">
+                <td colspan="2">&nbsp;</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td >
+                    @{var @DisplayError = (ViewBag.LoginFailed) ? "" : "display:none";
+                        var @ErrorMsg = ViewBag.ErrorMsg == null ? "The e-mail/password is not valid" : ViewBag.ErrorMsg;
+                    }
+                    <p style="text-align:center;font-style:italic;color:white;background-color:red; @DisplayError;"> @ErrorMsg </p>
+                </td>
+            </tr>
+
+            <tr>
+                <td width="20%" align="left">
+                    <label style="text-align:right;"><span>E-Mail:</span> </label>
+                </td>
+                <td width="60%" align="right">
+                    @Html.TextBoxFor(m => m.Email, new { @type = "email", @style = "width:100%", @class = "wpcf7-form-control m-y3 wpcf7-text rma-textfield form-control", @placeholder = "Email", @required = "", @autofocus = "" })
+                </td>
+            </tr>
+            <tr class="p-5"></tr>
+            <tr>
+                <td align="left">
+                    <label style="text-align:right"><span>Password:   </span></label>
+                </td>
+                <td align="left" style="" class="flex-container">
+                    @Html.PasswordFor(m => m.Password, new { @value = Model?.Password, @style = "width:100%;", @class = "rma-textfield form-control", @placeholder = ViewBag.TempPassword ? "Temp Password" : "Password", @required = "", @autofocus = "" })
+                    
+                    <button id="show_password" class="show-password" style="display:none;" type="button">
+                        <span class="fa fa-eye icon"></span>
+                    </button>
+                </td>
+                <td align="left">
+                    @*<button id="show_password" class="btn  show-password" style="display:none" type="button">
+                        <span class="fa fa-eye icon"></span>
+                    </button>*@
+                </td>
+
+
+            </tr>
+            <tr class="blank_row">
+                <td colspan="2">&nbsp;</td>
+            </tr>
+            <tr>
+                <td >&nbsp;</td>
+                <td align="right" >
+                    <button class="btn btn-lg btn-primary btn-block" style="width:100%" type="submit" id="btnLogin">Log in</button>
+                </td>
+            </tr>
+
+            <tr class="blank_row">
+                <td colspan="2">&nbsp;</td>
+            </tr>
+            <tr>
+                <td colspan="@ColSpan" align="center">
+                    <a href="~/Home/ValidateEmailGet">Forgot your password?</a>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="@ColSpan" align="center">
+                    <a href="~/Home/UserRegistrationGet">Register New User</a>
+                </td>
+            </tr>
+        </table>
+        
+    </div>
+
+
+}
+    <div id="divUserProfileAddress" style="overflow-x:hidden;border:solid;display:none;">
+        @{ if (ViewBag.PopupAddress)
+            {
+                Html.RenderPartial("~/Views/RmaForm/_NewReturnAddressView.cshtml", new DataLayer.ReturnAddress());
+            }
+        }
+    </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1"
+        crossorigin="anonymous"></script>
+<script src="~/Scripts/Login/bootbox.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+
+<script>
+    
+    $("#loginForm").validate({
+        errorClass: 'validate-error',
+        errorPlacement: function (error, element) {
+            var newCell = $('<td> </td>');
+            var newRow = $('<tr> </tr>');
+            newCell.appendTo(newRow);
+            newCell = $('<td align="right"> </td>')
+            error.css("width", "90%");
+            error.attr("align", "left");
+            error.appendTo(newCell);
+            newCell.appendTo(newRow);
+            newRow.insertAfter(element.closest('tr'));
+
+
+        }
+    });
+    $("#frmUserAddress").validate({
+        errorClass: 'validate-error',
+    });
+
+    $(document).ready(function () {
+        $('.btn-primary').css('background-color', '#F57B20')
+        $("input[id*='assword']").each(function () {
+            ToggleEyeButtonDisplay($(this));
+        });
+        if ('@ViewBag.PopupAddress' == 'True') {
+            ShowAddressForm();
+        }
+        $("input").each(function () {
+            $(this).attr("autocomplete", "none");
+        });
+        if (document.referrer.indexOf(window.location.host) >= 0) {
+            history.pushState(null, null, window.location.href);
+            window.addEventListener('popstate', function () {
+                history.pushState(null, null, window.location.href);
+            });
+        }
+        var mobileType = getMobileOperatingSystem();
+        if (mobileType == "android") {
+            $(".google-badge").attr('href', "https://play.google.com/store/apps/details?id=com.parabit.tracs_android");
+            $(".google-badge").show();
+        }
+        else if (mobileType == "ios") {
+            $(".apple-badge").attr('href', "https://itunes.apple.com/us/app/parabit-tracs/id1453624053?mt=8h");
+            $(".apple-badge").show();
+        }
+        else
+            $(".app-links").remove();
+        //$('.para-links').css("margin-top", $('.head-top').height());
+        //RunBanner('ios');
+        //RunBanner('android');
+    });
+
+
+    function ShowAddressForm(e) {
+
+        var divName = "divUserProfileAddress";
+        var formName = "formReturnAddressSave";
+        var saveButtonName = "btnSaveAddress";
+        var cancelButtonName = "btnCancelSaveAddress";
+        var isMobile = '@IsMobile'.toLowerCase()=="false" ?false : true;
+        $('#' + divName).css('zIndex', 999999999999999);
+        $('#' + divName).dialog({
+            autoOpen: true,
+            position: { my: "center", at: !isMobile ? "top+" + $("#navigation").height : "top", of: window },
+            //width: !isMobile ? $(window).width() / 2 : $(window).width(),
+            resizable: true,
+            modal: true,
+            title: "User Return Address",
+            create: function (event) {
+                if (!isMobile)
+                    $(this).parent().css({ 'position': 'fixed' });
+            },
+            beforeClose: function (event, ui) {
+                if (!isMobile)
+                    $("body").css({ overflow: 'inherit' })
+            },
+            open: function () {
+                if (!isMobile) {
+                    if (!isMobile) {
+                        var dialog = $(this).data("ui-dialog");
+                        dialog.option("width", $(window).width() / 2);
+                        $(window).resize(function () {
+                            var dialog = $('#' + divName).data("ui-dialog");
+                            dialog.option("position", dialog.options.position);
+                            dialog.option("width", $(window).width() / 2);
+                            if (!$('.navbar-toggle').hasClass('collapsed'))
+                                $('.navbar-toggle').click();
+                        });
+                        $("body").css({ overflow: 'hidden' })
+                    }
+                }
+                ReturnAddressInitUSA();
+                //$('#' + saveButtonName).attr('form', formName);
+                $('#' + saveButtonName).attr('class', "btn btn-primary");
+                $('#' + cancelButtonName).attr('class', "btn btn-primary");
+                $('.btn-primary').css('background-color', '#F57B20')
+                $('#divIsDefault').css('display', 'none');
+                $('#IsDefault').prop("checked", true)
+                $("#" + formName).validate({
+                    errorClass: 'validate-error',
+                });
+                $("#" + formName).submit(function (e) {
+                    e.preventDefault();
+                    status = ValidateFormForKendo(formName);
+                    if (status =='false') {
+                        return false;
+                    }
+
+                    $.ajax({
+                        url:  '@Url.Action("SubmitReturnAddress", "RmaForm")', //"~/Home/UpdateDefaultAddress",
+                        type: 'POST',
+                        data: $("#" + formName).serialize(),
+                        async: false,
+                        success: function (result) {
+                            var status = result.status;
+                            var message = result.message;
+                            if (status == 0) {
+                                changeFeedbackMessage('error', message);
+                                returnValue = false;
+                            }
+                            else {
+                                window.location.href = '@Url.Action("PasswordResetGet", "Home")'
+                                returnValue = true;
+                            }
+
+                        },
+                        error: function (request, status, error) {
+                            changeFeedbackMessage('error', error, 'Error');
+                            returnValue = false;
+                        }
+                    });
+                    e.preventDefault();
+
+
+                });
+
+            },
+            close: function () {
+                $('label.error').remove();
+                $('label.validate-error').remove();
+                //$('#' + formName)[0].reset();
+            },
+            buttons: [
+                {
+                    id: saveButtonName,
+                    text: "Save",
+                    form: formName,
+                    click: function () {
+                        $("#" + formName).submit();
+                    }
+                },
+                {
+                    id: cancelButtonName,
+                    text: "Cancel",
+                    click: function () {
+                        $(this).dialog("close");
+                        //$(this).remove();
+                    }
+                }
+
+            ]
+        });
+
+
+    }
+
+    function ValidateFormForKendo(FormName) {
+        var status = true;
+        $("#" + FormName).find("input[data-role='combobox'][optional!='true']").each(function () {
+          
+            if ($(this).val().length == 0 && $(this).closest('form').attr('id') == FormName) {
+                var $label = $("<label  class='error' for='" + this.id + "'>");
+                $label.attr('id', this.id + "-error");
+                //$label.attr("class", "error");
+                //$label.attr("for", this.id);
+                $label.text("This field is required."); $label.css("color", "red");
+                var divParent = $(this).closest('div');
+                $(divParent).find("label.error").each(function () {
+                    $(this).remove();
+                });
+                $label.appendTo(divParent);
+                var parentFormId = 'formRMAParent';
+                status = false;
+            }
+
+        });
+        return status;
+    }
+
+
+
+
+
+ 
+</script>

@@ -1,0 +1,93 @@
+﻿@*@Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")*@
+@using Kendo.Mvc.UI
+<head>
+    <base href="https://demos.telerik.com/kendo-ui/combobox/index">
+    <style>
+        html {
+            font-size: 14px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+    </style>
+    <title></title>
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2019.1.220/styles/kendo.common-material.min.css" />
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2019.1.220/styles/kendo.material.min.css" />
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2019.1.220/styles/kendo.material.mobile.min.css" />
+
+    <script src="https://kendo.cdn.telerik.com/2019.1.220/js/jquery.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2019.1.220/js/kendo.all.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+</head>
+<div id="tshirt-view" class="demo-section k-content">
+    <h4>Customize your Kendo T-shirt</h4>
+    <img id="tshirt" alt="T-shirt image" src="../content/web/combobox/tShirt.png" />
+    <h4><label for="fabric">T-shirt Fabric</label></h4>
+    <input id="fabric" placeholder="Select fabric..." style="width: 100%;" />
+
+    <h4 style="margin-top: 2em;"><label for="size">T-shirt Size</label></h4>
+    <select id="size" placeholder="Select size..." style="width: 100%;">
+        <option>X-Small</option>
+        <option>Small</option>
+        <option>Medium</option>
+        <option>Large</option>
+        <option>X-Large</option>
+        <option>2X-Large</option>
+    </select>
+
+    <button class="k-button k-primary" id="get" style="margin-top: 2em; float: right;">Customize</button>
+    <input name="rma.ServiceCallDate" class="wpcf7-form-control wpcf7-date wpcf7-validates-as-date form-control" id="rma_ServiceCallDate" aria-invalid="false" aria-required="true" required="" type="date" min="2000-01-01" max="2019-04-05" step="" value="" autocomplete="none">
+    <label>Date: <input type="date" name="checkin-date"></label>
+    <label>Date: <input type="date" name="checkin-date2"></label>
+</div>
+<div class="demo-section k-content">
+    @(Html.Kendo().ComboBox()
+                        .HtmlAttributes(new { id = "id" })
+                        .Name("name")
+                        .Filter("contains")
+                        .Placeholder("Select fabric...")
+                        .DataTextField("Text")
+                        .DataValueField("Value")
+                        //.BindTo((SelectList)ViewBag.DropDownList)
+                        //.SelectedIndex(3)
+                        .Suggest(true)
+                        .HtmlAttributes(new { style = "width:100%;" })
+
+    )
+    <script>
+        $(document).ready(function () {
+            // create ComboBox from input HTML element
+            if ($('[type="date"]').prop('type') != 'date') {
+                $('[type="date"]').datepicker();
+            }
+            $("#fabric").kendoComboBox({
+                dataTextField: "text",
+                dataValueField: "value",
+                dataSource: [
+                    { text: "Cotton", value: "1" },
+                    { text: "Polyester", value: "2" },
+                    { text: "Cotton/Polyester", value: "3" },
+                    { text: "Rib Knit", value: "4" }
+                ],
+                filter: "contains",
+                suggest: true,
+                index: 3
+            });
+
+            // create ComboBox from select HTML element
+            $("#size").kendoComboBox();
+
+            var fabric = $("#fabric").data("kendoComboBox");
+            var select = $("#size").data("kendoComboBox");
+
+
+            $("#get").click(function () {
+                alert('Thank you! Your Choice is:\n\nFabric ID: ' + fabric.value() + ' and Size: ' + select.value());
+            });
+        });
+    </script>
+</div>

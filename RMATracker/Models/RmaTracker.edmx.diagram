@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="0d465dbf6afa4154ae81449d5ae8d242" Name="Diagram1">
+        <EntityTypeShape EntityType="RMATrackerModel1.Assessment" Width="1.5" PointX="0.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RMATrackerModel1.BankInfo" Width="1.5" PointX="3.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RMATrackerModel1.Date" Width="1.5" PointX="3.75" PointY="12" IsExpanded="true" />
+        <EntityTypeShape EntityType="RMATrackerModel1.Image" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RMATrackerModel1.Part" Width="1.5" PointX="3" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="RMATrackerModel1.PuttyTest" Width="1.5" PointX="3.75" PointY="15.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RMATrackerModel1.ReturnAddress" Width="1.5" PointX="3.75" PointY="19" IsExpanded="true" />
+        <EntityTypeShape EntityType="RMATrackerModel1.RMADetail" Width="1.5" PointX="0.75" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="RMATrackerModel1.RMA" Width="1.5" PointX="6" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RMATrackerModel1.TechInfo" Width="1.5" PointX="3.75" PointY="22.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="RMATrackerModel1.Test" Width="1.5" PointX="3.75" PointY="26.25" IsExpanded="true" />
+        <AssociationConnector Association="RMATrackerModel1.FK_RMAs_BankInfo" ManuallyRouted="false" />
+        <AssociationConnector Association="RMATrackerModel1.FK_RMAs_Dates" ManuallyRouted="false" />
+        <AssociationConnector Association="RMATrackerModel1.FK_Parts_Parts" ManuallyRouted="false" />
+        <AssociationConnector Association="RMATrackerModel1.FK_RMAs_RMAs5" ManuallyRouted="false" />
+        <AssociationConnector Association="RMATrackerModel1.FK_RMAs_Assessment" ManuallyRouted="false" />
+        <AssociationConnector Association="RMATrackerModel1.FK_RMAs_RMADetails" ManuallyRouted="false" />
+        <AssociationConnector Association="RMATrackerModel1.FK_RMAs_TechInfo" ManuallyRouted="false" />
+        <AssociationConnector Association="RMATrackerModel1.FK_RMAs_TestResults" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

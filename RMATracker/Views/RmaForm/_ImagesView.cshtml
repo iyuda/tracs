@@ -1,0 +1,192 @@
+﻿<script src="@Url.Content("~/Scripts/jquery-input-file-text.js")"></script>
+<script src="@Url.Content("~/Scripts/bootstrap-filestyle.min.js")"></script>
+
+@using RMATracker.Models
+@using DataLayer
+@model RMAModel
+@{
+    ViewBag.QueryMode = (ViewBag.QueryMode ?? false);
+    string is_asterik = ViewBag.QueryMode ? ": " : "*";
+
+}
+
+@*<form id="formImages" action="~/RmaForm/SaveImages" method="post" class="wpcf7-form" enctype="multipart/form-data" novalidate="novalidate" runat="server">*@
+@Html.TextBox("image-input", null, new
+          {
+              @style = "display:none",
+              @type = "file",
+              @accept = "image/*",
+              @onchange = "LoadMediaOnForm(this)",
+          })
+@Html.TextBox("video-input", null, new
+          {
+              @style = "display:none",
+              @type = "file",
+              @accept = "video/*",
+              @onchange = "LoadMediaOnForm(this)",
+          })
+
+
+<fieldset id="fsImages">
+    <legend>Add Image or Video</legend>
+    <div class="container" style="border:solid">
+        <div id="divImages">
+            @{ if (Model?.rma?.RMAMedias == null)
+                {
+                    Model.rma.RMAMedias = new List<RMAMedia>();
+                }
+
+            }
+            @{for (int i = 0; i < (Model != null ? Model?.rma?.RMAMedias?.Count : 0); i++)
+                {
+                    Html.RenderPartial("~/Views/RmaForm/Singles/_MediaEntryView.cshtml", Model,
+                                                         new ViewDataDictionary() { { "Index", i } });
+
+
+                }
+            }
+        </div>
+        <div class="section1" style="padding-left: 10px">
+            <button style="float: left;" type="button" class="btn btn-primary" id="btnAddImage" media_type="image" onclick="AddMediaRecord(this)">
+                Add Image
+            </button>
+        </div>
+        <div class="section1" align="center" id="divImageLimitEror">@Html.Label("lblImageLimitError", "At least one image has to be added!", new { @id = "lblImageLimitError", @style = "font -weight:bold;color:red;display:none", @class = "media-limit-error" })</div>
+        <div class="section1">
+
+
+            <button style="float: right;" type="button" class="btn btn-primary" id="btnAddVideo" media_type="video" onclick="AddMediaRecord(this)">
+                Add Video
+            </button>
+
+        </div>
+    </div>
+</fieldset>
+
+@*</form>*@
+
+<script>
+    $(document).ready(function () {
+        $("input[name^='upload-file-']").each(function () {
+            LoadMediaOnForm(this);
+        });
+
+    });
+</script>
+<script>
+
+    function LoadMediaOnForm(e, files) {
+
+        var id = e.id;
+        files = files || e.files;
+
+        if ((e.attr('skip')||'').toLowerCase()=='true')
+            return false;
+        var rmaParentDiv = $("div[id^=tabs-" + $('#TabId').val() + "]");
+        if (rmaParentDiv.length == 0) {
+            rmaParentDiv = $("div[id='rmaContainer']");
+        }
+        var index = rmaParentDiv.find("#" + id).attr("index");
+        var namePrefix = "#" + rmaParentDiv.find("#" + id).attr("accept").replace("/*", "") + "-";
+
+        if (files.length == 0) {
+            fileName = ''; //rmaParentDiv.find("[tag$=media-path-" + index + "]").val();
+
+            if (fileName != '' && fileName != null) {
+                //alert(namePrefix + index);
+                rmaParentDiv.find(namePrefix + index).attr("src", fileName);
+                rmaParentDiv.find(namePrefix + index).show();
+                $("#btnViewFile_" + index).attr("href", fileName);
+                rmaParentDiv.find("#" + id).removeAttr("aria-required");
+                rmaParentDiv.find("#" + id).removeAttr("required");
+                $("#image_details_"+index).show();
+                $("#btnViewFile_" + index).show();
+            }
+            else if (rmaParentDiv.find("[tag$=media-path-" + index + "]").val().length==0) {
+                $("#btnRemoveMedia_"+index).click();
+            }
+            return false;
+        }
+        var fileSize = files[0].size / 1024 / 1024;
+        if (namePrefix.toLowerCase().indexOf('video')>=0) {
+            if (fileSize > 200) {
+                changeFeedbackMessage("error", 'The file is too big!  Please select a video file of size 200mb or less.');
+                return false;
+            }
+        }
+        else {
+            if (fileSize > 25) {
+                changeFeedbackMessage("error", 'The file is too big!  Please select an image file of size 25mb or less.');
+                return false;
+            }
+        }
+        fileName = files[0].name;
+        if (rmaParentDiv.find("[tag=media-path-" + index + "]").length > 0)
+            rmaParentDiv.find("[tag=media-path-" + index + "]").val(fileName);
+
+        rmaParentDiv.find(namePrefix + index).fadeIn("fast").attr('src', URL.createObjectURL(files[0]));
+        $("#image_details_" + index).show();
+        rmaParentDiv.find(namePrefix + index).show();
+        $("#btnViewFile_" + index).attr('href', URL.createObjectURL(files[0]));
+        return true;
+    }
+
+    function AddMediaRecord(e) {
+
+        var rmaParentDiv = $("div[id^=tabs-" + $('#TabId').val() + "]");
+        if (rmaParentDiv.length == 0) {
+            rmaParentDiv = $("div[id='rmaContainer']");
+        }
+        //var new_image = rmaParentDiv.find("#image_details:first").clone();
+
+        var imagesCount = rmaParentDiv.find("input.image-item:visible").length;
+        var videosCount = rmaParentDiv.find("input.video-item:visible").length;
+
+
+        if (videosCount >= 1 && $(e).attr("media_type") == "video") {
+
+            changeFeedbackMessage("error", "You have reached the maximum number of video items!");
+            return;
+        }
+
+        if (imagesCount + videosCount >= 10) {
+
+            changeFeedbackMessage("error", "You have reached the maximum number of media items!");
+
+            return;
+        }
+
+        var new_number = rmaParentDiv.find(".image_details_class").length;
+
+        var fileInput = $("#" + $(e).attr("media_type") + "-input");
+        fileInput.attr("onchange", "LoadMediaByIndex(this, " + new_number + ", '" + $(e).attr("media_type") + "')");
+        fileInput.trigger("click");
+
+    }
+
+    function LoadMediaByIndex(e, index, media_type) {
+        var accept_types = media_type == "image" ? "Images" : "Videos";
+        var queryString = $.param({ index: index, DynamicAdd: true, AcceptTypes: accept_types});
+        var sURL = '@Url.Action("MediaEntry", "RmaForm")' +  '?' + queryString; //.replace("param1", new_number).replace("param3", accept_types);
+
+        var rmaParentDiv = $("div[id^=tabs-" + $('#TabId').val() + "]");
+        if (rmaParentDiv.length == 0) {
+            rmaParentDiv = $("div[id='rmaContainer']");
+        }
+        $.get(sURL, function (data) {
+            rmaParentDiv.find("#divImages").append(data);
+            $("#lblImageLimitError").hide();
+            $('.btn-primary').css('background-color', '#F57B20')
+            $("#upload-file-" + index).each(function () {
+                this.files = e.files;
+                if (!LoadMediaOnForm(this, e.files)) {
+                    $("#image_details_" + index).remove();
+                }
+            });
+
+        });
+
+    }
+
+
+</script>

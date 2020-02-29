@@ -1,0 +1,124 @@
+#mage-enabler-body {
+	height: 100%;
+	font-family: "Lucida Grande",Verdana,Arial,"Bitstream Vera Sans",sans-serif;
+	font-size: 11px;
+	margin: 10px 0px 0px 5px;
+	width: 99%;
+}
+
+.mage-enabler-box {
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #E3E3E3;
+	float: left;
+	clear: both;
+	width: inherit;
+	padding: 1px;
+	margin-bottom: 20px;
+}
+
+#mage-enabler-header-box {
+	-moz-border-radius-topleft:5px;
+	-moz-border-radius-topright:5px;
+	background:-moz-linear-gradient(center bottom , #D7D7D7, #E4E4E4) repeat scroll 0 0 transparent;
+	border-color:#EFEFEF #EFEFEF #C6C6C6;
+	border-style:solid;
+	border-width: 0px 0px 1px 0px;
+	/*margin:10px 10px 20px;*/
+	border-bottom: 1px solid #C6C6C6;
+	float: left;
+	width: 100%;
+}
+
+.mage-enabler-box .separator {
+	background: #EBEBEB;
+	text-shadow:0 1px 0 #FFFFFF;
+	width: 100%;
+	float: inherit;
+}
+
+.mage-enabler-box p {
+	margin: 5px 10px;
+}
+
+.mage-enabler-box th {
+	font-weight: bold;
+	color:#FF7B00;
+	width: 300px;
+}
+
+.mage-enabler-box th div {
+	font-weight: normal;
+	color: #333333;
+}
+
+.mage-enabler-box .content {
+	float:inherit;
+	margin: 0px;
+	width: 100%;
+	padding-bottom: 10px;
+}
+
+.mage-enabler-box .with-version {
+	background-image: url("mage-enabler-version.png");
+	background-repeat: no-repeat;
+	background-position: right center;
+}
+
+.mage-enabler-box h3 {
+	font:normal 19px Georgia,"Times New Roman",Times,serif;
+	margin: 10px 0px;
+	font-style: italic;
+}
+
+.mage-enabler-box li {
+	margin-left: 13px;
+}
+
+.mage-enabler-box #logo {
+	float:left;
+	margin:30px 0 60px 10px;
+	padding:0 50px 0 0;
+	text-align:right;
+	vertical-align:middle;
+}
+
+#mage-enabler-header-title {
+	color: #333C42;
+	font:bold 22px Georgia,"Times New Roman",Times,serif;
+	letter-spacing:-1px;
+	margin:0;
+	padding:0;
+	text-shadow:0 1px 0 #FFFFFF;
+	float: left;
+	padding:10px;
+}
+
+#mage-enabler-header-title .icon32 {
+	vertical-align: middle;
+	margin: 0px 10px 0px 0px;
+	vertical-align: text-bottom
+}
+
+#mage-enabler-header-title #header-text {
+	margin-top:5px;
+	vertical-align:middle;
+	white-space:nowrap;
+}
+
+#mage-enabler-header-top-links {
+	color:#A4A4A4;
+	float:right;
+	padding:18px 15px 0;
+}
+
+#mage-enabler-header-top-links a {
+	font-weight: bold;
+	color: #555555;
+	text-shadow:0 1px 0 #FFFFFF;
+}
+
+#mage-enabler-header-top-links a:hover {
+	color: #3366CC;
+}

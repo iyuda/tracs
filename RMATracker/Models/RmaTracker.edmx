@@ -1,0 +1,825 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="RMATrackerModel1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Assessment">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VerifyReturn" Type="bit" />
+          <Property Name="PhysicalDamage" Type="bit" />
+          <Property Name="PowerUp" Type="bit" />
+          <Property Name="VerifyLED" Type="bit" />
+          <Property Name="TamperSwitch" Type="bit" />
+          <Property Name="PosSwitch" Type="bit" />
+          <Property Name="CableCut" Type="bit" />
+          <Property Name="SkimAlarm" Type="bit" />
+          <Property Name="CardRead" Type="bit" />
+          <Property Name="NFCProximity" Type="varchar" MaxLength="50" />
+          <Property Name="UnitPassFail" Type="varchar" MaxLength="50" />
+          <Property Name="RootCause" Type="varchar" MaxLength="50" />
+          <Property Name="HardwareRootCause" Type="varchar" MaxLength="50" />
+          <Property Name="DateCreated" Type="datetime" />
+        </EntityType>
+        <EntityType Name="BankInfo">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BankName" Type="varchar" MaxLength="50" />
+          <Property Name="BankStreetAddress" Type="varchar" MaxLength="255" />
+          <Property Name="BankCity" Type="varchar" MaxLength="50" />
+          <Property Name="BankState" Type="varchar" MaxLength="50" />
+          <Property Name="BankZipCode" Type="nchar" MaxLength="10" />
+          <Property Name="DateCreated" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Dates">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ReceivedDate" Type="datetime" />
+          <Property Name="ShippingDate" Type="datetime" />
+          <Property Name="MFGDate" Type="datetime" />
+          <Property Name="CaseDate" Type="datetime" />
+          <Property Name="TestDate" Type="datetime" />
+          <Property Name="ReworkDate" Type="datetime" />
+          <Property Name="DateCreated" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Images">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="rma_id" Type="int" />
+          <Property Name="Image1" Type="image" />
+          <Property Name="Description1" Type="varchar" MaxLength="255" />
+          <Property Name="Image2" Type="image" />
+          <Property Name="Description2" Type="varchar" MaxLength="255" />
+          <Property Name="Image3" Type="image" />
+          <Property Name="Description3" Type="varchar" MaxLength="255" />
+          <Property Name="Image4" Type="image" />
+          <Property Name="Description4" Type="varchar" MaxLength="255" />
+          <Property Name="Image5" Type="image" />
+          <Property Name="Description5" Type="varchar" MaxLength="255" />
+          <Property Name="Image6" Type="image" />
+          <Property Name="Description6" Type="varchar" MaxLength="255" />
+          <Property Name="Image7" Type="image" />
+          <Property Name="Description7" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Parts">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SN" Type="char" MaxLength="6" />
+          <Property Name="PartNo" Type="char" MaxLength="9" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="rma_details_id" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'RMATracker.dbo.PartTypes' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="PartTypes">
+          <Property Name="PartNo" Type="char" MaxLength="9" />
+          <Property Name="PartDescription" Type="varchar" MaxLength="50" />
+        </EntityType>-->
+        <EntityType Name="PuttyTest">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VerifyComms" Type="bit" />
+          <Property Name="MagneticCardReaderTest" Type="varchar" MaxLength="50" />
+          <Property Name="NFCProximityTest" Type="varchar" MaxLength="50" />
+          <Property Name="BeaconFunctional" Type="bit" />
+          <Property Name="FirmwareVersion" Type="varchar" MaxLength="50" />
+          <Property Name="Notes" Type="varchar" MaxLength="150" />
+          <Property Name="DateCreated" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ReturnAddress">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StreetAddress" Type="varchar" MaxLength="255" />
+          <Property Name="City" Type="varchar" MaxLength="50" />
+          <Property Name="State" Type="varchar" MaxLength="50" />
+          <Property Name="ZipCode" Type="nchar" MaxLength="10" />
+          <Property Name="DateCreated" Type="datetime" />
+        </EntityType>
+        <EntityType Name="RMADetails">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Status" Type="varchar" MaxLength="50" />
+          <Property Name="ReturnType" Type="int" />
+          <Property Name="CreditReason" Type="int" />
+          <Property Name="DateCreated" Type="datetime" />
+        </EntityType>
+        <EntityType Name="RMAs">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="received" Type="varchar" MaxLength="10" />
+          <Property Name="rma_no" Type="char" MaxLength="6" />
+          <Property Name="tr_no" Type="char" MaxLength="10" />
+          <Property Name="case_no" Type="int" />
+          <Property Name="date_submitted" Type="datetime" />
+          <Property Name="date_created" Type="datetime" />
+          <Property Name="rma_details_id" Type="int" />
+          <Property Name="bankinfo_id" Type="int" />
+          <Property Name="assessment_id" Type="int" />
+          <Property Name="dates_id" Type="int" />
+          <Property Name="putty_test_id" Type="int" />
+          <Property Name="tech_info_id" Type="int" />
+          <Property Name="test_results_id" Type="int" />
+          <Property Name="return_address_id" Type="int" />
+          <Property Name="DispatchNo" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="TechInfo">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TechName" Type="varchar" MaxLength="50" />
+          <Property Name="TechEmail" Type="varchar" MaxLength="50" />
+          <Property Name="TechPhone" Type="varchar" MaxLength="50" />
+          <Property Name="ClientName" Type="varchar" MaxLength="50" />
+          <Property Name="ClientComplaint" Type="varchar" MaxLength="50" />
+          <Property Name="ImageFile" Type="image" />
+          <Property Name="FieldObservation" Type="varchar" MaxLength="255" />
+          <Property Name="StepsUndertaken" Type="varchar" MaxLength="255" />
+          <Property Name="ComplaintConfirmed" Type="bit" />
+          <Property Name="DateCreated" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Test">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TestResults" Type="varchar" MaxLength="50" />
+          <Property Name="FactoryTech" Type="varchar" MaxLength="50" />
+          <Property Name="DateCreated" Type="datetime" />
+        </EntityType>
+        <Association Name="FK_Parts_Parts">
+          <End Role="RMADetails" Type="Self.RMADetails" Multiplicity="0..1" />
+          <End Role="Parts" Type="Self.Parts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RMADetails">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Parts">
+              <PropertyRef Name="rma_details_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RMAs_Assessment">
+          <End Role="ReturnAddress" Type="Self.ReturnAddress" Multiplicity="0..1" />
+          <End Role="RMAs" Type="Self.RMAs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ReturnAddress">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="RMAs">
+              <PropertyRef Name="return_address_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RMAs_BankInfo">
+          <End Role="BankInfo" Type="Self.BankInfo" Multiplicity="0..1" />
+          <End Role="RMAs" Type="Self.RMAs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BankInfo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="RMAs">
+              <PropertyRef Name="bankinfo_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RMAs_Dates">
+          <End Role="Dates" Type="Self.Dates" Multiplicity="0..1" />
+          <End Role="RMAs" Type="Self.RMAs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dates">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="RMAs">
+              <PropertyRef Name="dates_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RMAs_RMADetails">
+          <End Role="RMADetails" Type="Self.RMADetails" Multiplicity="0..1" />
+          <End Role="RMAs" Type="Self.RMAs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RMADetails">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="RMAs">
+              <PropertyRef Name="rma_details_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RMAs_RMAs5">
+          <End Role="PuttyTest" Type="Self.PuttyTest" Multiplicity="0..1" />
+          <End Role="RMAs" Type="Self.RMAs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PuttyTest">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="RMAs">
+              <PropertyRef Name="putty_test_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RMAs_TechInfo">
+          <End Role="TechInfo" Type="Self.TechInfo" Multiplicity="0..1" />
+          <End Role="RMAs" Type="Self.RMAs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TechInfo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="RMAs">
+              <PropertyRef Name="tech_info_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RMAs_TestResults">
+          <End Role="Test" Type="Self.Test" Multiplicity="0..1" />
+          <End Role="RMAs" Type="Self.RMAs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Test">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="RMAs">
+              <PropertyRef Name="test_results_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RMATrackerModel1StoreContainer">
+          <EntitySet Name="Assessment" EntityType="Self.Assessment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BankInfo" EntityType="Self.BankInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Dates" EntityType="Self.Dates" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Images" EntityType="Self.Images" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Parts" EntityType="Self.Parts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PuttyTest" EntityType="Self.PuttyTest" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ReturnAddress" EntityType="Self.ReturnAddress" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RMADetails" EntityType="Self.RMADetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RMAs" EntityType="Self.RMAs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TechInfo" EntityType="Self.TechInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Test" EntityType="Self.Test" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Parts_Parts" Association="Self.FK_Parts_Parts">
+            <End Role="RMADetails" EntitySet="RMADetails" />
+            <End Role="Parts" EntitySet="Parts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RMAs_Assessment" Association="Self.FK_RMAs_Assessment">
+            <End Role="ReturnAddress" EntitySet="ReturnAddress" />
+            <End Role="RMAs" EntitySet="RMAs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RMAs_BankInfo" Association="Self.FK_RMAs_BankInfo">
+            <End Role="BankInfo" EntitySet="BankInfo" />
+            <End Role="RMAs" EntitySet="RMAs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RMAs_Dates" Association="Self.FK_RMAs_Dates">
+            <End Role="Dates" EntitySet="Dates" />
+            <End Role="RMAs" EntitySet="RMAs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RMAs_RMADetails" Association="Self.FK_RMAs_RMADetails">
+            <End Role="RMADetails" EntitySet="RMADetails" />
+            <End Role="RMAs" EntitySet="RMAs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RMAs_RMAs5" Association="Self.FK_RMAs_RMAs5">
+            <End Role="PuttyTest" EntitySet="PuttyTest" />
+            <End Role="RMAs" EntitySet="RMAs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RMAs_TechInfo" Association="Self.FK_RMAs_TechInfo">
+            <End Role="TechInfo" EntitySet="TechInfo" />
+            <End Role="RMAs" EntitySet="RMAs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RMAs_TestResults" Association="Self.FK_RMAs_TestResults">
+            <End Role="Test" EntitySet="Test" />
+            <End Role="RMAs" EntitySet="RMAs" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="RMATrackerModel1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Assessment">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VerifyReturn" Type="Boolean" />
+          <Property Name="PhysicalDamage" Type="Boolean" />
+          <Property Name="PowerUp" Type="Boolean" />
+          <Property Name="VerifyLED" Type="Boolean" />
+          <Property Name="TamperSwitch" Type="Boolean" />
+          <Property Name="PosSwitch" Type="Boolean" />
+          <Property Name="CableCut" Type="Boolean" />
+          <Property Name="SkimAlarm" Type="Boolean" />
+          <Property Name="CardRead" Type="Boolean" />
+          <Property Name="NFCProximity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UnitPassFail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RootCause" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="HardwareRootCause" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="BankInfo">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BankName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BankStreetAddress" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="BankCity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BankState" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BankZipCode" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="RMAs" Relationship="Self.FK_RMAs_BankInfo" FromRole="BankInfo" ToRole="RMAs" />
+        </EntityType>
+        <EntityType Name="Date">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ReceivedDate" Type="DateTime" Precision="3" />
+          <Property Name="ShippingDate" Type="DateTime" Precision="3" />
+          <Property Name="MFGDate" Type="DateTime" Precision="3" />
+          <Property Name="CaseDate" Type="DateTime" Precision="3" />
+          <Property Name="TestDate" Type="DateTime" Precision="3" />
+          <Property Name="ReworkDate" Type="DateTime" Precision="3" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="RMAs" Relationship="Self.FK_RMAs_Dates" FromRole="Dates" ToRole="RMAs" />
+        </EntityType>
+        <EntityType Name="Image">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="rma_id" Type="Int32" />
+          <Property Name="Image1" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Description1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Image2" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Description2" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Image3" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Description3" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Image4" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Description4" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Image5" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Description5" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Image6" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Description6" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Image7" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Description7" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Part">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SN" Type="String" MaxLength="6" FixedLength="true" Unicode="false" />
+          <Property Name="PartNo" Type="String" MaxLength="9" FixedLength="true" Unicode="false" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="rma_details_id" Type="Int32" />
+          <NavigationProperty Name="RMADetail" Relationship="Self.FK_Parts_Parts" FromRole="Parts" ToRole="RMADetails" />
+        </EntityType>
+        <EntityType Name="PuttyTest">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VerifyComms" Type="Boolean" />
+          <Property Name="MagneticCardReaderTest" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="NFCProximityTest" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BeaconFunctional" Type="Boolean" />
+          <Property Name="FirmwareVersion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Notes" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="RMAs" Relationship="Self.FK_RMAs_RMAs5" FromRole="PuttyTest" ToRole="RMAs" />
+        </EntityType>
+        <EntityType Name="ReturnAddress">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StreetAddress" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ZipCode" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="RMAs" Relationship="Self.FK_RMAs_Assessment" FromRole="ReturnAddress" ToRole="RMAs" />
+        </EntityType>
+        <EntityType Name="RMADetail">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ReturnType" Type="Int32" />
+          <Property Name="CreditReason" Type="Int32" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Parts" Relationship="Self.FK_Parts_Parts" FromRole="RMADetails" ToRole="Parts" />
+          <NavigationProperty Name="RMAs" Relationship="Self.FK_RMAs_RMADetails" FromRole="RMADetails" ToRole="RMAs" />
+        </EntityType>
+        <EntityType Name="RMA">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="received" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="rma_no" Type="String" MaxLength="6" FixedLength="true" Unicode="false" />
+          <Property Name="tr_no" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="case_no" Type="Int32" />
+          <Property Name="date_submitted" Type="DateTime" Precision="3" />
+          <Property Name="date_created" Type="DateTime" Precision="3" />
+          <Property Name="rma_details_id" Type="Int32" />
+          <Property Name="bankinfo_id" Type="Int32" />
+          <Property Name="assessment_id" Type="Int32" />
+          <Property Name="dates_id" Type="Int32" />
+          <Property Name="putty_test_id" Type="Int32" />
+          <Property Name="tech_info_id" Type="Int32" />
+          <Property Name="test_results_id" Type="Int32" />
+          <Property Name="return_address_id" Type="Int32" />
+          <Property Name="DispatchNo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="BankInfo" Relationship="Self.FK_RMAs_BankInfo" FromRole="RMAs" ToRole="BankInfo" />
+          <NavigationProperty Name="Date" Relationship="Self.FK_RMAs_Dates" FromRole="RMAs" ToRole="Dates" />
+          <NavigationProperty Name="PuttyTest" Relationship="Self.FK_RMAs_RMAs5" FromRole="RMAs" ToRole="PuttyTest" />
+          <NavigationProperty Name="ReturnAddress" Relationship="Self.FK_RMAs_Assessment" FromRole="RMAs" ToRole="ReturnAddress" />
+          <NavigationProperty Name="RMADetail" Relationship="Self.FK_RMAs_RMADetails" FromRole="RMAs" ToRole="RMADetails" />
+          <NavigationProperty Name="TechInfo" Relationship="Self.FK_RMAs_TechInfo" FromRole="RMAs" ToRole="TechInfo" />
+          <NavigationProperty Name="Test" Relationship="Self.FK_RMAs_TestResults" FromRole="RMAs" ToRole="Test" />
+        </EntityType>
+        <EntityType Name="TechInfo">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TechName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TechEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TechPhone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ClientName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ClientComplaint" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ImageFile" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="FieldObservation" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="StepsUndertaken" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="ComplaintConfirmed" Type="Boolean" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="RMAs" Relationship="Self.FK_RMAs_TechInfo" FromRole="TechInfo" ToRole="RMAs" />
+        </EntityType>
+        <EntityType Name="Test">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TestResults" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FactoryTech" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="RMAs" Relationship="Self.FK_RMAs_TestResults" FromRole="Test" ToRole="RMAs" />
+        </EntityType>
+        <Association Name="FK_RMAs_BankInfo">
+          <End Role="BankInfo" Type="Self.BankInfo" Multiplicity="0..1" />
+          <End Role="RMAs" Type="Self.RMA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BankInfo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="RMAs">
+              <PropertyRef Name="bankinfo_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RMAs_Dates">
+          <End Role="Dates" Type="Self.Date" Multiplicity="0..1" />
+          <End Role="RMAs" Type="Self.RMA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dates">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="RMAs">
+              <PropertyRef Name="dates_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Parts_Parts">
+          <End Role="RMADetails" Type="Self.RMADetail" Multiplicity="0..1" />
+          <End Role="Parts" Type="Self.Part" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RMADetails">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Parts">
+              <PropertyRef Name="rma_details_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RMAs_RMAs5">
+          <End Role="PuttyTest" Type="Self.PuttyTest" Multiplicity="0..1" />
+          <End Role="RMAs" Type="Self.RMA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PuttyTest">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="RMAs">
+              <PropertyRef Name="putty_test_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RMAs_Assessment">
+          <End Role="ReturnAddress" Type="Self.ReturnAddress" Multiplicity="0..1" />
+          <End Role="RMAs" Type="Self.RMA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ReturnAddress">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="RMAs">
+              <PropertyRef Name="return_address_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RMAs_RMADetails">
+          <End Role="RMADetails" Type="Self.RMADetail" Multiplicity="0..1" />
+          <End Role="RMAs" Type="Self.RMA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RMADetails">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="RMAs">
+              <PropertyRef Name="rma_details_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RMAs_TechInfo">
+          <End Role="TechInfo" Type="Self.TechInfo" Multiplicity="0..1" />
+          <End Role="RMAs" Type="Self.RMA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TechInfo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="RMAs">
+              <PropertyRef Name="tech_info_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RMAs_TestResults">
+          <End Role="Test" Type="Self.Test" Multiplicity="0..1" />
+          <End Role="RMAs" Type="Self.RMA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Test">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="RMAs">
+              <PropertyRef Name="test_results_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RMATrackerEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Assessments" EntityType="Self.Assessment" />
+          <EntitySet Name="BankInfoes" EntityType="Self.BankInfo" />
+          <EntitySet Name="Dates" EntityType="Self.Date" />
+          <EntitySet Name="Images" EntityType="Self.Image" />
+          <EntitySet Name="Parts" EntityType="Self.Part" />
+          <EntitySet Name="PuttyTests" EntityType="Self.PuttyTest" />
+          <EntitySet Name="ReturnAddresses" EntityType="Self.ReturnAddress" />
+          <EntitySet Name="RMADetails" EntityType="Self.RMADetail" />
+          <EntitySet Name="RMAs" EntityType="Self.RMA" />
+          <EntitySet Name="TechInfoes" EntityType="Self.TechInfo" />
+          <EntitySet Name="Tests" EntityType="Self.Test" />
+          <AssociationSet Name="FK_RMAs_BankInfo" Association="Self.FK_RMAs_BankInfo">
+            <End Role="BankInfo" EntitySet="BankInfoes" />
+            <End Role="RMAs" EntitySet="RMAs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RMAs_Dates" Association="Self.FK_RMAs_Dates">
+            <End Role="Dates" EntitySet="Dates" />
+            <End Role="RMAs" EntitySet="RMAs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Parts_Parts" Association="Self.FK_Parts_Parts">
+            <End Role="RMADetails" EntitySet="RMADetails" />
+            <End Role="Parts" EntitySet="Parts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RMAs_RMAs5" Association="Self.FK_RMAs_RMAs5">
+            <End Role="PuttyTest" EntitySet="PuttyTests" />
+            <End Role="RMAs" EntitySet="RMAs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RMAs_Assessment" Association="Self.FK_RMAs_Assessment">
+            <End Role="ReturnAddress" EntitySet="ReturnAddresses" />
+            <End Role="RMAs" EntitySet="RMAs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RMAs_RMADetails" Association="Self.FK_RMAs_RMADetails">
+            <End Role="RMADetails" EntitySet="RMADetails" />
+            <End Role="RMAs" EntitySet="RMAs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RMAs_TechInfo" Association="Self.FK_RMAs_TechInfo">
+            <End Role="TechInfo" EntitySet="TechInfoes" />
+            <End Role="RMAs" EntitySet="RMAs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RMAs_TestResults" Association="Self.FK_RMAs_TestResults">
+            <End Role="Test" EntitySet="Tests" />
+            <End Role="RMAs" EntitySet="RMAs" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="RMATrackerModel1StoreContainer" CdmEntityContainer="RMATrackerEntities1">
+          <EntitySetMapping Name="Assessments">
+            <EntityTypeMapping TypeName="RMATrackerModel1.Assessment">
+              <MappingFragment StoreEntitySet="Assessment">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="VerifyReturn" ColumnName="VerifyReturn" />
+                <ScalarProperty Name="PhysicalDamage" ColumnName="PhysicalDamage" />
+                <ScalarProperty Name="PowerUp" ColumnName="PowerUp" />
+                <ScalarProperty Name="VerifyLED" ColumnName="VerifyLED" />
+                <ScalarProperty Name="TamperSwitch" ColumnName="TamperSwitch" />
+                <ScalarProperty Name="PosSwitch" ColumnName="PosSwitch" />
+                <ScalarProperty Name="CableCut" ColumnName="CableCut" />
+                <ScalarProperty Name="SkimAlarm" ColumnName="SkimAlarm" />
+                <ScalarProperty Name="CardRead" ColumnName="CardRead" />
+                <ScalarProperty Name="NFCProximity" ColumnName="NFCProximity" />
+                <ScalarProperty Name="UnitPassFail" ColumnName="UnitPassFail" />
+                <ScalarProperty Name="RootCause" ColumnName="RootCause" />
+                <ScalarProperty Name="HardwareRootCause" ColumnName="HardwareRootCause" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BankInfoes">
+            <EntityTypeMapping TypeName="RMATrackerModel1.BankInfo">
+              <MappingFragment StoreEntitySet="BankInfo">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="BankName" ColumnName="BankName" />
+                <ScalarProperty Name="BankStreetAddress" ColumnName="BankStreetAddress" />
+                <ScalarProperty Name="BankCity" ColumnName="BankCity" />
+                <ScalarProperty Name="BankState" ColumnName="BankState" />
+                <ScalarProperty Name="BankZipCode" ColumnName="BankZipCode" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Dates">
+            <EntityTypeMapping TypeName="RMATrackerModel1.Date">
+              <MappingFragment StoreEntitySet="Dates">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="ReceivedDate" ColumnName="ReceivedDate" />
+                <ScalarProperty Name="ShippingDate" ColumnName="ShippingDate" />
+                <ScalarProperty Name="MFGDate" ColumnName="MFGDate" />
+                <ScalarProperty Name="CaseDate" ColumnName="CaseDate" />
+                <ScalarProperty Name="TestDate" ColumnName="TestDate" />
+                <ScalarProperty Name="ReworkDate" ColumnName="ReworkDate" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Images">
+            <EntityTypeMapping TypeName="RMATrackerModel1.Image">
+              <MappingFragment StoreEntitySet="Images">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="rma_id" ColumnName="rma_id" />
+                <ScalarProperty Name="Image1" ColumnName="Image1" />
+                <ScalarProperty Name="Description1" ColumnName="Description1" />
+                <ScalarProperty Name="Image2" ColumnName="Image2" />
+                <ScalarProperty Name="Description2" ColumnName="Description2" />
+                <ScalarProperty Name="Image3" ColumnName="Image3" />
+                <ScalarProperty Name="Description3" ColumnName="Description3" />
+                <ScalarProperty Name="Image4" ColumnName="Image4" />
+                <ScalarProperty Name="Description4" ColumnName="Description4" />
+                <ScalarProperty Name="Image5" ColumnName="Image5" />
+                <ScalarProperty Name="Description5" ColumnName="Description5" />
+                <ScalarProperty Name="Image6" ColumnName="Image6" />
+                <ScalarProperty Name="Description6" ColumnName="Description6" />
+                <ScalarProperty Name="Image7" ColumnName="Image7" />
+                <ScalarProperty Name="Description7" ColumnName="Description7" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Parts">
+            <EntityTypeMapping TypeName="RMATrackerModel1.Part">
+              <MappingFragment StoreEntitySet="Parts">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="SN" ColumnName="SN" />
+                <ScalarProperty Name="PartNo" ColumnName="PartNo" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="rma_details_id" ColumnName="rma_details_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PuttyTests">
+            <EntityTypeMapping TypeName="RMATrackerModel1.PuttyTest">
+              <MappingFragment StoreEntitySet="PuttyTest">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="VerifyComms" ColumnName="VerifyComms" />
+                <ScalarProperty Name="MagneticCardReaderTest" ColumnName="MagneticCardReaderTest" />
+                <ScalarProperty Name="NFCProximityTest" ColumnName="NFCProximityTest" />
+                <ScalarProperty Name="BeaconFunctional" ColumnName="BeaconFunctional" />
+                <ScalarProperty Name="FirmwareVersion" ColumnName="FirmwareVersion" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ReturnAddresses">
+            <EntityTypeMapping TypeName="RMATrackerModel1.ReturnAddress">
+              <MappingFragment StoreEntitySet="ReturnAddress">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="StreetAddress" ColumnName="StreetAddress" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RMADetails">
+            <EntityTypeMapping TypeName="RMATrackerModel1.RMADetail">
+              <MappingFragment StoreEntitySet="RMADetails">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ReturnType" ColumnName="ReturnType" />
+                <ScalarProperty Name="CreditReason" ColumnName="CreditReason" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RMAs">
+            <EntityTypeMapping TypeName="RMATrackerModel1.RMA">
+              <MappingFragment StoreEntitySet="RMAs">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="received" ColumnName="received" />
+                <ScalarProperty Name="rma_no" ColumnName="rma_no" />
+                <ScalarProperty Name="tr_no" ColumnName="tr_no" />
+                <ScalarProperty Name="case_no" ColumnName="case_no" />
+                <ScalarProperty Name="date_submitted" ColumnName="date_submitted" />
+                <ScalarProperty Name="date_created" ColumnName="date_created" />
+                <ScalarProperty Name="rma_details_id" ColumnName="rma_details_id" />
+                <ScalarProperty Name="bankinfo_id" ColumnName="bankinfo_id" />
+                <ScalarProperty Name="assessment_id" ColumnName="assessment_id" />
+                <ScalarProperty Name="dates_id" ColumnName="dates_id" />
+                <ScalarProperty Name="putty_test_id" ColumnName="putty_test_id" />
+                <ScalarProperty Name="tech_info_id" ColumnName="tech_info_id" />
+                <ScalarProperty Name="test_results_id" ColumnName="test_results_id" />
+                <ScalarProperty Name="return_address_id" ColumnName="return_address_id" />
+                <ScalarProperty Name="DispatchNo" ColumnName="DispatchNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TechInfoes">
+            <EntityTypeMapping TypeName="RMATrackerModel1.TechInfo">
+              <MappingFragment StoreEntitySet="TechInfo">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="TechName" ColumnName="TechName" />
+                <ScalarProperty Name="TechEmail" ColumnName="TechEmail" />
+                <ScalarProperty Name="TechPhone" ColumnName="TechPhone" />
+                <ScalarProperty Name="ClientName" ColumnName="ClientName" />
+                <ScalarProperty Name="ClientComplaint" ColumnName="ClientComplaint" />
+                <ScalarProperty Name="ImageFile" ColumnName="ImageFile" />
+                <ScalarProperty Name="FieldObservation" ColumnName="FieldObservation" />
+                <ScalarProperty Name="StepsUndertaken" ColumnName="StepsUndertaken" />
+                <ScalarProperty Name="ComplaintConfirmed" ColumnName="ComplaintConfirmed" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tests">
+            <EntityTypeMapping TypeName="RMATrackerModel1.Test">
+              <MappingFragment StoreEntitySet="Test">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="TestResults" ColumnName="TestResults" />
+                <ScalarProperty Name="FactoryTech" ColumnName="FactoryTech" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,33 @@
+[29-Aug-2017 02:15:42 UTC] WordPress database error Access denied; you need (at least one of) the SUPER privilege(s) for this operation for query SET GLOBAL max_allowed_packet=33554432 made by do_action('wp_ajax_updraft_ajax'), WP_Hook->do_action, WP_Hook->apply_filters, call_user_func_array, UpdraftPlus_Admin->updraft_ajax_handler, call_user_func, UpdraftPlus_WPAdmin_Commands->restore_alldownloaded, UpdraftPlus->analyse_db_file, UpdraftPlus->get_max_packet_size
+[29-Aug-2017 02:15:47 UTC] WordPress database error Access denied; you need (at least one of) the SUPER privilege(s) for this operation for query SET GLOBAL max_allowed_packet=33554432 made by require_once('wp-admin/admin.php'), do_action('settings_page_updraftplus'), WP_Hook->do_action, WP_Hook->apply_filters, call_user_func_array, UpdraftPlus_Admin->settings_output, UpdraftPlus_Admin->restore_backup, Updraft_Restorer->restore_backup, Updraft_Restorer->restore_backup_db, UpdraftPlus->get_max_packet_size
+[29-Aug-2017 02:27:53 UTC] UpdraftPlus: Warning: settings for googledrive are empty. A dummy field is usually needed so that something is saved.
+[29-Aug-2017 02:27:53 UTC] UpdraftPlus: Warning: settings for onedrive are empty. A dummy field is usually needed so that something is saved.
+[29-Aug-2017 02:27:53 UTC] UpdraftPlus: Warning: settings for azure are empty. A dummy field is usually needed so that something is saved.
+[29-Aug-2017 02:27:53 UTC] UpdraftPlus: Warning: settings for googlecloud are empty. A dummy field is usually needed so that something is saved.
+[29-Aug-2017 02:27:53 UTC] UpdraftPlus: Warning: settings for webdav are empty. A dummy field is usually needed so that something is saved.
+[29-Aug-2017 02:28:33 UTC] UpdraftPlus: Warning: settings for googledrive are empty. A dummy field is usually needed so that something is saved.
+[29-Aug-2017 02:28:33 UTC] UpdraftPlus: Warning: settings for onedrive are empty. A dummy field is usually needed so that something is saved.
+[29-Aug-2017 02:28:33 UTC] UpdraftPlus: Warning: settings for azure are empty. A dummy field is usually needed so that something is saved.
+[29-Aug-2017 02:28:33 UTC] UpdraftPlus: Warning: settings for googlecloud are empty. A dummy field is usually needed so that something is saved.
+[29-Aug-2017 02:28:33 UTC] UpdraftPlus: Warning: settings for webdav are empty. A dummy field is usually needed so that something is saved.
+[30-Aug-2017 02:38:00 UTC] UpdraftPlus: Warning: settings for googledrive are empty. A dummy field is usually needed so that something is saved.
+[30-Aug-2017 02:38:00 UTC] UpdraftPlus: Warning: settings for onedrive are empty. A dummy field is usually needed so that something is saved.
+[30-Aug-2017 02:38:00 UTC] UpdraftPlus: Warning: settings for azure are empty. A dummy field is usually needed so that something is saved.
+[30-Aug-2017 02:38:00 UTC] UpdraftPlus: Warning: settings for googlecloud are empty. A dummy field is usually needed so that something is saved.
+[30-Aug-2017 02:38:00 UTC] UpdraftPlus: Warning: settings for webdav are empty. A dummy field is usually needed so that something is saved.
+[30-Aug-2017 03:00:35 UTC] UpdraftPlus: Warning: settings for googledrive are empty. A dummy field is usually needed so that something is saved.
+[30-Aug-2017 03:00:35 UTC] UpdraftPlus: Warning: settings for onedrive are empty. A dummy field is usually needed so that something is saved.
+[30-Aug-2017 03:00:35 UTC] UpdraftPlus: Warning: settings for azure are empty. A dummy field is usually needed so that something is saved.
+[30-Aug-2017 03:00:35 UTC] UpdraftPlus: Warning: settings for googlecloud are empty. A dummy field is usually needed so that something is saved.
+[30-Aug-2017 03:00:35 UTC] UpdraftPlus: Warning: settings for webdav are empty. A dummy field is usually needed so that something is saved.
+[30-Aug-2017 03:00:48 UTC] UpdraftPlus: Warning: settings for googledrive are empty. A dummy field is usually needed so that something is saved.
+[30-Aug-2017 03:00:48 UTC] UpdraftPlus: Warning: settings for onedrive are empty. A dummy field is usually needed so that something is saved.
+[30-Aug-2017 03:00:48 UTC] UpdraftPlus: Warning: settings for azure are empty. A dummy field is usually needed so that something is saved.
+[30-Aug-2017 03:00:48 UTC] UpdraftPlus: Warning: settings for googlecloud are empty. A dummy field is usually needed so that something is saved.
+[30-Aug-2017 03:00:48 UTC] UpdraftPlus: Warning: settings for webdav are empty. A dummy field is usually needed so that something is saved.
+[07-Sep-2017 19:15:18 UTC] UpdraftPlus: Warning: settings for googledrive are empty. A dummy field is usually needed so that something is saved.
+[07-Sep-2017 19:15:18 UTC] UpdraftPlus: Warning: settings for onedrive are empty. A dummy field is usually needed so that something is saved.
+[07-Sep-2017 19:15:18 UTC] UpdraftPlus: Warning: settings for azure are empty. A dummy field is usually needed so that something is saved.
+[07-Sep-2017 19:15:18 UTC] UpdraftPlus: Warning: settings for googlecloud are empty. A dummy field is usually needed so that something is saved.
+[07-Sep-2017 19:15:18 UTC] UpdraftPlus: Warning: settings for webdav are empty. A dummy field is usually needed so that something is saved.
+[20-Jun-2018 00:41:37 UTC] PHP Parse error:  syntax error, unexpected '<' in /home2/parabitcom/public_html/wp-content/themes/parabit-2015/functions.php on line 321

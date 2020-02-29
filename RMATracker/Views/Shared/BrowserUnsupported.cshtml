@@ -1,0 +1,16 @@
+﻿
+<div id="broswer-warning" style="display:none;">
+    <h5 class="red" style="color:red;font-weight:bold">Your Browser Is Not Supported By This Application!</h5><br />
+    <p>
+        Please upgrade to
+        <a href='http://www.google.com/chrome'>Chrome</a>,
+        <a href='http://getfirefox.com'>FireFox</a> or
+        <a href='http://www.opera.com/download/'>Opera</a>
+    </p>
+</div>
+
+<script>
+        var isIE = false || !!document.documentMode;
+    if (isIE)
+        document.getElementById('broswer-warning').style.display = 'block'; 
+</script>

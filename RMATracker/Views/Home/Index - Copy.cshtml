@@ -1,0 +1,548 @@
+﻿@model RMATracker.Models.RMATrackerViewModel
+@{
+    ViewBag.Title = "Home Page";
+}
+@*<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js">
+
+        $(document).ready(function () {
+
+
+            alert('load');
+        });
+
+        $("input[name^='upload-file-']").change(function (event) {
+            alert('asdfas');
+            var tmppath = URL.createObjectURL(event.target.files[0]);
+            $("img").fadeIn("fast").attr('src',URL.createObjectURL(event.target.files[0]));
+            $("#disp_tmp_path").html("Temporary Path(Copy it and try pasting it in browser address bar) --> <strong>["+tmppath+"]</strong>");
+    });
+
+    </script>*@
+<div class="container" style="margin-top:40px;">
+    <div class="row">
+
+
+        @*        <form action="/securitas/rma-boa/#wpcf7-f1433-p1434-o1" method="post" class="wpcf7-form" enctype="multipart/form-data" novalidate="novalidate">*@
+        <form id="formRMASend" action="~/Home/SendRMAData" method="post" enctype="multipart/form-data" novalidate="novalidate" runat="server">
+
+            <div style="display: none;">
+                <input type="hidden" name="_wpcf7" value="1433">
+                <input type="hidden" name="_wpcf7_version" value="5.0.1">
+                <input type="hidden" name="_wpcf7_locale" value="en_US">
+                <input type="hidden" name="_wpcf7_unit_tag" value="wpcf7-f1433-p1434-o1">
+                <input type="hidden" name="_wpcf7_container_post" value="1434">
+            </div>
+
+            <br><br>
+            * Required Fields <br> <br>
+            <strong>Problem Description:*</strong>  <br>
+                                                    <div class="form-group call-number">
+                                                        <label class="">Vendor Call # (TR #): <span class="required">*</span></label>
+                     @*                                   <input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required rma-calendar form-control" name="RMAs.tr_no" value="" aria-invalid="false" aria-required="true" required="" type="text">*@
+                     @Html.TextBoxFor(m => m.RMAs.tr_no, new { @aria_invalid = "false", @aria_required1 = "true", @required1 = "", @class = "wpcf7-form-control wpcf7-select wpcf7-validates-as-required1 form-control" })
+                                                    </div> <br>
+
+            <div class="container1">
+                <strong>Type of RMA:*</strong>  <br>
+                <div class="form-group TypeofRMA">
+                    @*<select class="wpcf7-form-control wpcf7-select wpcf7-validates-as-required1 section1 form-control" id="TypeofRMA" name="TypeofRMA" aria-invalid="false" aria-required1="true" required1=""><option value="Pick One"> Pick One</option><option value="Service request"> Service request</option><option value="Credit request"> Credit request</option></select>*@
+                    @Html.DropDownListFor(m=> m.RMADetails.ReturnType, new SelectList(new List<Object>{
+                       new { value = 0 , text = "Service request"  },
+                       new { value = 1 , text = "Credit request" },
+                    },  "Value", "Text"), "Pick One", new { @aria_invalid = "false", @aria_required1 = "true", @required1 = "", @class = "wpcf7-form-control wpcf7-select wpcf7-validates-as-required1 form-control" })
+                </div><br><br>
+
+                <strong>If Credit then reason for:</strong>  <br>
+                <div class="form-group IfCreditReason">
+                    @*<select class="wpcf7-form-control wpcf7-select wpcf7-validates-as-required1 section1 form-control" id="IfCreditReason" name="IfCreditReason" aria-invalid="false" aria-required1="true" required1=""><option value="Pick One"> Pick One</option><option value="Job cancelled"> Job cancelled</option><option value="No longer required1 (excess inventory)"> No longer required1(excess inventory)</option><option value="Wrong part ordered"> Wrong part ordered</option><option value="Wrong color"> Wrong color</option></select>*@
+                    @Html.DropDownListFor(m=> m.RMADetails.ReturnType, new SelectList(new List<Object>{
+                    new { value = 0 , text = "Job cancelled"  },
+                    new { value = 1 , text = "No longer required1 (excess inventory)" },
+                    new { value = 2 , text = "Wrong part ordered" },
+                    new { value = 3 , text = "Wrong color" },
+                },  "Value", "Text"), "Pick One", new { @aria_invalid = "false", @aria_required1 = "true", @required1 = "", @class = "wpcf7-form-control wpcf7-select wpcf7-validates-as-required1 form-control" })
+                </div><br><br>
+
+            </div>
+            <br>
+
+            <div class="form-group firm-name">
+                <label class="">Firm Name</label>
+                @*<input class="wpcf7-form-control wpcf7-text rma-textfield form-control" name="firm-name" type="text" value="" placeholder="Securitas" aria-invalid="false" width=200>*@
+                @Html.TextBoxFor(m => m.TechInfo.ClientName, new { @aria_invalid = "false",  @class = "wpcf7-form-control wpcf7-text rma-textfield form-control" })
+            </div>
+
+            <div class="container1">
+                <div class="section1"><div class="form-group tech-name"><label class="">Tech Name<span class="required1">*</span></label>
+                    @*<input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required1 form-control" name="tech-name" type="text" value="" aria-invalid="false" aria-required1="true" required1="">*@
+                     @Html.TextBoxFor(m => m.TechInfo.TechName, new { @aria_invalid = "false", @aria_required1 = "true", @required1 = "", @class = "wpcf7-form-control wpcf7-text wpcf7-validates-as-required1 form-control" })
+                 </div></div>
+                <div class="section1"><div class="form-group tech-email"><label class="">Tech Email<span class="required1">*</span></label>
+                    @*<input class="wpcf7-form-control wpcf7-text wpcf7-email wpcf7-validates-as-required1 wpcf7-validates-as-email form-control" name="tech-email" type="email" value="" aria-invalid="false" aria-required1="true" required1="">*@
+                     @Html.TextBoxFor(m => m.TechInfo.TechEmail, new { @aria_invalid = "false", @aria_required1 = "true", @required1 = "", @class = "wpcf7-form-control wpcf7-text wpcf7-validates-as-required1 form-control" })
+                 </div></div>
+                <div class="section1"><div class="form-group tech-phone"><label class="">Tech Phone<span class="required1">*</span></label>
+                    @*<input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required1 form-control" name="tech-phone" type="text" value="" aria-invalid="false" aria-required1="true" required1="">*@</div>
+                    @Html.TextBoxFor(m => m.TechInfo.TechPhone, new { @aria_invalid = "false", @aria_required1 = "true", @required1 = "", @class = "wpcf7-form-control wpcf7-text wpcf7-validates-as-required1 form-control" })
+                </div>
+            </div>
+
+            <br><br>
+            <fieldset>
+                <legend>Return Address</legend>
+                <div class="form-group return-street-address"><label class="">Street Address<span class="required1">*</span></label>
+                <input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required1 rma-textfield form-control" name="return-street-address" type="text" value="" aria-invalid="false" aria-required1="true" required1="">
+                </div>
+
+                <div class="container1">
+                    <div class="section1"><div class="form-group return-city"><label class="">City<span class="required1">*</span></label><input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required1 form-control" name="return-city" type="text" value="" aria-invalid="false" aria-required1="true" required1=""></div></div>
+                    <div class="section1"><div class="form-group return-state"><label class="">State<span class="required1">*</span></label><input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required1 rma-short form-control" name="return-state" type="text" value="" aria-invalid="false" aria-required1="true" required1=""></div></div>
+                    <div class="section1"><div class="form-group return-zip"><label class="">Zip Code<span class="required1">*</span></label><input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required1 form-control" name="return-zip" type="text" value="" aria-invalid="false" aria-required1="true" required1=""></div></div>
+                </div>
+            </fieldset>
+            <br><br>
+            <fieldset>
+                <legend>Bank Name &amp; Address</legend>
+                <div class="form-group bank-name"><label class="">Bank Name</label><input class="wpcf7-form-control wpcf7-text rma-textfield form-control" name="bank-name" type="text" value="" placeholder="Bank of America" aria-invalid="false"></div><br>
+
+                <div class="form-group bank-street-address"><label class="">Service Call Street Address<span class="required1">*</span></label><input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required1 rma-textfield form-control" name="bank-street-address" type="text" value="" aria-invalid="false" aria-required1="true" required1=""></div>
+
+                <div class="container1">
+                    <div class="section1"><div class="form-group bank-city"><label class="">City<span class="required1">*</span></label><input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required1 form-control" name="bank-city" type="text" value="" aria-invalid="false" aria-required1="true" required1=""></div></div>
+                    <div class="section1"><div class="form-group bank-state"><label class="">State<span class="required1">*</span></label><input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required1 rma-short form-control" name="bank-state" type="text" value="" aria-invalid="false" aria-required1="true" required1=""></div></div>
+                    <div class="section1"><div class="form-group bank-zip"><label class="">Zip Code<span class="required1">*</span></label><input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required1 form-control" name="bank-zip" type="text" value="" aria-invalid="false" aria-required1="true" required1=""></div></div>
+                </div>
+            </fieldset>
+
+
+
+
+            <strong>Date of Service Call:*</strong> <div class="form-group service-call-date"><input class="wpcf7-form-control wpcf7-date wpcf7-validates-as-required1 wpcf7-validates-as-date rma-calendar form-control" name="service-call-date" type="date" value="" min="" max="" step="" aria-invalid="false" aria-required1="true" required1=""></div>  <br>
+            <strong>Problem Description:*</strong>  <br>
+            <div class="form-group problem-menu"><select class="wpcf7-form-control wpcf7-select wpcf7-validates-as-required1 rma-dropdown form-control" name="problem-menu" aria-invalid="false" aria-required1="true" required1=""><option value="" selected="">---</option><option value="Card swipe not reading cards"> Card swipe not reading cards</option><option value="Reader flashing red/ access denied"> Reader flashing red/ access denied</option><option value="Phones/Contactless cards not being read"> Phones / Contactless cards not being read</option><option value="False skimming/overlay alarm"> False skimming/overlay alarm</option><option value="Tamper alarm active"> Tamper alarm active</option><option value="CableCut alarm active"> CableCut alarm active</option><option value="Reader LED not working"> Reader LED not working</option><option value="Trouble loading firmware"> Trouble loading firmware</option><option value="Controller unresponsive"> Controller unresponsive</option><option value="Doors not locking"> Doors not locking</option><option value="Doors not opening"> Doors not opening</option><option value="Can't connect to controller"> Can't connect to controller</option><option value="Other">Other</option></select></div> <br>
+            <div class="form-group additional-info"><label class="">Additional Information:</label><textarea class="wpcf7-form-control wpcf7-textarea rma-textarea form-control" name="additional-info" rows="4" aria-invalid="false"></textarea></div> <br>
+            <div class="form-group steps-taken"><label class="">Steps undertaken to Resolve Issues:</label><textarea class="wpcf7-form-control wpcf7-textarea rma-textarea form-control" name="steps-taken" rows="4" aria-invalid="false"></textarea></div> <br>
+
+
+            <fieldset>
+                <legend>Part Number and Serial Number Returns</legend>
+
+
+                <i>*Only the 1st Part Number &amp; Serial Number is required1</i> <br> <br>
+
+                @for (int i=1; i<=7; i++)
+                {
+                    <div class="container1">
+                        <div class="section1">
+                            <strong>Part Number @i:* </strong><div class="form-group part-menu">
+                            @{ 
+                            if (i == 1)
+                                {
+                                @Html.DropDownList("PartTypeList", new SelectList(Model.getPartTypes(), "Value", "Text"), "-- Select Part --", new { @aria_invalid = "false", @aria_required1 = "true", @required1 = "", @class = "wpcf7-form-control wpcf7-select wpcf7-validates-as-required1 form-control" })
+                            }
+                            else
+                            {
+                                @Html.DropDownList("PartTypeList", new SelectList(Model.getPartTypes(), "Value", "Text"), "-- Select Part --", new { @aria_invalid = "false", @class = "wpcf7-form-control wpcf7-select form-control" })
+                                }
+                            }
+                        </div>
+
+                        </div>
+
+                        <div class="section1">
+                            <strong>Serial Number @i:* </strong><div class="form-group serial-number"><input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required1 form-control" name="serial-number" type="text" value="" aria-invalid="false" aria-required1="true" required1=""></div>
+                        </div>
+                    </div>
+                }
+
+                @*<div class="container1">
+                    <div class="section1">
+                        <strong>Part Number 1:* </strong><div class="form-group part-menu">               
+                            <select class="wpcf7-form-control wpcf7-select wpcf7-validates-as-required1 form-control" name="part-menu" aria-invalid="false" aria-required1="true" required1="">
+                                <option value="" selected="">---</option>
+                                <option value="V1 Controller PCB 200-10102"> V1 Controller PCB 200-10102</option>
+                                <option value="Reader - MMR 200-10095"> Reader - MMR 200-10095</option>
+                                <option value="Reader - Skimgard 200-10092"> Reader - Skimgard 200-10092</option>
+                                <option value="2nd Card Reader PCB 200-10103"> 2nd Card Reader PCB 200-10103</option>
+                                <option value="Power Booster PCB 200-10205"> Power Booster PCB 200-10205</option>
+                                <option value="Modem PC Board 200-10137"> Modem PC Board 200-10137</option>
+                                <option value="I/O PC Board 200-10110"> I / O PC Board 200-10110</option>
+                                <option value="Power Supply"> Power Supply</option>
+                                <option value="Older Controllers"> Older Controllers</option>
+                                <option value="Other">
+                                    Other
+                                </option>
+                            </select>
+                        </div>
+
+                                    </div >
+
+                                    <div class="section1"><strong>Serial Number 1:* </strong><div class="form-group serial-number"><input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required1 form-control" name="serial-number" type="text" value="" aria-invalid="false" aria-required1="true" required1=""></div>
+                        </div>
+                    </div>
+
+                    <div class="container1">
+                        <div class="section1">
+                            <strong>Part Number 2: </strong><div class="form-group part-menu2">
+                                <select class="wpcf7-form-control wpcf7-select form-control" name="part-menu2" aria-invalid="false">
+                                    <option value="" selected="">---</option>
+                                    <option value="V1 Controller PCB 200-10102"> V1 Controller PCB 200-10102</option>
+                                    <option value="Reader - MMR 200-10095"> Reader - MMR 200-10095</option>
+                                    <option value="Reader - Skimgard 200-10092"> Reader - Skimgard 200-10092</option>
+                                    <option value="2nd Card Reader PCB 200-10103"> 2nd Card Reader PCB 200-10103</option>
+                                    <option value="Power Booster PCB 200-10205"> Power Booster PCB 200-10205</option>
+                                    <option value="Modem PC Board 200-10137"> Modem PC Board 200-10137</option>
+                                    <option value="I/O PC Board 200-10110"> I / O PC Board 200-10110</option>
+                                    <option value="Power Supply"> Power Supply</option>
+                                    <option value="Older Controllers"> Older Controllers</option>
+                                    <option value="Other">
+                                        Other </option ></select ></div >
+
+                                        </div >
+
+                                        <div class="section1"><strong>Serial Number 2: </strong><div class="form-group serial-number2"><input class="wpcf7-form-control wpcf7-text form-control" name="serial-number2" type="text" value="" aria-invalid="false"></div>
+                            </div>
+                        </div>
+
+                        <div class="container1">
+                            <div class="section1">
+                                <strong>Part Number 3: </strong><div class="form-group part-menu3">
+                                    <select class="wpcf7-form-control wpcf7-select form-control" name="part-menu3" aria-invalid="false">
+                                        <option value="" selected="">---</option>
+                                        <option value="V1 Controller PCB 200-10102"> V1 Controller PCB 200-10102</option>
+                                        <option value="Reader - MMR 200-10095"> Reader - MMR 200-10095</option>
+                                        <option value="Reader - Skimgard 200-10092"> Reader - Skimgard 200-10092</option>
+                                        <option value="2nd Card Reader PCB 200-10103"> 2nd Card Reader PCB 200-10103</option>
+                                        <option value="Power Booster PCB 200-10205"> Power Booster PCB 200-10205</option>
+                                        <option value="Modem PC Board 200-10137"> Modem PC Board 200-10137</option>
+                                        <option value="I/O PC Board 200-10110"> I / O PC Board 200-10110</option>
+                                        <option value="Power Supply"> Power Supply</option>
+                                        <option value="Older Controllers"> Older Controllers</option>
+                                        <option value="Other">
+                                            Other </option ></select ></div >
+
+                                            </div >
+
+                                            <div class="section1"><strong>Serial Number 3: </strong><div class="form-group serial-number3"><input class="wpcf7-form-control wpcf7-text form-control" name="serial-number3" type="text" value="" aria-invalid="false"></div>
+                                </div>
+                            </div>
+
+                            <div class="container1">
+                                <div class="section1">
+                                    <strong>Part Number 4: </strong><div class="form-group part-menu4">
+                                        <select class="wpcf7-form-control wpcf7-select form-control" name="part-menu4" aria-invalid="false">
+                                            <option value="" selected="">---</option>
+                                            <option value="V1 Controller PCB 200-10102"> V1 Controller PCB 200-10102</option>
+                                            <option value="Reader - MMR 200-10095"> Reader - MMR 200-10095</option>
+                                            <option value="Reader - Skimgard 200-10092"> Reader - Skimgard 200-10092</option>
+                                            <option value="2nd Card Reader PCB 200-10103"> 2nd Card Reader PCB 200-10103</option>
+                                            <option value="Power Booster PCB 200-10205"> Power Booster PCB 200-10205</option>
+                                            <option value="Modem PC Board 200-10137"> Modem PC Board 200-10137</option>
+                                            <option value="I/O PC Board 200-10110"> I / O PC Board 200-10110</option>
+                                            <option value="Power Supply"> Power Supply</option>
+                                            <option value="Older Controllers"> Older Controllers</option>
+                                            <option value="Other">
+                                                Other </option ></select ></div >
+
+                                                </div >
+
+                                                <div class="section1"><strong>Serial Number 4: </strong><div class="form-group serial-number4"><input class="wpcf7-form-control wpcf7-text form-control" name="serial-number4" type="text" value="" aria-invalid="false"></div>
+                                    </div>
+                                </div>
+
+
+                                <div class="container1">
+                                    <div class="section1">
+                                        <strong>Part Number 5: </strong><div class="form-group part-menu5">
+                                            <select class="wpcf7-form-control wpcf7-select form-control" name="part-menu5" aria-invalid="false">
+                                                <option value="" selected="">---</option>
+                                                <option value="V1 Controller PCB 200-10102"> V1 Controller PCB 200-10102</option>
+                                                <option value="Reader - MMR 200-10095"> Reader - MMR 200-10095</option>
+                                                <option value="Reader - Skimgard 200-10092"> Reader - Skimgard 200-10092</option>
+                                                <option value="2nd Card Reader PCB 200-10103"> 2nd Card Reader PCB 200-10103</option>
+                                                <option value="Power Booster PCB 200-10205"> Power Booster PCB 200-10205</option>
+                                                <option value="Modem PC Board 200-10137"> Modem PC Board 200-10137</option>
+                                                <option value="I/O PC Board 200-10110"> I / O PC Board 200-10110</option>
+                                                <option value="Power Supply"> Power Supply</option>
+                                                <option value="Older Controllers"> Older Controllers</option>
+                                                <option value="Other">
+                                                    Other </option ></select ></div >
+
+                                                    </div >
+
+                                                    <div class="section1"><strong>Serial Number 5: </strong><div class="form-group serial-number5"><input class="wpcf7-form-control wpcf7-text form-control" name="serial-number5" type="text" value="" aria-invalid="false"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="container1">
+                                        <div class="section1">
+                                            <strong>Part Number 6: </strong><div class="form-group part-menu6">
+                                                <select class="wpcf7-form-control wpcf7-select form-control" name="part-menu6" aria-invalid="false">
+                                                    <option value="" selected="">---</option>
+                                                    <option value="V1 Controller PCB 200-10102"> V1 Controller PCB 200-10102</option>
+                                                    <option value="Reader - MMR 200-10095"> Reader - MMR 200-10095</option>
+                                                    <option value="Reader - Skimgard 200-10092"> Reader - Skimgard 200-10092</option>
+                                                    <option value="2nd Card Reader PCB 200-10103"> 2nd Card Reader PCB 200-10103</option>
+                                                    <option value="Power Booster PCB 200-10205"> Power Booster PCB 200-10205</option>
+                                                    <option value="Modem PC Board 200-10137"> Modem PC Board 200-10137</option>
+                                                    <option value="I/O PC Board 200-10110"> I / O PC Board 200-10110</option>
+                                                    <option value="Power Supply"> Power Supply</option>
+                                                    <option value="Older Controllers"> Older Controllers</option>
+                                                    <option value="Other">
+                                                        Other </option ></select ></div >
+
+                                                        </div >
+
+                                                        <div class="section1"><strong>Serial Number 6: </strong><div class="form-group serial-number6"><input class="wpcf7-form-control wpcf7-text form-control" name="serial-number6" type="text" value="" aria-invalid="false"></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="container1">
+                                            <div class="section1">
+                                                <strong>Part Number 7: </strong><div class="form-group part-menu7">
+                                                    <select class="wpcf7-form-control wpcf7-select form-control" name="part-menu7" aria-invalid="false">
+                                                        <option value="" selected="">---</option>
+                                                        <option value="V1 Controller PCB 200-10102"> V1 Controller PCB 200-10102</option>
+                                                        <option value="Reader - MMR 200-10095"> Reader - MMR 200-10095</option>
+                                                        <option value="Reader - Skimgard 200-10092"> Reader - Skimgard 200-10092</option>
+                                                        <option value="2nd Card Reader PCB 200-10103"> 2nd Card Reader PCB 200-10103</option>
+                                                        <option value="Power Booster PCB 200-10205"> Power Booster PCB 200-10205</option>
+                                                        <option value="Modem PC Board 200-10137"> Modem PC Board 200-10137</option>
+                                                        <option value="I/O PC Board 200-10110"> I / O PC Board 200-10110</option>
+                                                        <option value="Power Supply"> Power Supply</option>
+                                                        <option value="Older Controllers"> Older Controllers</option>
+                                                        <option value="Other">
+                                                            Other </option ></select ></div >
+
+                                                            </div >
+
+                                                            <div class="section1"><strong>Serial Number 7: </strong><div class="form-group serial-number7"><input class="wpcf7-form-control wpcf7-text form-control" name="serial-number7" type="text" value="" aria-invalid="false"></div>
+                                                </div>
+                                            </div>*@
+
+            </fieldset>
+
+
+
+
+            <fieldset>
+                <legend>Image Uploads</legend>
+
+                <strong>Upload picture(s) of reader and controller Installation</strong> (2MB Limit):<br><i>*Only the 1st Description &amp; Photo is required1</i> <br> <br>
+                @for (int i = 0; i < 7; i++)
+                {
+                    <div class="clearfix">
+                        <div id="left">
+                            <div class="form-group image-description1">
+                                @*<input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required1 form-control" name="image-description1" type="text" value="" placeholder="Image 1 Description" aria-invalid="false" aria-required1="true" required1="">*@
+                                @{ if (i == 0)
+                                    {
+                                        @Html.TextBoxFor(m => m.Images[i].ImageDescription, new { @aria_invalid = "false", @aria_required1 = "true", @required1 = "", @class = "wpcf7-form-control wpcf7-select wpcf7-validates-as-required1 form-control", @placeholder = "Image " + (i + 1) + " Description" })
+                                    }
+                                    else
+                                    {
+                                        @Html.TextBoxFor(m => m.Images[i].ImageDescription, new { @aria_invalid = "false", @class = "wpcf7-form-control wpcf7-select form-control", @placeholder = "Image "+(i+1) +" Description" })
+                                    }
+                                 }
+                            </div>
+                        </div>
+                        <div id="right">
+                            <div class="form-group upload-file-1">
+                                @*<input class="wpcf7-form-control wpcf7-file wpcf7-validates-as-required1 " name="Images.Image1" type="file" aria-invalid="false" aria-required1="true" required1="">*@
+
+                                @{
+                                    if (i == 0)
+                                    {
+                                        @Html.TextBoxFor(m => m.Images[i].ImageBody, new { type = "file", @aria_invalid = "false", @aria_required1 = "true", @required1 = "", @class = "wpcf7-form-control wpcf7-select wpcf7-validates-as-required1" })
+                                    }
+                                    else
+                                    {
+                                        @Html.TextBoxFor(m => m.Images[i].ImageBody, new { type = "file", @aria_invalid = "false", @class = "wpcf7-form-control wpcf7-select" })
+                                        }
+                                 }
+                                 @*@Html.ValidationMessageFor(m => m.Images[i].ImageBody)*@
+
+                                </div>
+                        </div>
+                    </div>
+                }
+                @*<div class="clearfix">
+                    <div id="left">
+                        <div class="form-group image-description2"><input class="wpcf7-form-control wpcf7-text form-control" name="Images.ImageDescription2" type="text" value="" placeholder="Image 2 Description" aria-invalid="false"></div>
+                    </div>
+                    <div id="right">
+                        <div class="form-group upload-file-2">
+                            
+                            @Html.TextBoxFor(m => m.Images.Image2, new { type = "file" })
+                            @Html.ValidationMessageFor(m => m.Images.Image2)
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="clearfix">
+                    <div id="left">
+                        <div class="form-group image-description3"><input class="wpcf7-form-control wpcf7-text form-control" name="image-description3" type="text" value="" placeholder="Image 3 Description" aria-invalid="false"></div>
+                    </div>
+                    <div id="right">
+                        <div class="form-group upload-file-3">
+                            
+                            @Html.TextBoxFor(m => m.Images.Image3, new { type = "file" })
+                            @Html.ValidationMessageFor(m => m.Images.Image3)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="clearfix">
+                    <div id="left">
+                        <div class="form-group image-description4"><input class="wpcf7-form-control wpcf7-text form-control" name="image-description4" type="text" value="" placeholder="Image 4 Description" aria-invalid="false"></div>
+                    </div>
+                    <div id="right">
+                        <div class="form-group upload-file-4">
+                            
+                            @Html.TextBoxFor(m => m.Images.Image4, new { type = "file" })
+                            @Html.ValidationMessageFor(m => m.Images.Image4)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="clearfix">
+                    <div id="left">
+                        <div class="form-group image-description5"><input class="wpcf7-form-control wpcf7-text form-control" name="image-description5" type="text" value="" placeholder="Image 5 Description" aria-invalid="false"></div>
+                    </div>
+                    <div id="right">
+                        <div class="form-group upload-file-5">
+                            
+                            @Html.TextBoxFor(m => m.Images.Image5, new { type = "file" })
+                            @Html.ValidationMessageFor(m => m.Images.Image5)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="clearfix">
+                    <div id="left">
+                        <div class="form-group image-description6"><input class="wpcf7-form-control wpcf7-text form-control" name="image-description6" type="text" value="" placeholder="Image 6 Description" aria-invalid="false"></div>
+                    </div>
+                    <div id="right">
+                        <div class="form-group upload-file-6">
+                            
+                            @Html.TextBoxFor(m => m.Images.Image6, new { type = "file" })
+                            @Html.ValidationMessageFor(m => m.Images.Image6)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="clearfix">
+                    <div id="left">
+                        <div class="form-group image-description7"><input class="wpcf7-form-control wpcf7-text form-control" name="image-description7" type="text" value="" placeholder="Image 7 Description" aria-invalid="false"></div>
+                    </div>
+                    <div id="right">
+                        <div class="form-group upload-file-7">
+                            
+                            @Html.TextBoxFor(m => m.Images.Image7, new { type = "file" })
+                            @Html.ValidationMessageFor(m => m.Images.Image7)
+                        </div>
+                    </div>
+                </div>*@
+                <fieldset>
+                    <div class="container1">
+                        <div class="section1"><strong>Was Parabit Called?*</strong></div>
+                        <div class="section1"><strong>If yes, Date:</strong></div>
+                        <div class="section1"><strong>Parabit Dispatch #:</strong></div>
+                    </div>
+
+                    <div class="container1">
+                        <div class="section1"><div class="form-group parabit-called"><select class="wpcf7-form-control wpcf7-select wpcf7-validates-as-required1 rma-short form-control" name="parabit-called" aria-invalid="false" aria-required1="true" required1=""><option value="" selected="">---</option><option value="Yes">Yes</option><option value="No">No</option></select></div></div>
+                        <div class="section1"><div class="form-group call-date"><input class="wpcf7-form-control wpcf7-date wpcf7-validates-as-date form-control" name="call-date" type="date" value="" min="" max="" step="" aria-invalid="false"></div></div>
+                        <div class="section1"><div class="form-group dispatch-number"><input class="wpcf7-form-control wpcf7-text form-control" name="dispatch-number" type="text" value="" aria-invalid="false"></div></div>
+                    </div>
+
+                    <span class="wpcf7-form-control-wrap cf7-counter"><input type="hidden" name="cf7-counter" value="225" size="40" class="wpcf7-form-control wpcf7dtx-dynamictext wpcf7-dynamichidden" aria-invalid="false"></span>
+
+
+
+                    <div class="form-group"><div><input class="wpcf7-form-control wpcf7-submit btn btn-primary" type="submit" value="Send"></div></div><div class="wpcf7-response-output wpcf7-display-none alert"></div>
+                </fieldset>
+            </fieldset>
+        </form>
+
+
+
+
+
+
+
+
+
+
+        @*<form id="formRMASend" action="~/Home/SendRMAData" method="post">
+            <table style="width:auto;height:300px">
+
+                <tr>
+                    <td>Tracking Number:<span class="required1">*</span></td>
+                    <td><input type="text" id="txtTrackId" name="txtTrackId" placeholder="Please enter tracking number..." class="form-control" style="width:400px;" /></td>
+                </tr>
+                <tr>
+                    <td>Type of RMA:<span class="required1">*</span></td>
+                    <td>
+                        <select class="form-control" id="TypeofRMA" name="TypeofRMA" aria-invalid="false" aria-required1="true" required1="">
+                            <option value="Pick One">Pick One</option>
+                            <option value="Service request">Service request</option>
+                            <option value="Credit request">Credit request</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>If Credit then reason for:</td>
+                    <td>
+                        <select class="form-control" id="IfCreditReason" name="IfCreditReason" aria-invalid="false" aria-required1="true" required1="">
+                            <option value="Pick One">Pick One</option>
+                            <option value="Job cancelled">Job cancelled</option>
+                            <option value="No longer required1 (excess inventory)">No longer required1 (excess inventory)</option>
+                            <option value="Wrong color">Wrong color</option>
+                            <option value="Wrong part ordered">Wrong part ordered</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Firm Name</td>
+                    <td><input class="wpcf7-form-control wpcf7-text rma-textfield form-control" name="firm-name" type="text" value="" placeholder="Securitas" aria-invalid="false"></td>
+                </tr>
+                <tr>
+
+                <tr>
+                    <td>Tech Name:<span class="required1">*</span></td>
+                    <td>Tech Email:<span class="required1">*</span></td>
+                    <td>Tech Phone:<span class="required1">*</span></td>
+                </tr>
+                <tr>
+                    <td><input type="text" id="txtTechName" name="txtTechName" class="form-control" style="width:400px;" /></td>
+                    <td><input type="text" id="txtTechEmail" name="txtTechEmail" class="form-control" style="width:400px;" /></td>
+                    <td><input type="text" id="txtTechPhone" name="txtTechPhone" class="form-control" style="width:400px;" /></td>
+                </tr>
+
+
+                </tr>
+                <tr>
+                    <td colspan="2"></td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="right"><input type="submit" value="Send" class="btn-primary" /></td>
+                </tr>
+            </table>
+        </form>*@
+        
+    </div>
+</div>
+@Scripts.Render("~/bundles/jquery")
+<script type="text/javascript">
+    $(document).ready(function () {
+
+    });
+    $("input[name^='upload-file-']").change(function (event) {
+        //alert(event.target.files[0]).tmppath);
+        var tmppath = URL.createObjectURL(event.target.files[0]);
+        //$("img").fadeIn("fast").attr('src', URL.createObjectURL(event.target.files[0]));
+        //$("#disp_tmp_path").html("Temporary Path(Copy it and try pasting it in browser address bar) --> <strong>[" + tmppath + "]</strong>");
+    });
+</script>

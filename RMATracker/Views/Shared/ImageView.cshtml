@@ -1,0 +1,95 @@
+﻿@model RMATracker.Models.SurveyModel
+@{
+
+    var className = ViewData["ClassName"];
+    var propertyName = ViewData["PropertyName"];
+    var imageIndex = ViewData["imageIndex"];
+    var Index = ViewData["Index"];
+    var QueryMode = ViewData["QueryMode"];
+    if (QueryMode == null)
+    {
+        QueryMode = false;
+    }
+
+    string AddToID = "";
+    string AddToName = "";
+
+    dynamic WorkObject;
+    switch (className)
+    {
+        case "SurveyIntegrityChecks":
+            WorkObject = Model.SurveyIntegrityChecks;
+            break;
+        case "SurveyObstructions":
+            WorkObject = Model.SurveyObstructions;
+            break;
+        case "SurveyReaderArrivalStates":
+            WorkObject = Model.SurveyReaderArrivalStates;
+            break;
+        case "SurveySiteInspection":
+            WorkObject = Model.SurveySiteInspection;
+            break;
+        default:
+            WorkObject = Model.Survey;
+            break;
+    }
+    if (Index != null)
+    {
+        AddToID = Index.ToString() + "__";
+        AddToName = "[" + Index.ToString() + "]";
+        WorkObject = WorkObject[Int32.Parse(Index.ToString())];
+    }
+    var text = WorkObject?.GetType().GetProperty(propertyName.ToString())?.GetValue(WorkObject, null);
+}
+@{
+    if (!(bool)QueryMode)
+    {
+        <div class="section1">
+            @{
+                @*@Html.TextBox("sDZfdasfdas","asdfdas", new { @value="asdfasd", @maxlength = "6", @aria_invalid = "false", @aria_required = "true", @required = "", @class = "wpcf7-form-control wpcf7-validates-as-required form-control" })*@
+                string value = text;
+                @Html.Hidden(className + "_" + AddToID + propertyName, value , new
+                   {
+                   @Name = className + AddToName + "." + propertyName,
+                   @tag="image-path-"+ imageIndex,
+                   @value =value,
+                   @index = imageIndex, })
+
+                @*@Html.Hidden(String.Format("ImagePathsMap_{0}_", Int32.Parse(imageIndex.ToString())-1), String.Format("{0}@{1}@{2}", className, Index, propertyName), new
+                    {
+                        @Name = String.Format("ImagePathsMap[{0}]", Int32.Parse(imageIndex.ToString()) - 1),
+                    })*@
+
+                @Html.TextBox("upload-file-" + imageIndex, null, new
+                {
+                    @index = imageIndex,
+                    @type = "file",
+                    @accept = "image/*",
+                    @aria_invalid = "false",
+                    @aria_required = "true",
+                    @multiple="",
+                    @required = "",
+                    @class = "wpcf7-form-control wpcf7-slim wpcf7-validates-as-required",
+                    @onchange = "LoadImageOnForm(this)",
+                })
+
+            }
+        </div>
+    }
+}
+<div class="section1" style="padding-left: 100px">
+    @{
+        string image_path = text; // String.IsNullOrEmpty(Model.GetValue(className, propertyName)) ? "" : Model.GetValue(className, propertyName);
+        var absolutePath = Server.MapPath(image_path);
+        if (!File.Exists(absolutePath)) { image_path = ".." + image_path; }
+        if (String.IsNullOrEmpty(@image_path))
+        {
+            <img alt="Image Not Available" id="image-2" style="width: auto;height: auto;" />
+        }
+        else
+        {
+            <img alt="Image Not Available" src="@image_path" id="image-@imageIndex" style="width: auto;height:100px;" />
+        }
+    }
+</div>
+
